@@ -1478,4 +1478,152 @@ I_D = \frac{k_n}{2}(V_{GS} - V_T)^2(1 + \lambda V_{DS})
   * Output resistance becomes finite (not infinite)
 
 ---
+# Chapter 3
+
+## Introduction to SPICE
+
+---
+
+## Lecture 1: Basic SPICE Setup (Linking Device Physics to Simulation)
+
+---
+
+## 1. Context from Saturation Region Operation
+
+* In the previous chapter, NMOS behaviour in the **saturation region** was established.
+* Saturation occurs when:
+
+```math
+V_{GS} - V_{DS} \le V_T
+```
+
+* At this condition:
+
+  * Channel begins to disappear near the drain.
+  * Channel voltage no longer follows $V_{GS} - V_{DS}$ everywhere.
+* This creates an apparent contradiction:
+
+  * Earlier, channel voltage depended on $V_{DS}$.
+  * Now, channel voltage appears fixed.
+* Resolution:
+
+  * In saturation, the **channel voltage clamps to $(V_{GS} - V_T)$**.
+  * Any extra $V_{DS}$ drops across the drain-side depletion region.
+
+---
+
+## 2. Channel Voltage in Saturation Region
+
+* In linear region:
+
+  * Channel voltage varies along the channel length.
+* In saturation region:
+
+  * Channel voltage becomes approximately constant and equal to:
+
+```math
+V_{channel} = V_{GS} - V_T
+```
+
+* Reason:
+
+  * Drain-end inversion condition is lost.
+  * Additional drain voltage no longer modulates channel charge.
+* This simplifies current modelling because:
+
+  * Drain current no longer strongly depends on $V_{DS}$.
+
+**Insert Image 1 here**
+Channel pinch-off near the drain and constant channel voltage
+
+---
+
+## 3. Saturation Region Drain Current Model (Ideal)
+
+* Start from the linear-region drain current equation:
+
+```math
+I_D = k_n \left[(V_{GS} - V_T)V_{DS} - \frac{V_{DS}^2}{2}\right]
+```
+
+* At saturation boundary, substitute:
+
+```math
+V_{DS} = V_{GS} - V_T
+```
+
+* Drain current simplifies to:
+
+```math
+I_D = \frac{k_n}{2}(V_{GS} - V_T)^2
+```
+
+* Observations:
+
+  * Drain current depends only on $V_{GS}$ and $V_T$.
+  * Drain current appears independent of $V_{DS}$.
+* This gives the **ideal saturation current model**.
+
+---
+
+## 4. Why Ideal Saturation Is Not Fully Accurate
+
+* The ideal model suggests NMOS behaves like a perfect current source.
+* In practice:
+
+  * Increasing $V_{DS}$ enlarges the drain-side depletion region.
+  * Effective conductive channel length reduces.
+* This reduction causes:
+
+  * A small increase in drain current with increasing $V_{DS}$.
+* Hence, drain current is **not truly constant** in saturation.
+
+**Insert Image 2 here**
+Reduction of effective channel length with increasing $V_{DS}$
+
+---
+
+## 5. Channel Length Modulation and Improved Model
+
+* To account for non-ideal behaviour, introduce channel length modulation factor $\lambda$.
+* Modified saturation current equation:
+
+```math
+I_D = \frac{k_n}{2}(V_{GS} - V_T)^2 (1 + \lambda V_{DS})
+```
+
+* Where:
+
+  * $\lambda$ models dependency of current on $V_{DS}$.
+  * $\lambda$ is provided in foundry SPICE model files.
+* Effects:
+
+  * Drain current increases slightly with $V_{DS}$.
+  * Output resistance becomes finite.
+
+---
+
+## 6. Motivation for SPICE Simulations
+
+* At this stage, three key models are available:
+
+  1. Threshold voltage model
+  2. Linear-region drain current model
+  3. Saturation-region drain current model
+* Manually evaluating these equations for:
+
+  * Multiple $V_{GS}$
+  * Sweeping $V_{DS}$
+  * Different technology nodes
+    is impractical.
+* SPICE simulators:
+
+  * Use these equations internally
+  * Take foundry-provided parameters
+  * Automatically generate $I_D$ – $V_{DS}$ curves
+* Next step:
+
+  * Build a basic SPICE setup
+  * Understand required parameters
+  * Run simulations for different technology nodes
 
