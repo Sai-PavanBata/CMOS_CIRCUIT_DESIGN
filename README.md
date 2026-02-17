@@ -1375,8 +1375,107 @@ V_{DS} \ge (V_{GS} - V_T)
   * Validate behaviour through SPICE simulations
 
 
+---
+
+
+## Lecture 6: Drain Current Model for Saturation Region of Operation
+
+---
 
 
 
+## 1. Channel Voltage Behaviour in Saturation
 
+* In the linear region, channel voltage varies as:
+
+```math
+V_{GC}(x) = V_{GS} - V(x)
+```
+
+* In saturation:
+
+  * Channel voltage can no longer increase beyond $(V_{GS} - V_T)$.
+  * The channel voltage effectively becomes **constant**.
+* Therefore, instead of using $V_{DS}$ directly, we replace it with:
+
+```math
+V_{DS} = V_{GS} - V_T
+```
+
+* This substitution reflects the physical fact that:
+
+  * Any additional $V_{DS}$ drops across the **drain depletion region**, not the channel.
+
+---
+
+## 2. Drain Current Equation in Saturation (Ideal Case)
+
+* Starting from the linear-region drain current equation:
+
+```math
+I_D = k_n \left[(V_{GS} - V_T)V_{DS} - \frac{V_{DS}^2}{2}\right]
+```
+
+* Substitute:
+
+```math
+V_{DS} = V_{GS} - V_T
+```
+
+* The drain current simplifies to:
+
+```math
+I_D = \frac{k_n}{2}(V_{GS} - V_T)^2
+```
+
+* Key observations:
+
+  * Drain current is **independent of $V_{DS}$**
+  * Drain current depends only on:
+
+    * $V_{GS}$
+    * $V_T$
+    * Device parameters ($W/L$)
+* This gives the **ideal saturation current model**.
+
+---
+
+## 3. Why Saturation Current Is Not Truly Constant
+
+* The ideal model suggests NMOS behaves like a **perfect current source**.
+* In reality:
+
+  * Increasing $V_{DS}$ increases the **drain-side depletion region**.
+  * This reduces the **effective channel length**.
+* As effective channel length decreases:
+
+  * Drain current increases slightly with $V_{DS}$.
+* This phenomenon is known as **channel length modulation**.
+
+<img width="1319" height="688" alt="Screenshot 2026-02-17 195253" src="https://github.com/user-attachments/assets/6ab861a1-4489-4ae9-8b41-2a1dadd8da02" />
+
+
+Reduction of effective channel length as $V_{DS}$ increases
+
+---
+
+## 4. Saturation Current with Channel Length Modulation
+
+* To model non-ideal behaviour, introduce channel length modulation factor $\lambda$.
+* Modified saturation current equation:
+
+```math
+I_D = \frac{k_n}{2}(V_{GS} - V_T)^2(1 + \lambda V_{DS})
+```
+
+* Where:
+
+  * $\lambda$ = channel length modulation parameter
+  * Supplied by the foundry in SPICE model files
+* Effects of $\lambda$:
+
+  * Drain current increases **slightly linearly** with $V_{DS}$
+  * Output resistance becomes finite (not infinite)
+
+---
 
