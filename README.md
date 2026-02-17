@@ -206,4 +206,221 @@ Here’s the **lecture-note/exam-answer style rewrite**, keeping the meaning exa
 ---
 
 
+Here is the **lecture-note style explanation**, structured and exam-ready.
+
+---
+
+
+# Lecture 2
+
+## Introduction to Fundamental Elements in Circuit Design – NMOS
+
+---
+
+## Structure of an NMOS Transistor
+
+<img width="1343" height="509" alt="image" src="https://github.com/user-attachments/assets/2f6e1e2d-1fd1-4f73-a973-2567f8d4958a" />
+
+
+The figure shows the **cross-sectional structure of an NMOS transistor**.
+
+### 1) NMOS as a 4-Terminal Device
+
+NMOS consists of four terminals:
+
+* **G** — Gate
+* **S** — Source
+* **D** — Drain
+* **B** — Body (Substrate)
+
+---
+
+### 2) Physical Regions
+
+* **P-Substrate**
+
+  * Base semiconductor material
+  * Forms the **Body (B)** terminal
+
+* **n⁺ Diffusion Regions**
+
+  * Heavily doped n-type regions
+  * Form **Source (S)** and **Drain (D)**
+
+* **Gate Oxide (SiO₂)**
+
+  * Thin insulating layer
+  * Electrically isolates the gate from the substrate
+
+* **Poly-Silicon or Metal Gate**
+
+  * Controls channel formation
+
+* **Isolation Oxide**
+
+  * Electrically separates adjacent devices
+
+---
+
+## Working Principle
+
+* When $V_{GS} = 0$:
+
+  * No inversion channel exists
+  * No conduction between Source and Drain
+
+* When $V_{GS} > V_{th}$:
+
+  * An **inversion layer (n-channel)** forms
+  * Current flows when $V_{DS}$ is applied
+
+* The resulting current is called **Drain Current**, denoted as $I_D$
+
+---
+
+## Body Effect and Threshold Voltage Tuning
+
+Usually, the body is connected to the ground.
+However, if a voltage difference exists between Source and Body:
+
+$$
+V_{SB} \neq 0
+$$
+
+The threshold voltage changes.
+
+---
+
+### Body Effect
+
+* Increasing $V_{SB}$ (reverse-biasing source-body junction):
+
+  * Increases depletion width
+  * Requires a higher gate voltage for inversion
+  * Therefore increases $V_{th}$
+
+---
+
+### Threshold Voltage with Body Effect
+
+$$
+V_{th} = V_{th0} + \gamma \left( \sqrt{2\phi_F + V_{SB}} - \sqrt{2\phi_F} \right)
+$$
+
+Where:
+
+* $V_{th0}$ = Threshold voltage when $V_{SB} = 0$
+* $\gamma$ = Body-effect coefficient
+* $\phi_F$ = Fermi potential
+* $V_{SB}$ = Source-to-body voltage
+
+---
+
+## Threshold Voltage
+<img width="1352" height="498" alt="image" src="https://github.com/user-attachments/assets/f90da67d-f583-4833-873a-5ef4da14a07e" />
+
+
+## NMOS Threshold Voltage – Physical Understanding
+
+---
+
+## 1. Importance of Threshold Voltage
+
+* **Threshold Voltage ($V_T$)** is the **most critical parameter** in NMOS modeling.
+* It determines:
+
+  * When the NMOS **turns ON**
+  * Channel formation
+  * Accuracy of **SPICE simulations**
+* In SPICE, $V_T$ is not a constant but a **model parameter**, expressed as a function:
+
+```math
+V_T = f(x, y, z)
+```
+
+* Advanced SPICE models use complex equations, but analysis starts with the **basic threshold voltage model**.
+
+---
+
+## 2. Initial Condition: $V_{GS} = 0$
+
+* Gate, Source, Drain, and Body are all connected to **GND**.
+* NMOS structure consists of:
+
+  * **n⁺ Source**
+  * **n⁺ Drain**
+  * **p-type Substrate (Body)**
+
+### Junction Behaviour
+
+* Source–Body (S–B) and Drain–Body (D–B) form **PN junction diodes**.
+* At $0\text{ V}$ bias:
+
+  * Both junctions are **OFF**
+  * No conduction path exists
+
+### Electrical State
+
+* Source–Drain resistance is **very high**
+* NMOS behaves as an **open switch**
+* Drain current:
+
+```math
+I_D \approx 0
+```
+
+---
+
+## 3. Applying a Small Positive Gate Voltage ($V_{GS} > 0$)
+
+* Gate, oxide, and substrate form a **MOS capacitor**.
+* Gate is treated as a **metal plate**.
+* Oxide ($SiO_2$) acts as a **dielectric**.
+
+### Charge Redistribution
+
+* Positive voltage on the gate causes:
+
+  * Accumulation of **positive charge on gate**
+  * Repulsion of **holes** (majority carriers) from substrate surface
+* Holes move deeper into the substrate.
+
+---
+
+## 4. Depletion Region Formation
+
+* Removal of holes near the surface leaves behind:
+
+  * **Fixed negatively charged acceptor ions**
+* This creates a **depletion region** below the gate oxide.
+
+### Key Concept
+
+* Depletion region contains:
+
+  * No mobile carriers
+  * Only an immobile negative charge
+* Still **no conduction channel** exists.
+
+---
+
+## 5. Toward Threshold Voltage (Preview)
+
+* Increasing $V_{GS}$ further:
+
+  * Expands depletion region
+  * At a critical voltage, the surface **inverts** to n-type
+* This voltage is called **Threshold Voltage ($V_T$)**.
+
+```math
+V_{GS} = V_T \Rightarrow \text{Onset of inversion}
+```
+
+* Inversion layer forms a **conductive channel** between Source and Drain.
+
+---
+
+
+
+
 
