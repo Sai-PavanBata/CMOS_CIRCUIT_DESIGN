@@ -1629,3 +1629,157 @@ I_D = \frac{k_n}{2}(V_{GS} - V_T)^2 (1 + \lambda V_{DS})
   * Understand required parameters
   * Run simulations for different technology nodes
 
+## Lecture 2
+
+### Circuit Description in SPICE Syntax (NMOS Example)
+
+---
+
+## 1. Objective of This Lecture
+
+* Convert a simple NMOS circuit into a valid SPICE netlist.
+* Understand how SPICE interprets a circuit using nodes and components.
+* Learn the correct syntax and pin ordering used by SPICE for MOSFETs, resistors, and voltage sources.
+* Prepare the circuit description so it can be simulated using a technology (model) file.
+
+---
+
+## 2. Identifying and Defining Nodes
+
+
+<img width="1286" height="568" alt="Screenshot 2026-02-17 223644" src="https://github.com/user-attachments/assets/c10c0d2d-922c-4db7-8c82-caeecf279c82" />
+
+* In SPICE, a node is a continuous electrical connection with no obstruction in between.
+* Any wire segment without a component in between is treated as one node.
+* Nodes are identified first before writing the netlist.
+
+For the given circuit:
+
+* Ground node is always named `0` in SPICE.
+* The drain supply node is named `VDD`.
+* The gate input node is named `IN`.
+* The intermediate node between the resistor and the MOSFET drain is named `N1`.
+
+Summary of nodes:
+
+* `0` → Ground (VSS)
+* `VDD` → Drain supply node
+* `IN` → Gate input node
+* `N1` → Drain node of MOSFET and resistor connection
+
+These node names can be chosen freely, but must be used consistently.
+
+---
+
+## 3. MOSFET Declaration in SPICE
+
+* MOSFETs are declared using the letter `M`.
+* General syntax:
+
+```
+M<name> <drain> <gate> <source> <bulk> <model> W=<width> L=<length>
+```
+
+* Pin order is fixed and very important:
+
+  * Drain
+  * Gate
+  * Source
+  * Bulk (Body)
+
+<img width="535" height="349" alt="Screenshot 2026-02-17 224625" src="https://github.com/user-attachments/assets/616ed054-5e3b-4664-a6f1-d10bed915bd2" />
+
+For this circuit:
+
+* MOSFET name: `M1`
+* Drain node: `N1`
+* Gate node: `IN`
+* Source node: `0`
+* Bulk node: `0`
+* Model name: `NMOS`
+* Width = 0.8 micron
+* Length = 1.2 micron
+
+SPICE line:
+
+```
+M1 N1 IN 0 0 NMOS W=0.8u L=1.2u
+```
+
+This line fully describes the NMOS device and connects it electrically to the circuit.
+
+---
+
+## 4. Resistor Definition
+
+* Resistors start with the letter `R`.
+* Syntax:
+
+```
+R<name> <node1> <node2> <value>
+```
+
+For the circuit:
+
+* Resistor name: `R1`
+* Connected between nodes `VDD` and `N1`
+* Resistance value: 55 ohms
+
+SPICE line:
+
+```
+R1 VDD N1 55
+```
+
+---
+
+## 5. Voltage Source Definitions
+
+* Voltage sources start with the letter `V`.
+* Syntax:
+
+```
+V<name> <positive_node> <negative_node> <value>
+```
+
+Drain supply (VDD):
+
+* Name: `VDD`
+* Positive node: `VDD`
+* Negative node: `0`
+* Voltage: 2.5 V
+
+```
+VDD VDD 0 2.5
+```
+
+Gate input voltage (VIN):
+
+* Name: `VIN`
+* Positive node: `IN`
+* Negative node: `0`
+* Voltage: 2.5 V
+
+```
+VIN IN 0 2.5
+```
+
+---
+
+## 6. Complete SPICE Netlist (So Far)
+
+Putting everything together:
+
+```
+M1 N1 IN 0 0 NMOS W=0.8u L=1.2u
+R1 VDD N1 55
+VDD VDD 0 2.5
+VIN IN 0 2.5
+```
+
+* This netlist fully represents the NMOS circuit topology.
+* At this stage, SPICE understands the circuit connectivity but not the device physics.
+* The electrical behaviour will only be defined after adding the technology (model) file.
+
+---
+
