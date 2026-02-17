@@ -1533,7 +1533,8 @@ V_{channel} = V_{GS} - V_T
 
   * Drain current no longer strongly depends on $V_{DS}$.
 
-**Insert Image 1 here**
+<img width="1330" height="639" alt="Screenshot 2026-02-17 195233" src="https://github.com/user-attachments/assets/f8c5632a-7347-42f8-8937-7d28c471d7d0" />
+
 Channel pinch-off near the drain and constant channel voltage
 
 ---
@@ -1578,7 +1579,8 @@ I_D = \frac{k_n}{2}(V_{GS} - V_T)^2
   * A small increase in drain current with increasing $V_{DS}$.
 * Hence, drain current is **not truly constant** in saturation.
 
-**Insert Image 2 here**
+<img width="1278" height="726" alt="Screenshot 2026-02-17 215143" src="https://github.com/user-attachments/assets/878329ac-0ca9-4675-9c5a-4ec377c7e644" />
+
 Reduction of effective channel length with increasing $V_{DS}$
 
 ---
