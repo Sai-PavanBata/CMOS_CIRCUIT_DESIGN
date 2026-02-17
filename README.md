@@ -874,5 +874,153 @@ V_{DS} \ge (V_{GS} - V_T)
 
 
 
+## Lecture 2: Drift Current Theory (Resistive Region with Small $V_{DS}$)
+
+---
+
+## 1. Channel Potential Variation with Applied $V_{DS}$
+
+* Consider the NMOS operating in strong inversion with:
+<img width="1313" height="587" alt="Screenshot 2026-02-17 182246" src="https://github.com/user-attachments/assets/db88a991-7fe3-477a-bbff-e5c29a7039f4" />
+
+* $V_{GS} = 1.0\ \text{V}$
+* $V_T = 0.45\ \text{V}$
+* A small drain–source voltage $V_{DS} = 0.05\ \text{V}$
+* At the **source end** of the channel:
+
+  * Channel potential $V(x) = 0$
+  * Effective gate-to-channel voltage is:
+
+```math
+V_{GS} - V(x) = 1.0\ \text{V}
+```
+
+* At the **drain end** of the channel:
+
+  * Channel potential $V(x) = V_{DS} = 0.05\ \text{V}$
+  * Effective gate-to-channel voltage becomes:
+
+```math
+V_{GS} - V(x) = 0.95\ \text{V}
+```
+
+* Therefore, the channel potential is **not constant**.
+* A **voltage gradient exists along the channel**, caused purely by the applied $V_{DS}$.
+* This gradient is the fundamental reason current can flow from Source to Drain.
+
+---
+
+
+## 2. Effective Gate Voltage Along the Channel
+
+* When $V_{DS} = 0$, every point along the channel sees the same gate voltage $V_{GS}$.
+* When $V_{DS} > 0$, each point along the channel experiences a different effective gate voltage.
+* At any position $x$ along the channel:
+
+```math
+V_{GC}(x) = V_{GS} - V(x)
+```
+
+* Since $V(x)$ varies from 0 at the source to $V_{DS}$ at the drain:
+
+  * The effective gate voltage decreases gradually from source to drain.
+* As a result:
+
+  * Channel charge density is **higher near the source**
+  * Channel charge density is **lower near the drain**
+
+---
+
+## 3. Induced Channel Charge in Presence of $V_{DS}$
+
+* The inversion charge in the channel depends on:
+
+  * Effective gate voltage
+  * Threshold voltage
+* At any position $x$, the induced inversion charge per unit area is:
+
+```math
+Q_i(x) = C_{ox}\left( V_{GS} - V(x) - V_T \right)
+```
+
+* Threshold voltage $V_T$ represents the minimum voltage required to form inversion.
+* Only the voltage **above $V_T$** contributes to useful channel charge.
+* This expression shows clearly that:
+
+  * Channel charge is **position-dependent**
+  * Charge decreases gradually as we move from source to drain
+
+---
+
+## 4. Gate Oxide Capacitance and Technology Parameters
+
+* Gate oxide capacitance per unit area is given by:
+
+```math
+C_{ox} = \frac{\varepsilon_{ox}}{t_{ox}}
+```
+
+* Where:
+
+  * $\varepsilon_{ox} = 3.97,\varepsilon_0$
+  * $t_{ox}$ is the gate oxide thickness
+* $t_{ox}$ is:
+
+  * Fixed for a given technology node
+  * Provided by the foundry
+* Parameters such as $C_{ox}$, $V_T$, and $t_{ox}$:
+
+  * Are **technology constants**
+  * Are directly used in SPICE models
+* These expressions form the physical foundation before moving to simulations.
+
+---
+<img width="1392" height="732" alt="Screenshot 2026-02-17 182345" src="https://github.com/user-attachments/assets/471bce0e-fd26-421c-a0bc-3af251cfe822" />
+
+## 5. Drift Current Concept in NMOS
+
+* From device physics, two current mechanisms exist:
+
+  * Drift current
+  * Diffusion current
+* In this lecture, the focus is on **drift current**.
+* Drift current arises due to:
+
+  * An electric field created by a potential difference
+* In the NMOS resistive region:
+
+  * Source is at 0 V
+  * Drain is at $V_{DS}$
+  * An electric field exists along the channel
+* Electrons drift from source to drain under this electric field, producing drain current.
+
+---
+
+## 6. Drain Current Dependence on Channel Charge
+
+* Drain current is fundamentally related to:
+
+  * Amount of charge present in the channel
+  * Velocity of charge carriers
+  * Channel dimensions
+* Conceptually:
+
+```math
+I_D \propto (\text{channel charge}) \times (\text{carrier velocity}) \times (\text{channel width})
+```
+
+* Channel width $W$ is observed from the **top view** of the MOSFET.
+* Channel length $L$ is the distance between source and drain.
+* To obtain the final drain current equation:
+
+  * Channel charge expression is combined with carrier velocity
+  * Resulting expression is integrated along the channel length
+* This derivation leads directly to the **NMOS resistive-region current equation**, which is used in circuit design and delay analysis.
+
+
+
+
+
+
 
 
