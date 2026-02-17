@@ -1687,7 +1687,7 @@ M<name> <drain> <gate> <source> <bulk> <model> W=<width> L=<length>
   * Source
   * Bulk (Body)
 
-<img width="535" height="349" alt="Screenshot 2026-02-17 224625" src="https://github.com/user-attachments/assets/616ed054-5e3b-4664-a6f1-d10bed915bd2" />
+<img width="801" height="302" alt="Screenshot 2026-02-17 231023" src="https://github.com/user-attachments/assets/5d2e3b06-1f0f-40ac-b346-cea8f49dfe93" />
 
 For this circuit:
 
@@ -1782,4 +1782,163 @@ VIN IN 0 2.5
 * The electrical behaviour will only be defined after adding the technology (model) file.
 
 ---
+
+## Lecture 2: Circuit Description in SPICE Syntax and Technology Parameters 
+
+---
+
+## 1. Goal of This Lecture
+
+* The objective is to translate a physical NMOS circuit into a SPICE-readable netlist.
+* SPICE does not understand schematics or drawings; it only understands text-based descriptions called netlists.
+* A valid simulation requires three things:
+
+  * Correct circuit connectivity using nodes
+  * Correct device declarations (NMOS, resistors, sources)
+  * A technology (model) file that provides device parameters
+
+<img width="621" height="703" alt="Screenshot 2026-02-17 230855" src="https://github.com/user-attachments/assets/1a9ccf29-cbb1-4c8e-82e1-719275678efd" />
+
+
+
+---
+
+## 2. Node Identification and Naming
+
+* A node is a continuous electrical connection with no obstruction (no component in between).
+* All points connected by plain wires belong to the same node and must share the same node name.
+* The ground node is always named `0` in SPICE and is mandatory.
+
+Example node identification in this circuit:
+
+
+* Node `vdd`: Drain supply node connected to VDD source and NMOS drain
+* Node `n1`: Gate node between resistor R1 and NMOS gate
+* Node `in`: Input node connected to Vin and resistor R1
+* Node `0`: Ground node connected to source and substrate
+
+These node names are user-defined and can be numeric or symbolic, but must be used consistently.
+
+---
+
+## 3. Writing the SPICE Netlist (Circuit Description)
+
+Each component is written as a single line using the format:
+
+* Component name
+* Connected nodes
+* Component value or model
+
+### NMOS Declaration
+
+* MOSFETs start with the letter `M`
+* Order of terminals is strictly: Drain Gate Source Substrate (D G S B)
+
+```
+M1 vdd n1 0 0 nmos W=1.8u L=1.2u
+```
+<img width="801" height="302" alt="Screenshot 2026-02-17 231023" src="https://github.com/user-attachments/assets/36baed8c-2b9a-4041-af28-e4d762124ed6" />
+
+
+Explanation:
+
+* `M1` is the MOSFET name
+* `vdd` is the drain
+* `n1` is a gate
+* `0` is the source
+* `0` is substrate (body tied to ground)
+* `nmos` is the model name
+* `W` and `L` are width and length in microns
+
+### Resistor Declaration
+
+* Resistors start with `R`
+
+```
+R1 in n1 55
+```
+
+* R1 connects node `in` to node `n1`
+* Resistance value is 55 ohms
+
+### Voltage Sources
+
+* Voltage sources start with `V`
+
+```
+Vdd vdd 0 2.5
+Vin in 0 2.5
+```
+
+* First node is a positive terminal
+* The Second node is the negative terminal
+* Last value is DC voltage in volts
+
+
+
+---
+
+## 4. Role of the Technology (Model) File
+
+* The SPICE engine does not compute NMOS behaviour using geometry alone.
+* It requires a model file containing physical and process parameters.
+* These parameters come from the foundry and depend on the technology node (1.2 μm, 350 nm, etc.).
+
+Key model parameters include:
+
+* `VTO`: Threshold voltage at VSB = 0
+* `gamma`: Body effect coefficient
+* `KP` or `kn`: Process transconductance
+* `lambda`: Channel length modulation
+* `tox`: Oxide thickness
+* `u0`: Carrier mobility
+
+These parameters allow SPICE to internally evaluate:
+
+* Threshold voltage equation
+* Linear-region drain current
+* Saturation-region drain current
+
+
+
+---
+
+## 5. Defining NMOS and PMOS Models
+
+Models are defined using the `.MODEL` statement.
+
+```
+.MODEL nmos NMOS (VTO=0.45 GAMMA=0.4 KP=120u LAMBDA=0.02)
+.MODEL pmos PMOS (...)
+```
+
+Important rules:
+
+* The model name `nmos` must exactly match the name used in the MOSFET line (`M1 ... nmos`).
+* Any mismatch between the model name and the netlist name will cause simulation failure or incorrect results.
+* NMOS and PMOS have separate models, even if only NMOS is used in the circuit.
+
+---
+
+## 6. Including the Model File in the Netlist
+
+* Model parameters are usually stored in a separate `.mod` file.
+* This file is included in the main netlist using `.include` or `.lib`.
+<img width="801" height="716" alt="Screenshot 2026-02-17 231023" src="https://github.com/user-attachments/assets/4ff67588-cc56-4a08-8a6f-cb7b7721a18f" />
+
+Example:
+
+```
+.include xxxx_1um_model.mod
+.LIB "xxxx_025um_model.mod" CMOS_MODELS
+```
+
+Structure of a complete SPICE setup:
+
+* Netlist description (devices and connections)
+* Model file inclusion
+* Simulation commands (to be added next)
+
+Anything starting with `*` is treated as a comment and ignored by SPICE.
+
 
