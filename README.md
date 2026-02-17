@@ -59,7 +59,6 @@ Follow the steps below to load the provided **CMOS VDI file** in **Oracle Virtua
 
 ---
 
-Perfect—here’s the **lecture-note style version**, structured, concise, and exam-friendly while preserving the **exact meaning**.
 
 ---
 
@@ -177,7 +176,6 @@ The above inverter will have the following characteristics. We will run SPICE si
    The interpolated value is the buffer propagation delay.
 
 ---
-Here’s the **lecture-note/exam-answer style rewrite**, keeping the meaning exactly the same while making it clearer and more structured.
 
 ---
 
@@ -204,9 +202,6 @@ Here’s the **lecture-note/exam-answer style rewrite**, keeping the meaning exa
 * If both values closely match, the delay model is considered **accurate and valid** for use in SPICE-based timing analysis.
 
 ---
-
-
-Here is the **lecture-note style explanation**, structured and exam-ready.
 
 ---
 
@@ -404,7 +399,7 @@ I_D \approx 0
 
 ---
 
-## 5. Toward Threshold Voltage (Preview)
+## 5. Toward Threshold Voltage 
 
 * Increasing $V_{GS}$ further:
 
@@ -419,6 +414,309 @@ V_{GS} = V_T \Rightarrow \text{Onset of inversion}
 * Inversion layer forms a **conductive channel** between Source and Drain.
 
 ---
+
+
+## Lecture 3: Strong Inversion and Threshold Voltage
+
+---
+
+<img width="1365" height="654" alt="Screenshot 2026-02-17 151838" src="https://github.com/user-attachments/assets/bff35db2-a072-4900-b699-845d41f2cf6c" />
+
+## 1️. Recap: Small Positive $V_{GS}$
+
+* Applying small positive $V_{GS}$:
+
+  * Repels holes (majority carriers in p-substrate)
+  * Leaves behind fixed negative acceptor ions
+* A **depletion region** forms under the gate.
+* Behavior similar to a **reverse-biased PN junction diode**.
+
+---
+
+## 2️. Increasing Gate Voltage
+
+* As $V_{GS}$ increases:
+
+  * More holes are repelled
+  * Depletion width increases
+* Eventually, the surface concentration of electrons increases.
+
+---
+
+## 3️. Strong Inversion
+
+At a critical gate voltage:
+
+* Surface of p-substrate becomes **n-type**
+* A thin **inversion layer** forms.
+* This is called **Strong Inversion**.
+
+### Definition
+
+```math
+V_{GS} = V_T
+```
+
+* The gate voltage at which strong inversion occurs is called
+  **Threshold Voltage ($V_T$)**.
+
+---
+
+## 4️. After Threshold ($V_{GS} > V_T$)
+
+* Depletion region width remains approximately constant.
+* Additional gate voltage:
+
+  * Does NOT significantly increase depletion width.
+  * Increases **channel charge density**.
+* Electrons are attracted from a heavily doped **n⁺ source**.
+* Channel width increases.
+
+### Result
+
+* A **continuous n-channel** forms between Source and Drain.
+* Now current can flow if $V_{DS}$ is applied.
+
+---
+
+## 5️. Region of Operation
+
+* Before inversion → **Cutoff Region**
+* After inversion → Channel exists
+* Current flows only when:
+
+```math
+V_{DS} > 0
+```
+
+(Subthreshold current ignored for now.)
+
+---
+
+# 6️. Effect of Body Terminal (Body Effect Introduction)
+
+Consider two cases:
+
+---
+
+## Case 1: $V_{SB} = 0$
+
+* No additional bias between source and body.
+* Standard depletion region width.
+* Threshold voltage = normal $V_T$.
+
+---
+<img width="1307" height="586" alt="Screenshot 2026-02-17 152044" src="https://github.com/user-attachments/assets/1ffa528f-0532-4138-9ecf-55805745b695" />
+
+## Case 2: $V_{SB} > 0$ (Source positive w.r.t Body)
+
+* Source-body PN junction becomes **more reverse biased**.
+* Depletion width near the source increases.
+* Strong inversion requires a higher gate voltage.
+
+### Key Observation
+
+* For same $V_{GS}$:
+
+  * Inversion happens earlier when $V_{SB} = 0$
+  * Inversion is delayed when $V_{SB} > 0$
+
+---
+
+## 7️. Body Effect Concept
+
+Increasing $V_{SB}$:
+
+* Increases depletion width
+* Increases required inversion charge
+* Increases Threshold Voltage
+
+```math
+V_T \uparrow \quad \text{as} \quad V_{SB} \uparrow
+```
+
+This is called the **Body Effect**.
+
+---
+
+
+* **No standalone parentheses**
+* **Proper headings only**
+* **Image insertion clearly indicated**
+* **All equations GitHub-compatible**
+* **Zero formatting ambiguity**
+
+---
+
+## Lecture 4 Threshold Voltage with Positive Substrate Potential (Body Effect)
+
+---
+
+## 1. Objective of This Lecture
+
+* Study the effect of **positive source-to-body voltage ($V_{SB} > 0$)** on:
+
+  * Depletion region
+  * Channel formation
+  * Threshold voltage
+* Understand the **body effect**
+* Relate physical behavior to **SPICE model parameters**
+
+---
+
+## 2. Case A: Zero Substrate Bias ($V_{SB} = 0$)
+
+
+
+* Source and Body are at the same potential.
+* No additional reverse bias across the Source–Body PN junction.
+* As $V_{GS}$ increases:
+
+  * Holes are repelled from the surface
+  * Depletion region grows under the gate
+  * Surface eventually inverts to n-type
+
+```math
+V_{GS} = V_{TO} \Rightarrow \text{Strong inversion begins}
+```
+
+* $V_{TO}$ is defined as:
+
+  * Threshold voltage when $V_{SB} = 0$
+  * A function of device and technology parameters
+
+---
+<img width="1284" height="601" alt="Screenshot 2026-02-17 153737" src="https://github.com/user-attachments/assets/ac817483-0492-40b3-b79e-cd7e42b83210" />
+
+---
+## 3. Case B: Positive Substrate Bias ($V_{SB} > 0$)
+
+
+* Source is at a higher potential compared to the Body.
+* The Source–Body PN junction becomes **more reverse biased**.
+* This introduces an **additional depletion region near the source**.
+
+---
+
+## 4. Key Physical Observation
+
+<img width="1394" height="685" alt="Screenshot 2026-02-17 153830" src="https://github.com/user-attachments/assets/56d3908f-98b6-4efa-9318-8919dbf6bb27" />
+
+
+* In both cases, increasing $V_{GS}$:
+
+  * Repels holes from the surface
+  * Initially increases depletion width
+* Unique behavior when $V_{SB} > 0$:
+
+  * Channel electrons are pulled toward the Source
+  * Positive Source potential attracts a negative charge
+* This redistribution does not occur when $V_{SB} = 0$
+
+---
+
+## 5. Effect on Surface Inversion
+
+
+* For the same gate voltage:
+
+  * Surface inversion occurs earlier when $V_{SB} = 0$
+  * Surface inversion is delayed when $V_{SB} > 0$
+* Reason:
+
+  * Increased depletion width requires additional gate voltage
+  * Channel formation near the Source is resisted
+
+---
+
+## 6. Definition of Threshold Voltages
+
+### Threshold Voltage at Zero Body Bias
+
+```math
+V_T = V_{TO} \quad \text{when } V_{SB} = 0
+```
+
+* $V_{TO}$ is the reference threshold voltage.
+
+---
+
+### Threshold Voltage with Body Bias
+
+```math
+V_T = V_{TO} + V_1 \quad \text{when } V_{SB} > 0
+```
+
+* $V_1$ is the additional voltage required due to body bias.
+
+---
+
+## 7. Threshold Voltage Equation Including Body Effect
+
+```math
+V_T = V_{TO} + \gamma \left( \sqrt{2\phi_F + V_{SB}} - \sqrt{2\phi_F} \right)
+```
+
+### Parameter Definitions
+
+* $V_T$ : Threshold voltage with body bias
+* $V_{TO}$ : Threshold voltage at zero body bias
+* $\gamma$ : Body effect coefficient
+* $\phi_F$ : Fermi potential
+* $V_{SB}$ : Source-to-Body voltage
+
+---
+
+## 8. Body Effect Coefficient
+
+```math
+\gamma = \frac{\sqrt{2 q N_A \varepsilon_{si}}}{C_{ox}}
+```
+<img width="484" height="283" alt="Screenshot 2026-02-17 153956" src="https://github.com/user-attachments/assets/7180b9b7-bbf3-4eba-8508-e573883b851c" />
+
+
+All parameters are **technology-dependent** and provided by the **foundry**.
+
+---
+
+## 9. Fermi Potential
+
+```math
+\phi_F = -\phi_T \ln\left(\frac{N_A}{n_i}\right)
+```
+
+* $\phi_T$ = Thermal voltage
+* $n_i$ = Intrinsic carrier concentration
+
+(Treated as a constant here; covered in device physics.)
+
+---
+
+## 10. Key Conclusions
+
+* Increasing $V_{SB}$:
+
+  * Increases depletion width
+  * Delays surface inversion
+  * Increases threshold voltage
+* Summary:
+
+```math
+V_{SB} = 0 \Rightarrow V_T = V_{TO}
+```
+
+```math
+V_{SB} > 0 \Rightarrow V_T > V_{TO}
+```
+
+* This phenomenon is called the **Body Effect**.
+
+---
+
+
+
+---
+
 
 
 
