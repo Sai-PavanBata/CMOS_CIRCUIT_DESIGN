@@ -1208,9 +1208,6 @@ V_{DS} < (V_{GS} - V_T)
   * Initial circuit design intuition
 
 ---
-# Chapter 2
-
-## NMOS Resistive Region and Saturation Region of Operation
 
 ---
 
@@ -1231,7 +1228,7 @@ V_{DS} < (V_{GS} - V_T)
   * Multiple values of $V_{GS}$
   * Sweeping $V_{DS}$ from 0 to $(V_{GS} - V_T)$
     is impractical and time-consuming.
-* Practical circuit design therefore relies on **SPICE simulators**, which:
+  * Practical circuit design therefore relies on **SPICE simulators**, which:
 
   * Use compact models
   * Automatically sweep voltages
