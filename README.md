@@ -712,10 +712,164 @@ V_{SB} > 0 \Rightarrow V_T > V_{TO}
 * This phenomenon is called the **Body Effect**.
 
 ---
+---
 
+# Chapter 2
 
+## Lecture 1: NMOS Resistive Region and Saturation Region of Operation
 
 ---
+
+## Regions of NMOS Operation
+
+* NMOS operates in three regions:
+
+  * **Cutoff region**
+  * **Resistive (Linear) region**
+  * **Saturation region**
+
+---
+
+## Cutoff Region 
+
+* Condition:
+
+```math
+V_{GS} < V_T
+```
+
+* No inversion channel
+* Drain current approximately zero
+
+---
+
+## Strong Inversion Condition
+
+* When gate voltage reaches threshold:
+
+```math
+V_{GS} = V_T
+```
+
+* Surface of p-substrate inverts to n-type
+* Conducting channel forms between Source and Drain
+
+---
+
+## Resistive (Linear) Region of Operation
+
+<img width="822" height="448" alt="Induced charges" src="https://github.com/user-attachments/assets/d53af40a-d202-40b4-9977-959d3a4c204a" />
+
+*(NMOS with uniform channel and small drain–source voltage)*
+
+### Conditions
+
+```math
+V_{GS} > V_T
+```
+
+```math
+V_{DS} < (V_{GS} - V_T)
+```
+
+---
+
+### Physical Interpretation
+
+* Channel exists along the entire length
+* Applying a small $V_{DS}$:
+
+  * Creates a voltage gradient from Source to Drain
+  * Channel remains continuous
+* NMOS behaves like a **voltage-controlled resistor**
+
+---
+
+### Channel Charge Behaviour
+
+* Channel charge density is proportional to:
+
+```math
+V_{GS} - V_T
+```
+
+* Increasing $V_{GS}$:
+
+  * Increases electron concentration
+  * Increases channel width
+  * Reduces channel resistance
+
+---
+
+### Voltage Distribution Along Channel
+
+<img width="848" height="584" alt="Screenshot 2026-02-17 163811" src="https://github.com/user-attachments/assets/a3ac14af-a3f5-478a-b0b3-387543b06cbd" />
+
+*Channel potential variation along the channel length
+* (Channel potential varies: 0 -> $V_{DS}$).
+* Define effective channel length as $L$
+* Let $x$ be the position along the channel
+
+```math
+V(0) = 0 \quad \text{(Source end)}
+```
+
+```math
+V(L) = V_{DS} \quad \text{(Drain end)}
+```
+
+* Channel voltage varies continuously between 0 and $V_{DS}$
+
+---
+
+### Effective Gate-to-Channel Voltage
+
+* At any point $x$:
+
+```math
+V_{GC}(x) = V_{GS} - V(x)
+```
+
+* Channel charge is **not uniform**
+* Drain current must be derived using position-dependent quantities
+
+---
+
+## Saturation Region of Operation
+
+**Insert Image 3 here**
+*(Channel pinch-off near drain)*
+
+### Condition
+
+```math
+V_{DS} \ge (V_{GS} - V_T)
+```
+
+---
+
+### Physical Interpretation
+
+* Channel near the drain gets pinched off
+* Increasing $V_{DS}$:
+
+  * Does not significantly increase channel charge
+  * Current becomes weakly dependent on $V_{DS}$
+* Drain current mainly controlled by $V_{GS}$
+
+---
+
+## Key Comparison
+
+| Parameter     | Resistive Region      | Saturation Region      |
+| ------------- | --------------------- | ---------------------- |
+| Channel       | Continuous            | Pinched near drain     |
+| $V_{DS}$      | Small                 | Large                  |
+| $I_D$ control | $V_{GS}$ and $V_{DS}$ | Mostly $V_{GS}$        |
+| Behavior      | Acts as resistor      | Acts as current source |
+
+---
+
 
 
 
