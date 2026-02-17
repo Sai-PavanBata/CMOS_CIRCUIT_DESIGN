@@ -64,11 +64,11 @@ Follow the steps below to load the provided **CMOS VDI file** in **Oracle Virtua
 
 # Ngspice SKY130 – Day 1
 
-## Basics of NMOS Drain Current (Id) vs Drain-to-Source Voltage (Vds)
+# Basics of NMOS Drain Current (Id) vs Drain-to-Source Voltage (Vds)
 
 ---
 
-## Introduction to Circuit Design and SPICE Simulations
+# Chapter 1: Introduction to Circuit Design and SPICE Simulations
 
 ---
 
