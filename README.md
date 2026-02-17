@@ -1018,6 +1018,365 @@ I_D \propto (\text{channel charge}) \times (\text{carrier velocity}) \times (\te
 * This derivation leads directly to the **NMOS resistive-region current equation**, which is used in circuit design and delay analysis.
 
 
+---
+
+## Lecture 3: Drain Current Model for Linear (Resistive) Region of Operation
+
+---
+
+## 1. Objective and Physical Basis of Drain Current Model
+
+* Drain current in NMOS is physically understood as the product of:
+
+  * **Velocity of charge carriers**
+  * **Available inversion charge in the channel**
+* Goal of this lecture:
+
+  * Develop a **simple, first-order drain current model**
+  * Suitable for understanding and later use in **SPICE simulations**
+* Although SPICE uses more accurate and complex models, this basic model:
+
+  * Explains the underlying physics
+  * Forms the foundation for advanced models
+
+---
+
+## 2. Channel Geometry and Voltage Distribution
+
+<img width="513" height="668" alt="Screenshot 2026-02-17 185514" src="https://github.com/user-attachments/assets/81b6181f-406f-446a-a52b-396f65c7d252" />
+
+*(NMOS cross-section showing effective channel length $L$ and width $W$)
+
+* Channel is the gate-overlap region between source and drain.
+* Effective channel length is denoted as $L$.
+* Channel width $W$ is visible only in the **top view** of the MOSFET.
+* With a small drain–source voltage $V_{DS}$ applied:
+
+  * Source end of channel is at 0 V
+  * Drain end of channel is at $V_{DS}$
+* Channel potential varies gradually along the length.
+
+Define:
+
+```math
+V(x) = \text{Channel voltage at position } x
+```
+
+Boundary conditions:
+
+```math
+V(0) = 0
+```
+
+```math
+V(L) = V_{DS}
+```
+
+---
+
+## 3. Induced Channel Charge Along the Channel
+
+
+Inversion charge varying along channel due to $V(x)$
+
+* Effective gate-to-channel voltage at any point $x$:
+
+```math
+V_{GC}(x) = V_{GS} - V(x)
+```
+
+* Induced inversion charge per unit area:
+
+```math
+Q_i(x) = -C_{ox}\left( V_{GS} - V(x) - V_T \right)
+```
+
+* Negative sign indicates electron charge.
+* $C_{ox}$ is gate oxide capacitance per unit area:
+
+```math
+C_{ox} = \frac{\varepsilon_{ox}}{t_{ox}}
+```
+
+* $t_{ox}$ and $\varepsilon_{ox}$ are **technology constants** provided by the foundry.
+* Channel charge:
+
+  * Maximum near the source
+  * Minimum near the drain
+
+---
+
+## 4. Drift Current Expression and Integration
+
+* Drift current arises due to the electric field along the channel.
+* Electron velocity is proportional to the electric field:
+
+```math
+v_n(x) = \mu_n \frac{dV}{dx}
+```
+
+* Drain current is given by:
+
+```math
+I_D = -v_n(x)\, Q_i(x)\, W
+```
+
+* Substituting velocity and charge expressions:
+
+```math
+I_D\, dx = \mu_n\, C_{ox}\, W \left( V_{GS} - V(x) - V_T \right) dV
+```
+
+* Integrate:
+
+  * $x$ from 0 to $L$
+  * $V$ from 0 to $V_{DS}$
+
+Resulting expression:
+
+```math
+I_D = \mu_n C_{ox}\frac{W}{L}
+\left[ (V_{GS} - V_T)V_{DS} - \frac{V_{DS}^2}{2} \right]
+```
+
+---
+
+## 5. Linear Region Approximation and Final Model
+
+* Define process transconductance parameter:
+
+```math
+k_n' = \mu_n C_{ox}
+```
+
+* Drain current equation becomes:
+
+```math
+I_D = k_n' \frac{W}{L}
+\left[ (V_{GS} - V_T)V_{DS} - \frac{V_{DS}^2}{2} \right]
+```
+
+* For **small $V_{DS}$**, such that:
+
+```math
+V_{DS} \ll (V_{GS} - V_T)
+```
+
+* The quadratic term can be neglected:
+
+```math
+\frac{V_{DS}^2}{2} \approx 0
+```
+
+* Final **linear-region drain current model**:
+
+```math
+I_D = k_n (V_{GS} - V_T)V_{DS}
+```
+
+Where:
+
+```math
+k_n = k_n' \frac{W}{L}
+```
+
+---
+
+## 6. Linear Region Condition and Key Observations
+
+* NMOS operates in **resistive (linear) region** when:
+
+```math
+V_{GS} > V_T
+```
+
+```math
+V_{DS} < (V_{GS} - V_T)
+```
+
+* In this region:
+
+  * Drain current is **linear with $V_{DS}$**
+  * NMOS behaves like a **voltage-controlled resistor**
+* Model parameters $k_n'$, $V_T$, $W$, and $L$:
+
+  * Are supplied through **foundry SPICE model files**
+* This model is widely used for:
+
+  * Hand analysis
+  * Understanding delay
+  * Initial circuit design intuition
+
+---
+# Chapter 2
+
+## NMOS Resistive Region and Saturation Region of Operation
+
+---
+
+# Lecture 4 & Lecture 5
+
+## SPICE Conclusion to Resistive Operation and Pinch-Off Condition
+
+---
+
+## 1. Motivation for SPICE-Based Analysis
+
+* From earlier lectures, we derived a **linear-region drain current equation** valid when:
+
+  * $V_{GS} > V_T$
+  * $V_{DS} < (V_{GS} - V_T)$
+* Manually calculating $I_D$ for:
+
+  * Multiple values of $V_{GS}$
+  * Sweeping $V_{DS}$ from 0 to $(V_{GS} - V_T)$
+    is impractical and time-consuming.
+* Practical circuit design therefore relies on **SPICE simulators**, which:
+
+  * Use compact models
+  * Automatically sweep voltages
+  * Compute drain current accurately using foundry-provided parameters
+* Before running SPICE, it is essential to **physically understand** what happens as $V_{DS}$ increases.
+
+---
+
+## 2. Channel Voltage Concept with Increasing $V_{DS}$
+
+<img width="608" height="437" alt="Screenshot 2026-02-17 192816" src="https://github.com/user-attachments/assets/87ff1cc1-944e-48ce-bf55-679cddb2c52e" />
+
+*(NMOS cross-section showing channel and definition of $V(x)$)*
+
+* Channel voltage at any point $x$ is denoted as $V(x)$.
+* Effective gate-to-channel voltage at that point is:
+
+```math
+V_{GC}(x) = V_{GS} - V(x)
+```
+
+* For a fixed $V_{GS} = 1\ \text{V}$ and $V_T = 0.45\ \text{V}$:
+
+  * When $V_{DS}$ is small, $V_{GC}(x)$ is **greater than $V_T$ everywhere**
+  * A continuous inversion channel exists from source to drain
+* Channel voltage at the drain end is:
+
+```math
+V_{GC,\ drain} = V_{GS} - V_{DS}
+```
+
+* As long as:
+
+```math
+V_{GS} - V_{DS} > V_T
+```
+
+The channel remains intact across the full length.
+
+---
+
+## 3. Sweep of $V_{DS}$ and Channel Validity
+
+<img width="476" height="584" alt="Screenshot 2026-02-17 192535" src="https://github.com/user-attachments/assets/68ff2c67-10cb-453e-9fd7-09bf0300d51c" />
+
+*(Table showing $V_{GS}$, $V_{DS}$, $V_{GS}-V_{DS}$ compared to $V_T$)*
+
+* Keep $V_{GS} = 1\ \text{V}$ constant.
+* Gradually increase $V_{DS}$ from 0.05 V upward.
+* Observe:
+
+  * For small $V_{DS}$, $V_{GS} - V_{DS} > V_T$
+  * Channel exists throughout the device
+* At the critical point:
+
+```math
+V_{DS} = V_{GS} - V_T = 0.55\ \text{V}
+```
+
+* Drain-end channel voltage equals threshold voltage:
+
+```math
+V_{GS} - V_{DS} = V_T
+```
+
+* This marks the **onset of channel degradation at the drain side**.
+
+---
+
+## 4. Physical Meaning of Pinch-Off Initiation
+
+
+<img width="1315" height="655" alt="Screenshot 2026-02-17 192645" src="https://github.com/user-attachments/assets/4f0f935f-8cb7-4a63-a68f-d61c6cc2d616" />
+
+
+* Threshold voltage represents the condition for **surface inversion**.
+* When $V_{GS} - V_{DS} = V_T$:
+
+  * Drain-end surface is **just at inversion**
+  * Any further increase in $V_{DS}$ causes:
+
+    * $V_{GS} - V_{DS} < V_T$ near drain
+    * Inversion channel **disappears near the drain**
+* This phenomenon is called **pinch-off**.
+* Important observation:
+
+  * Channel still exists near the source
+  * Channel disappears progressively toward the drain
+* Pinch-off does **not** mean current stops flowing.
+
+---
+
+## 5. Transition from Resistive to Saturation Region
+
+<img width="758" height="650" alt="Screenshot 2026-02-17 192952" src="https://github.com/user-attachments/assets/29cb8206-471e-4c35-831a-3da16440dc74" />
+
+<img width="432" height="190" alt="Screenshot 2026-02-17 193550" src="https://github.com/user-attachments/assets/a7f32d57-148c-43ef-ab7e-896f79f8069d" />
+
+*(Pinch-off region clearly visible near drain)*
+
+* Once pinch-off begins:
+
+  * Drain current is no longer linearly dependent on $V_{DS}$
+* Saturation condition is defined as:
+
+```math
+V_{DS} \ge (V_{GS} - V_T)
+```
+
+* Beyond this point:
+
+  * Increasing $V_{DS}$ increases the depletion region near the drain
+  * Channel length effectively shortens
+  * Drain current becomes **almost constant**
+* This operating mode is called the **saturation region**.
+
+---
+
+## 6. Key Conclusions and Link to SPICE Models
+
+* Summary of regions:
+
+  * **Resistive (Linear) Region**:
+
+    ```math
+    V_{GS} > V_T,\quad V_{DS} < (V_{GS} - V_T)
+    ```
+  * **Pinch-Off / Saturation Region**:
+
+    ```math
+    V_{DS} \ge (V_{GS} - V_T)
+    ```
+* SPICE simulators:
+
+  * Automatically detect region transitions
+  * Switch between linear and saturation current models
+* Foundry-provided model parameters ensure:
+
+  * Accurate current computation
+  * Reliable delay and timing analysis
+* Next step:
+
+  * Derive the **saturation-region drain current equation**
+  * Validate behaviour through SPICE simulations
+
 
 
 
