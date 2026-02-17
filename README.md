@@ -73,7 +73,7 @@ Perfect—here’s the **lecture-note style version**, structured, concise, and 
 
 ---
 
-## L1: Why Do We Need SPICE Simulations?
+## Lecture 1: Why Do We Need SPICE Simulations?
 
 * Digital circuits are constructed using **PMOS and NMOS transistors** connected together to form logic gates such as:
 
