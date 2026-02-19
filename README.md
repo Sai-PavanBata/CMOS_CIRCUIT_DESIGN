@@ -1783,7 +1783,7 @@ VIN IN 0 2.5
 
 ---
 
-## Lecture 2: Circuit Description in SPICE Syntax and Technology Parameters 
+## Lecture 3: Circuit Description in SPICE Syntax and Technology Parameters 
 
 ---
 
