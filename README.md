@@ -1676,9 +1676,9 @@ These node names can be chosen freely, but must be used consistently.
 * MOSFETs are declared using the letter `M`.
 * General syntax:
 
-```
+
 M<name> <drain> <gate> <source> <bulk> <model> W=<width> L=<length>
-```
+
 
 * Pin order is fixed and very important:
 
@@ -1715,9 +1715,9 @@ This line fully describes the NMOS device and connects it electrically to the ci
 * Resistors start with the letter `R`.
 * Syntax:
 
-```
+
 R<name> <node1> <node2> <value>
-```
+
 
 For the circuit:
 
@@ -1727,9 +1727,9 @@ For the circuit:
 
 SPICE line:
 
-```
+
 R1 VDD N1 55
-```
+
 
 ---
 
@@ -1738,9 +1738,9 @@ R1 VDD N1 55
 * Voltage sources start with the letter `V`.
 * Syntax:
 
-```
+
 V<name> <positive_node> <negative_node> <value>
-```
+
 
 Drain supply (VDD):
 
@@ -1749,9 +1749,9 @@ Drain supply (VDD):
 * Negative node: `0`
 * Voltage: 2.5 V
 
-```
+
 VDD VDD 0 2.5
-```
+
 
 Gate input voltage (VIN):
 
@@ -1760,9 +1760,9 @@ Gate input voltage (VIN):
 * Negative node: `0`
 * Voltage: 2.5 V
 
-```
+
 VIN IN 0 2.5
-```
+
 
 ---
 
@@ -1770,12 +1770,12 @@ VIN IN 0 2.5
 
 Putting everything together:
 
-```
+
 M1 N1 IN 0 0 NMOS W=0.8u L=1.2u
 R1 VDD N1 55
 VDD VDD 0 2.5
 VIN IN 0 2.5
-```
+
 
 * This netlist fully represents the NMOS circuit topology.
 * At this stage, SPICE understands the circuit connectivity but not the device physics.
@@ -1834,9 +1834,8 @@ Each component is written as a single line using the format:
 * MOSFETs start with the letter `M`
 * Order of terminals is strictly: Drain Gate Source Substrate (D G S B)
 
-```
 M1 vdd n1 0 0 nmos W=1.8u L=1.2u
-```
+
 <img width="801" height="302" alt="Screenshot 2026-02-17 231023" src="https://github.com/user-attachments/assets/36baed8c-2b9a-4041-af28-e4d762124ed6" />
 
 
@@ -1854,9 +1853,9 @@ Explanation:
 
 * Resistors start with `R`
 
-```
+
 R1 in n1 55
-```
+
 
 * R1 connects node `in` to node `n1`
 * Resistance value is 55 ohms
@@ -1865,10 +1864,10 @@ R1 in n1 55
 
 * Voltage sources start with `V`
 
-```
+
 Vdd vdd 0 2.5
 Vin in 0 2.5
-```
+
 
 * First node is a positive terminal
 * The Second node is the negative terminal
@@ -1907,10 +1906,10 @@ These parameters allow SPICE to internally evaluate:
 
 Models are defined using the `.MODEL` statement.
 
-```
+
 .MODEL nmos NMOS (VTO=0.45 GAMMA=0.4 KP=120u LAMBDA=0.02)
 .MODEL pmos PMOS (...)
-```
+
 
 Important rules:
 
@@ -1928,10 +1927,10 @@ Important rules:
 
 Example:
 
-```
-.include xxxx_1um_model.mod
-.LIB "xxxx_025um_model.mod" CMOS_MODELS
-```
+
+* include xxxx_1um_model.mod
+* LIB "xxxx_025um_model.mod" CMOS_MODELS
+
 
 Structure of a complete SPICE setup:
 
