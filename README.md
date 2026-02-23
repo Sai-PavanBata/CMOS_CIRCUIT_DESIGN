@@ -1983,5 +1983,19 @@ Each curve clearly splits into two regions. At low VDS, the current increases al
 
 The same behaviour is then compared with a scaled device having **W = 0.375 µm and L = 0.25 µm**, while keeping **W/L = 1.5**. Although theory suggests the drain current should remain constant for constant W/L, the plots show lower current levels and greater spacing between curves in the smaller device. This difference, clearly visible in the side-by-side images, highlights short-channel effects and shows why long-channel equations no longer accurately predict behaviour at lower technology nodes.
 
+
+
 ---
 
+## Lecture 2: 
+
+---
+
+
+From the ID–VDS plots, if we fix the drain voltage at **VDS = 2.5 V** and observe the drain current for different gate voltages, the **long-channel device (L = 1.2 µm)** shows a **quadratic dependence of ID on VGS**. At VGS = 0 V, the drain current is zero because there is no channel. As VGS increases to 0.5 V, 1 V, and beyond threshold, the drain current increases nonlinearly, matching the square-law behaviour predicted by the long-channel MOSFET equation ( I_D \propto (V_{GS} - V_T)^2 ).
+
+For the **short-channel device (L = 0.25 µm)**, the behaviour initially looks similar at low VGS, where the drain current still follows a quadratic trend. However, as VGS increases further, the ID–VGS curve becomes **more linear rather than quadratic**, even though VDS is kept constant at 2.5 V. This deviation is clearly visible in the plotted curves and is not expected from long-channel theory.
+
+This difference occurs because **short-channel effects**, especially **velocity saturation**, become dominant at shorter channel lengths. In short-channel devices, carrier velocity saturates before the square-law behaviour can fully develop, leading to a drain current that increases almost linearly with gate voltage at higher VGS.
+
+To clearly highlight this effect, the simulation is modified to keep **VDS fixed at 2.5 V** and sweep **VGS**, generating **ID–VGS curves** for both devices. Comparing these plots side by side confirms that long-channel devices follow quadratic behaviour, while short-channel devices deviate significantly, explaining why long-channel equations fail at advanced technology nodes.
