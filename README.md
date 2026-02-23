@@ -1,4 +1,4 @@
-# CMOS_CIRCUIT_DESIGN
+# CMOS_CIRCUIT_DESIGN1
 
 ---
 
@@ -8,7 +8,7 @@ Follow the steps below to load the provided **CMOS VDI file** in **Oracle Virtua
 
 ---
 
-### Step 1: Install VirtualBox
+### Step 1: Install 1
 
 * Download **Oracle VirtualBox** from:
   [https://www.virtualbox.org/wiki/Downloads](https://www.virtualbox.org/wiki/Downloads)
@@ -1943,23 +1943,45 @@ Anything starting with `*` is treated as a comment and ignored by SPICE.
 ## Lecture 4: First SPICE simulation
 ---
 
-* You start by opening the terminal and attempting to clone the SKY130 workshop repository, but since it already exists, you simply move into the existing `sky130CircuitDesignWorkshop/design` directory. After listing the files to confirm the setup, you enter the `sky130_fd_pr` folder, which contains the SKY130 technology data used for simulations.
+* You start by opening the terminal and attempting to clone the SKY130 workshop repository, but since it already exists, you move into the existing `sky130CircuitDesignWorkshop/design` directory. After listing the files to confirm the setup, you enter the `sky130_fd_pr` folder, which contains the SKY130 technology data used for simulations.
 <img width="1920" height="1080" alt="Screenshot 2026-02-23 142911" src="https://github.com/user-attachments/assets/cb00299f-609c-4c44-893c-d68b3a3c63c3" />
 
-* From there, you navigate into the `cells` directory and then into `nfet_01v8`, where the NMOS device models are stored. Listing the contents shows multiple SPICE files corresponding to different process corners such as `tt`, `ss`, `ff`, and others. Opening the typical corner file lets you view the actual model parameters that NGSPICE uses during NMOS simulation, confirming how the device behavior is defined in SKY130.
+* From there, you navigate into the `cells` directory and then into `nfet_01v8`, where the NMOS device models are stored. Listing the contents shows multiple SPICE files corresponding to different process corners such as `tt`, `ss`, `ff`, and others. Opening the typical corner file lets you view the actual model parameters that NGSPICE uses during NMOS simulation, confirming how the device behaviour is defined in SKY130.
 ---
 
 <img width="1920" height="1080" alt="Screenshot 2026-02-23 143252" src="https://github.com/user-attachments/assets/95c4896b-a993-458c-9ea4-d2bf4b9e3dd2" />
 
-From the `nfet_01v8` folder, you go up to the `models` directory and list the files. This shows `sky130.lib.spice`, which serves as the main entry file that links all NMOS and PMOS models across process corners. Including this one file in a netlist gives access to the full SKY130 device library. After checking this, you return to the design directory and clear the terminal, confirming that the model setup is complete and ready for simulation.
+From the `nfet_01v8` folder, you go up to the `models` directory and list the files. This shows `sky130.lib.spice`, which serves as the main entry file that links all NMOS and PMOS models across process corners. Including this one file in a netlist gives access to the complete SKY130 device library. After checking this, you return to the design directory and clear the terminal, confirming that the model setup is complete and ready for simulation.
 
 ---
 <img width="1920" height="1080" alt="Screenshot 2026-02-23 144507" src="https://github.com/user-attachments/assets/1597b9c9-1195-4b96-ad72-06065c92e568" />
 
-After running the simulation, NGSPICE prints the operating-point information and lists all active vectors like node voltages and branch currents. You can see that `vdd#branch` and `vin#branch` are available, which means the simulator is ready to report supply and input currents. Using `plot -vdd#branch` opens the DC plot window and shows the drain current flowing from VDD for different bias conditions.
+After running the simulation, NGSPICE prints the operating-point information and lists all active vectors, such as node voltages and branch currents. You can see that `vdd#branch` and `vin#branch` are available, which means the simulator is ready to report supply and input currents. Using `plot -vdd#branch` opens the DC plot window and shows the drain current flowing from VDD for different bias conditions.
 <img width="1219" height="917" alt="Screenshot 2026-02-23 144635" src="https://github.com/user-attachments/assets/ba68d1e0-d954-4213-898c-f222e479c3ad" />
 
-The plot displays a family of ID–VDS curves as VDD is swept while Vin is stepped. At low VDS, the curves rise almost linearly, and at higher VDS they flatten, showing saturation. By clicking on any point in the plot, NGSPICE reports the exact voltage and current values in the terminal, which helps you directly read the drain current at a specific operating point and understand the NMOS behavior numerically.
+The plot displays a family of ID–VDS curves as VDD is swept while Vin is stepped. At low VDS, the curves rise almost linearly; at higher VDS, they flatten, indicating saturation. By clicking any point on the plot, NGSPICE reports the exact voltage and current values at the terminals, which lets you read the drain current directly at a specific operating point and understand NMOS behaviour numerically.
 
 <img width="1218" height="739" alt="Screenshot 2026-02-23 145120" src="https://github.com/user-attachments/assets/a329ed1e-f2a7-43b6-a735-de8b36332edf" />
+
+---
+
+# NgspiceSky130 - Day 2 - Velocity saturation and basics of CMOS inverter VTC
+
+---
+# Chapter 1: SPICE simulation for lower nodes and velocity saturation effect
+---
+## Lecture-1: SPICE simulation for lower nodes
+
+---
+<img width="1271" height="743" alt="Screenshot 2026-02-23 162218" src="https://github.com/user-attachments/assets/0e58a96f-827e-4911-8b76-586c985bf967" />
+
+The figures show NMOS **ID–VDS characteristics** with drain current on the y-axis and drain-to-source voltage on the x-axis for multiple gate voltages. For **W = 1.8 µm and L = 1.2 µm (W/L = 1.5)**, the lowest curve corresponds to **VGS = 0 V**, where the device is OFF, and the drain current is zero. As VGS exceeds the threshold, a channel forms and the drain current begins to increase, producing a family of curves at higher VGS values.
+<img width="1246" height="750" alt="Screenshot 2026-02-23 170212" src="https://github.com/user-attachments/assets/3b2d50cf-6c95-4727-8dfa-f29b880cf9ea" />
+
+Each curve clearly splits into two regions. At low VDS, the current increases almost linearly with VDS, indicating the **linear (resistive) region**. When VDS reaches approximately **VGS − VT**, marked in the images by the dashed line, the device enters the **saturation region**, where the channel pinches off, and the drain current flattens, increasing only slightly due to channel-length modulation.
+<img width="1582" height="845" alt="Screenshot 2026-02-23 220815" src="https://github.com/user-attachments/assets/7f7458ec-0a1a-472c-9415-1543c73fa5a6" />
+
+The same behaviour is then compared with a scaled device having **W = 0.375 µm and L = 0.25 µm**, while keeping **W/L = 1.5**. Although theory suggests the drain current should remain constant for constant W/L, the plots show lower current levels and greater spacing between curves in the smaller device. This difference, clearly visible in the side-by-side images, highlights short-channel effects and shows why long-channel equations no longer accurately predict behaviour at lower technology nodes.
+
+---
 
