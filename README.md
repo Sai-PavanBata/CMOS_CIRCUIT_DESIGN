@@ -106,7 +106,7 @@ The above inverter will have the following characteristics. We will run SPICE si
 
 ---
 
-## Role of SPICE in VLSI Physical Design
+### Role of SPICE in VLSI Physical Design
 
 * **SPICE (Simulation Program with Integrated Circuit Emphasis)** is the backbone of:
 
@@ -206,13 +206,13 @@ The above inverter will have the following characteristics. We will run SPICE si
 ---
 
 
-# Lecture 2
+## Lecture 2
 
 ## Introduction to Fundamental Elements in Circuit Design – NMOS
 
 ---
 
-## Structure of an NMOS Transistor
+### Structure of an NMOS Transistor
 
 <img width="1343" height="509" alt="image" src="https://github.com/user-attachments/assets/2f6e1e2d-1fd1-4f73-a973-2567f8d4958a" />
 
@@ -257,7 +257,7 @@ NMOS consists of four terminals:
 
 ---
 
-## Working Principle
+### Working Principle
 
 * When $V_{GS} = 0$:
 
@@ -273,7 +273,7 @@ NMOS consists of four terminals:
 
 ---
 
-## Body Effect and Threshold Voltage Tuning
+### Body Effect and Threshold Voltage Tuning
 
 Usually, the body is connected to the ground.
 However, if a voltage difference exists between Source and Body:
@@ -311,7 +311,7 @@ Where:
 
 ---
 
-## Threshold Voltage
+### Threshold Voltage
 <img width="1352" height="498" alt="image" src="https://github.com/user-attachments/assets/f90da67d-f583-4833-873a-5ef4da14a07e" />
 
 
@@ -319,7 +319,7 @@ Where:
 
 ---
 
-## 1. Importance of Threshold Voltage
+### 1. Importance of Threshold Voltage
 
 * **Threshold Voltage ($V_T$)** is the **most critical parameter** in NMOS modeling.
 * It determines:
@@ -337,7 +337,7 @@ V_T = f(x, y, z)
 
 ---
 
-## 2. Initial Condition: $V_{GS} = 0$
+### 2. Initial Condition: $V_{GS} = 0$
 
 * Gate, Source, Drain, and Body are all connected to **GND**.
 * NMOS structure consists of:
@@ -366,7 +366,7 @@ I_D \approx 0
 
 ---
 
-## 3. Applying a Small Positive Gate Voltage ($V_{GS} > 0$)
+### 3. Applying a Small Positive Gate Voltage ($V_{GS} > 0$)
 
 * Gate, oxide, and substrate form a **MOS capacitor**.
 * Gate is treated as a **metal plate**.
@@ -382,7 +382,7 @@ I_D \approx 0
 
 ---
 
-## 4. Depletion Region Formation
+### 4. Depletion Region Formation
 
 * Removal of holes near the surface leaves behind:
 
@@ -399,7 +399,7 @@ I_D \approx 0
 
 ---
 
-## 5. Toward Threshold Voltage 
+### 5. Toward Threshold Voltage 
 
 * Increasing $V_{GS}$ further:
 
@@ -422,7 +422,7 @@ V_{GS} = V_T \Rightarrow \text{Onset of inversion}
 
 <img width="1365" height="654" alt="Screenshot 2026-02-17 151838" src="https://github.com/user-attachments/assets/bff35db2-a072-4900-b699-845d41f2cf6c" />
 
-## 1️. Recap: Small Positive $V_{GS}$
+### 1️. Recap: Small Positive $V_{GS}$
 
 * Applying small positive $V_{GS}$:
 
@@ -433,7 +433,7 @@ V_{GS} = V_T \Rightarrow \text{Onset of inversion}
 
 ---
 
-## 2️. Increasing Gate Voltage
+### 2️. Increasing Gate Voltage
 
 * As $V_{GS}$ increases:
 
@@ -443,7 +443,7 @@ V_{GS} = V_T \Rightarrow \text{Onset of inversion}
 
 ---
 
-## 3️. Strong Inversion
+### 3️. Strong Inversion
 
 At a critical gate voltage:
 
@@ -462,7 +462,7 @@ V_{GS} = V_T
 
 ---
 
-## 4️. After Threshold ($V_{GS} > V_T$)
+### 4️. After Threshold ($V_{GS} > V_T$)
 
 * Depletion region width remains approximately constant.
 * Additional gate voltage:
@@ -479,7 +479,7 @@ V_{GS} = V_T
 
 ---
 
-## 5️. Region of Operation
+### 5️. Region of Operation
 
 * Before inversion → **Cutoff Region**
 * After inversion → Channel exists
@@ -493,13 +493,13 @@ V_{DS} > 0
 
 ---
 
-# 6️. Effect of Body Terminal (Body Effect Introduction)
+## 6️. Effect of Body Terminal (Body Effect Introduction)
 
 Consider two cases:
 
 ---
 
-## Case 1: $V_{SB} = 0$
+### Case 1: $V_{SB} = 0$
 
 * No additional bias between source and body.
 * Standard depletion region width.
@@ -508,7 +508,7 @@ Consider two cases:
 ---
 <img width="1307" height="586" alt="Screenshot 2026-02-17 152044" src="https://github.com/user-attachments/assets/1ffa528f-0532-4138-9ecf-55805745b695" />
 
-## Case 2: $V_{SB} > 0$ (Source positive w.r.t Body)
+### Case 2: $V_{SB} > 0$ (Source positive w.r.t Body)
 
 * Source-body PN junction becomes **more reverse biased**.
 * Depletion width near the source increases.
@@ -523,7 +523,7 @@ Consider two cases:
 
 ---
 
-## 7️. Body Effect Concept
+### 7️. Body Effect Concept
 
 Increasing $V_{SB}$:
 
@@ -552,7 +552,7 @@ This is called the **Body Effect**.
 
 ---
 
-## 1. Objective of This Lecture
+### 1. Objective of This Lecture
 
 * Study the effect of **positive source-to-body voltage ($V_{SB} > 0$)** on:
 
@@ -564,7 +564,7 @@ This is called the **Body Effect**.
 
 ---
 
-## 2. Case A: Zero Substrate Bias ($V_{SB} = 0$)
+### 2. Case A: Zero Substrate Bias ($V_{SB} = 0$)
 
 
 
@@ -589,7 +589,7 @@ V_{GS} = V_{TO} \Rightarrow \text{Strong inversion begins}
 <img width="1284" height="601" alt="Screenshot 2026-02-17 153737" src="https://github.com/user-attachments/assets/ac817483-0492-40b3-b79e-cd7e42b83210" />
 
 ---
-## 3. Case B: Positive Substrate Bias ($V_{SB} > 0$)
+### 3. Case B: Positive Substrate Bias ($V_{SB} > 0$)
 
 
 * Source is at a higher potential compared to the Body.
@@ -598,7 +598,7 @@ V_{GS} = V_{TO} \Rightarrow \text{Strong inversion begins}
 
 ---
 
-## 4. Key Physical Observation
+### 4. Key Physical Observation
 
 <img width="1394" height="685" alt="Screenshot 2026-02-17 153830" src="https://github.com/user-attachments/assets/56d3908f-98b6-4efa-9318-8919dbf6bb27" />
 
@@ -667,7 +667,7 @@ V_T = V_{TO} + \gamma \left( \sqrt{2\phi_F + V_{SB}} - \sqrt{2\phi_F} \right)
 
 ---
 
-## 8. Body Effect Coefficient
+### 8. Body Effect Coefficient
 
 ```math
 \gamma = \frac{\sqrt{2 q N_A \varepsilon_{si}}}{C_{ox}}
@@ -679,7 +679,7 @@ All parameters are **technology-dependent** and provided by the **foundry**.
 
 ---
 
-## 9. Fermi Potential
+### 9. Fermi Potential
 
 ```math
 \phi_F = -\phi_T \ln\left(\frac{N_A}{n_i}\right)
@@ -716,11 +716,11 @@ V_{SB} > 0 \Rightarrow V_T > V_{TO}
 
 # Chapter 2
 
-## Lecture 1: NMOS Resistive Region and Saturation Region of Operation
+### Lecture 1: NMOS Resistive Region and Saturation Region of Operation
 
 ---
 
-## Regions of NMOS Operation
+### Regions of NMOS Operation
 
 * NMOS operates in three regions:
 
@@ -730,7 +730,7 @@ V_{SB} > 0 \Rightarrow V_T > V_{TO}
 
 ---
 
-## Cutoff Region 
+### Cutoff Region 
 
 * Condition:
 
@@ -743,7 +743,7 @@ V_{GS} < V_T
 
 ---
 
-## Strong Inversion Condition
+### Strong Inversion Condition
 
 * When gate voltage reaches threshold:
 
@@ -756,7 +756,7 @@ V_{GS} = V_T
 
 ---
 
-## Resistive (Linear) Region of Operation
+### Resistive (Linear) Region of Operation
 
 <img width="822" height="448" alt="Induced charges" src="https://github.com/user-attachments/assets/d53af40a-d202-40b4-9977-959d3a4c204a" />
 
@@ -878,7 +878,7 @@ V_{DS} \ge (V_{GS} - V_T)
 
 ---
 
-## 1. Channel Potential Variation with Applied $V_{DS}$
+### 1. Channel Potential Variation with Applied $V_{DS}$
 
 * Consider the NMOS operating in strong inversion with:
 <img width="1313" height="587" alt="Screenshot 2026-02-17 182246" src="https://github.com/user-attachments/assets/db88a991-7fe3-477a-bbff-e5c29a7039f4" />
@@ -911,7 +911,7 @@ V_{GS} - V(x) = 0.95\ \text{V}
 ---
 
 
-## 2. Effective Gate Voltage Along the Channel
+### 2. Effective Gate Voltage Along the Channel
 
 * When $V_{DS} = 0$, every point along the channel sees the same gate voltage $V_{GS}$.
 * When $V_{DS} > 0$, each point along the channel experiences a different effective gate voltage.
@@ -931,7 +931,7 @@ V_{GC}(x) = V_{GS} - V(x)
 
 ---
 
-## 3. Induced Channel Charge in Presence of $V_{DS}$
+### 3. Induced Channel Charge in Presence of $V_{DS}$
 
 * The inversion charge in the channel depends on:
 
@@ -952,7 +952,7 @@ Q_i(x) = C_{ox}\left( V_{GS} - V(x) - V_T \right)
 
 ---
 
-## 4. Gate Oxide Capacitance and Technology Parameters
+### 4. Gate Oxide Capacitance and Technology Parameters
 
 * Gate oxide capacitance per unit area is given by:
 
@@ -977,7 +977,7 @@ C_{ox} = \frac{\varepsilon_{ox}}{t_{ox}}
 ---
 <img width="1392" height="732" alt="Screenshot 2026-02-17 182345" src="https://github.com/user-attachments/assets/471bce0e-fd26-421c-a0bc-3af251cfe822" />
 
-## 5. Drift Current Concept in NMOS
+### 5. Drift Current Concept in NMOS
 
 * From device physics, two current mechanisms exist:
 
@@ -996,7 +996,7 @@ C_{ox} = \frac{\varepsilon_{ox}}{t_{ox}}
 
 ---
 
-## 6. Drain Current Dependence on Channel Charge
+### 6. Drain Current Dependence on Channel Charge
 
 * Drain current is fundamentally related to:
 
@@ -1024,7 +1024,7 @@ I_D \propto (\text{channel charge}) \times (\text{carrier velocity}) \times (\te
 
 ---
 
-## 1. Objective and Physical Basis of Drain Current Model
+### 1. Objective and Physical Basis of Drain Current Model
 
 * Drain current in NMOS is physically understood as the product of:
 
@@ -1041,7 +1041,7 @@ I_D \propto (\text{channel charge}) \times (\text{carrier velocity}) \times (\te
 
 ---
 
-## 2. Channel Geometry and Voltage Distribution
+### 2. Channel Geometry and Voltage Distribution
 
 <img width="513" height="668" alt="Screenshot 2026-02-17 185514" src="https://github.com/user-attachments/assets/81b6181f-406f-446a-a52b-396f65c7d252" />
 
@@ -1074,10 +1074,10 @@ V(L) = V_{DS}
 
 ---
 
-## 3. Induced Channel Charge Along the Channel
+### 3. Induced Channel Charge Along the Channel
 
 
-Inversion charge varying along channel due to $V(x)$
+Inversion charge varying along the channel due to $V(x)$
 
 * Effective gate-to-channel voltage at any point $x$:
 
@@ -1106,7 +1106,7 @@ C_{ox} = \frac{\varepsilon_{ox}}{t_{ox}}
 
 ---
 
-## 4. Drift Current Expression and Integration
+### 4. Drift Current Expression and Integration
 
 * Drift current arises due to the electric field along the channel.
 * Electron velocity is proportional to the electric field:
@@ -1141,7 +1141,7 @@ I_D = \mu_n C_{ox}\frac{W}{L}
 
 ---
 
-## 5. Linear Region Approximation and Final Model
+### 5. Linear Region Approximation and Final Model
 
 * Define process transconductance parameter:
 
@@ -1211,13 +1211,13 @@ V_{DS} < (V_{GS} - V_T)
 
 ---
 
-# Lecture 4 & Lecture 5
+## Lecture 4 & Lecture 5
 
 ## SPICE Conclusion to Resistive Operation and Pinch-Off Condition
 
 ---
 
-## 1. Motivation for SPICE-Based Analysis
+### 1. Motivation for SPICE-Based Analysis
 
 * From earlier lectures, we derived a **linear-region drain current equation** valid when:
 
@@ -1237,7 +1237,7 @@ V_{DS} < (V_{GS} - V_T)
 
 ---
 
-## 2. Channel Voltage Concept with Increasing $V_{DS}$
+### 2. Channel Voltage Concept with Increasing $V_{DS}$
 
 <img width="608" height="437" alt="Screenshot 2026-02-17 192816" src="https://github.com/user-attachments/assets/87ff1cc1-944e-48ce-bf55-679cddb2c52e" />
 
@@ -1270,7 +1270,7 @@ The channel remains intact across the full length.
 
 ---
 
-## 3. Sweep of $V_{DS}$ and Channel Validity
+### 3. Sweep of $V_{DS}$ and Channel Validity
 
 <img width="476" height="584" alt="Screenshot 2026-02-17 192535" src="https://github.com/user-attachments/assets/68ff2c67-10cb-453e-9fd7-09bf0300d51c" />
 
@@ -1298,7 +1298,7 @@ V_{GS} - V_{DS} = V_T
 
 ---
 
-## 4. Physical Meaning of Pinch-Off Initiation
+### 4. Physical Meaning of Pinch-Off Initiation
 
 
 <img width="1315" height="655" alt="Screenshot 2026-02-17 192645" src="https://github.com/user-attachments/assets/4f0f935f-8cb7-4a63-a68f-d61c6cc2d616" />
@@ -1321,7 +1321,7 @@ V_{GS} - V_{DS} = V_T
 
 ---
 
-## 5. Transition from Resistive to Saturation Region
+### 5. Transition from Resistive to Saturation Region
 
 <img width="758" height="650" alt="Screenshot 2026-02-17 192952" src="https://github.com/user-attachments/assets/29cb8206-471e-4c35-831a-3da16440dc74" />
 
@@ -1347,7 +1347,7 @@ V_{DS} \ge (V_{GS} - V_T)
 
 ---
 
-## 6. Key Conclusions and Link to SPICE Models
+### 6. Key Conclusions and Link to SPICE Models
 
 * Summary of regions:
 
@@ -1384,7 +1384,7 @@ V_{DS} \ge (V_{GS} - V_T)
 
 
 
-## 1. Channel Voltage Behaviour in Saturation
+### 1. Channel Voltage Behaviour in Saturation
 
 * In the linear region, channel voltage varies as:
 
@@ -1408,7 +1408,7 @@ V_{DS} = V_{GS} - V_T
 
 ---
 
-## 2. Drain Current Equation in Saturation (Ideal Case)
+### 2. Drain Current Equation in Saturation (Ideal Case)
 
 * Starting from the linear-region drain current equation:
 
@@ -1440,7 +1440,7 @@ I_D = \frac{k_n}{2}(V_{GS} - V_T)^2
 
 ---
 
-## 3. Why Saturation Current Is Not Truly Constant
+### 3. Why Saturation Current Is Not Truly Constant
 
 * The ideal model suggests NMOS behaves like a **perfect current source**.
 * In reality:
@@ -1488,7 +1488,7 @@ I_D = \frac{k_n}{2}(V_{GS} - V_T)^2(1 + \lambda V_{DS})
 
 ---
 
-## 1. Context from Saturation Region Operation
+### 1. Context from Saturation Region Operation
 
 * In the previous chapter, NMOS behaviour in the **saturation region** was established.
 * Saturation occurs when:
@@ -1512,7 +1512,7 @@ V_{GS} - V_{DS} \le V_T
 
 ---
 
-## 2. Channel Voltage in Saturation Region
+### 2. Channel Voltage in Saturation Region
 
 * In linear region:
 
@@ -1539,7 +1539,7 @@ Channel pinch-off near the drain and constant channel voltage
 
 ---
 
-## 3. Saturation Region Drain Current Model (Ideal)
+### 3. Saturation Region Drain Current Model (Ideal)
 
 * Start from the linear-region drain current equation:
 
@@ -1567,7 +1567,7 @@ I_D = \frac{k_n}{2}(V_{GS} - V_T)^2
 
 ---
 
-## 4. Why Ideal Saturation Is Not Fully Accurate
+### 4. Why Ideal Saturation Is Not Fully Accurate
 
 * The ideal model suggests NMOS behaves like a perfect current source.
 * In practice:
@@ -1585,7 +1585,7 @@ Reduction of effective channel length with increasing $V_{DS}$
 
 ---
 
-## 5. Channel Length Modulation and Improved Model
+### 5. Channel Length Modulation and Improved Model
 
 * To account for non-ideal behaviour, introduce channel length modulation factor $\lambda$.
 * Modified saturation current equation:
@@ -1605,7 +1605,7 @@ I_D = \frac{k_n}{2}(V_{GS} - V_T)^2 (1 + \lambda V_{DS})
 
 ---
 
-## 6. Motivation for SPICE Simulations
+### 6. Motivation for SPICE Simulations
 
 * At this stage, three key models are available:
 
@@ -1635,7 +1635,7 @@ I_D = \frac{k_n}{2}(V_{GS} - V_T)^2 (1 + \lambda V_{DS})
 
 ---
 
-## 1. Objective of This Lecture
+### 1. Objective of This Lecture
 
 * Convert a simple NMOS circuit into a valid SPICE netlist.
 * Understand how SPICE interprets a circuit using nodes and components.
@@ -1644,7 +1644,7 @@ I_D = \frac{k_n}{2}(V_{GS} - V_T)^2 (1 + \lambda V_{DS})
 
 ---
 
-## 2. Identifying and Defining Nodes
+### 2. Identifying and Defining Nodes
 
 
 <img width="1286" height="568" alt="Screenshot 2026-02-17 223644" src="https://github.com/user-attachments/assets/c10c0d2d-922c-4db7-8c82-caeecf279c82" />
@@ -1671,7 +1671,7 @@ These node names can be chosen freely, but must be used consistently.
 
 ---
 
-## 3. MOSFET Declaration in SPICE
+### 3. MOSFET Declaration in SPICE
 
 * MOSFETs are declared using the letter `M`.
 * General syntax:
@@ -1710,7 +1710,7 @@ This line fully describes the NMOS device and connects it electrically to the ci
 
 ---
 
-## 4. Resistor Definition
+### 4. Resistor Definition
 
 * Resistors start with the letter `R`.
 * Syntax:
@@ -1733,7 +1733,7 @@ R1 VDD N1 55
 
 ---
 
-## 5. Voltage Source Definitions
+### 5. Voltage Source Definitions
 
 * Voltage sources start with the letter `V`.
 * Syntax:
@@ -1766,7 +1766,7 @@ VIN IN 0 2.5
 
 ---
 
-## 6. Complete SPICE Netlist (So Far)
+### 6. Complete SPICE Netlist (So Far)
 
 Putting everything together:
 
@@ -1787,7 +1787,7 @@ VIN IN 0 2.5
 
 ---
 
-## 1. Goal of This Lecture
+### 1. Goal of This Lecture
 
 * The objective is to translate a physical NMOS circuit into a SPICE-readable netlist.
 * SPICE does not understand schematics or drawings; it only understands text-based descriptions called netlists.
@@ -1803,7 +1803,7 @@ VIN IN 0 2.5
 
 ---
 
-## 2. Node Identification and Naming
+### 2. Node Identification and Naming
 
 * A node is a continuous electrical connection with no obstruction (no component in between).
 * All points connected by plain wires belong to the same node and must share the same node name.
@@ -1821,7 +1821,7 @@ These node names are user-defined and can be numeric or symbolic, but must be us
 
 ---
 
-## 3. Writing the SPICE Netlist (Circuit Description)
+### 3. Writing the SPICE Netlist (Circuit Description)
 
 Each component is written as a single line using the format:
 
@@ -1877,7 +1877,7 @@ Vin in 0 2.5
 
 ---
 
-## 4. Role of the Technology (Model) File
+### 4. Role of the Technology (Model) File
 
 * The SPICE engine does not compute NMOS behaviour using geometry alone.
 * It requires a model file containing physical and process parameters.
@@ -1902,7 +1902,7 @@ These parameters allow SPICE to internally evaluate:
 
 ---
 
-## 5. Defining NMOS and PMOS Models
+### 5. Defining NMOS and PMOS Models
 
 Models are defined using the `.MODEL` statement.
 
@@ -1919,7 +1919,7 @@ Important rules:
 
 ---
 
-## 6. Including the Model File in the Netlist
+### 6. Including the Model File in the Netlist
 
 * Model parameters are usually stored in a separate `.mod` file.
 * This file is included in the main netlist using `.include` or `.lib`.
@@ -1940,4 +1940,26 @@ Structure of a complete SPICE setup:
 
 Anything starting with `*` is treated as a comment and ignored by SPICE.
 
+## Lecture 4: First SPICE simulation
+---
+
+* You start by opening the terminal and attempting to clone the SKY130 workshop repository, but since it already exists, you simply move into the existing `sky130CircuitDesignWorkshop/design` directory. After listing the files to confirm the setup, you enter the `sky130_fd_pr` folder, which contains the SKY130 technology data used for simulations.
+<img width="1920" height="1080" alt="Screenshot 2026-02-23 142911" src="https://github.com/user-attachments/assets/cb00299f-609c-4c44-893c-d68b3a3c63c3" />
+
+* From there, you navigate into the `cells` directory and then into `nfet_01v8`, where the NMOS device models are stored. Listing the contents shows multiple SPICE files corresponding to different process corners such as `tt`, `ss`, `ff`, and others. Opening the typical corner file lets you view the actual model parameters that NGSPICE uses during NMOS simulation, confirming how the device behavior is defined in SKY130.
+---
+
+<img width="1920" height="1080" alt="Screenshot 2026-02-23 143252" src="https://github.com/user-attachments/assets/95c4896b-a993-458c-9ea4-d2bf4b9e3dd2" />
+
+From the `nfet_01v8` folder, you go up to the `models` directory and list the files. This shows `sky130.lib.spice`, which serves as the main entry file that links all NMOS and PMOS models across process corners. Including this one file in a netlist gives access to the full SKY130 device library. After checking this, you return to the design directory and clear the terminal, confirming that the model setup is complete and ready for simulation.
+
+---
+<img width="1920" height="1080" alt="Screenshot 2026-02-23 144507" src="https://github.com/user-attachments/assets/1597b9c9-1195-4b96-ad72-06065c92e568" />
+
+After running the simulation, NGSPICE prints the operating-point information and lists all active vectors like node voltages and branch currents. You can see that `vdd#branch` and `vin#branch` are available, which means the simulator is ready to report supply and input currents. Using `plot -vdd#branch` opens the DC plot window and shows the drain current flowing from VDD for different bias conditions.
+<img width="1219" height="917" alt="Screenshot 2026-02-23 144635" src="https://github.com/user-attachments/assets/ba68d1e0-d954-4213-898c-f222e479c3ad" />
+
+The plot displays a family of ID–VDS curves as VDD is swept while Vin is stepped. At low VDS, the curves rise almost linearly, and at higher VDS they flatten, showing saturation. By clicking on any point in the plot, NGSPICE reports the exact voltage and current values in the terminal, which helps you directly read the drain current at a specific operating point and understand the NMOS behavior numerically.
+
+<img width="1218" height="739" alt="Screenshot 2026-02-23 145120" src="https://github.com/user-attachments/assets/a329ed1e-f2a7-43b6-a735-de8b36332edf" />
 
