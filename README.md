@@ -2036,7 +2036,7 @@ The drain current is zero when `VGS < VT` (cutoff), and in all other regions it 
 
 ---
 
-# Lecture 4: Velocity saturation drain current model
+## Lecture 4: Velocity saturation drain current model
 
 ---
 
@@ -2055,4 +2055,18 @@ For **short-channel devices only**, when `VDSAT` is at its minimum, the device e
 ---
 
 
+<img width="1563" height="910" alt="image" src="https://github.com/user-attachments/assets/3a39b5f5-9346-4e7f-b249-84e573d877f9" />
 
+
+---
+
+## Lecture 5: Labs Sky130 Id-Vgs
+---
+
+In this SPICE simulation, a short-channel NMOS device with a channel length of around **0.12–0.15 µm** is analysed at a supply voltage of **1.8 V**. The drain voltage **VDS** is swept from **0 to 1.8 V** with a step of **0.1 V**, while the gate voltage **VGS** is swept in steps of **0.2 V** to generate the ID–VDS characteristics.
+<img width="1037" height="841" alt="image" src="https://github.com/user-attachments/assets/d0c87917-7a76-4e81-8de4-9df500bad86a" />
+
+From the ID–VDS plots, the device shows normal behaviour at lower VDS, but at higher VDS, the curves become more linear and saturate early. At **VDS = 1.8 V**, the peak drain current observed from the plot is approximately **0.196 mA (196 µA)**. This early saturation and reduced peak current confirm velocity saturation in short-channel devices.
+<img width="1046" height="838" alt="Screenshot 2026-02-24 121214" src="https://github.com/user-attachments/assets/8d0c9762-c400-40f5-95f3-a4f9aa3ac87f" />
+
+When the simulation is modified to keep **VDS = 1.8 V constant** and sweep **VGS from 0 to 1.8 V** with a step of **0.1 V**, the resulting ID–VGS curve shows a nearly linear behaviour. Since the channel length is around **0.12–0.15 µm**, the quadratic dependence of drain current is no longer valid, and velocity saturation dominates the device operation.
