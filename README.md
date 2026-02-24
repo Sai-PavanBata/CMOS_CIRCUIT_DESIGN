@@ -2146,3 +2146,103 @@ After these steps, PMOS current curves become **IDSN versus VIN curves**, and VG
 ---
 ## Lecture 5: Step2 & Step3 – Convert PMOS and NMOS drain-source-voltage to vout
 
+<img width="1379" height="769" alt="Screenshot 2026-02-24 143350" src="https://github.com/user-attachments/assets/5275fe65-2f81-42c4-a6ee-60d3d663c142" />
+
+* To derive the **PMOS load curve**, we next eliminate `VDSP` by expressing it in terms of the **output voltage**. Since `VOUT = VDD + VDSP`, the PMOS ID–VDSP curves can be shifted horizontally by `+VDD` and reinterpreted as **IDSN versus VOUT** curves. For example, when `VDSP = −2 V` and `VDD = 2 V`, `VOUT = 0 V`. At this point, a finite current flows because the output capacitor is fully discharged and must be charged by the PMOS. When `VDSP = 0`, `VOUT = VDD`, the output capacitor is fully charged, and the current becomes zero. This shift converts the PMOS characteristics into a load curve expressed solely in terms of VIN, VOUT, and IDSN.
+<img width="1393" height="451" alt="Screenshot 2026-02-24 143254" src="https://github.com/user-attachments/assets/d5e990c9-8589-482f-9c0f-5b821033d23e" />
+<img width="1381" height="480" alt="Screenshot 2026-02-24 143557" src="https://github.com/user-attachments/assets/61c46759-11ea-47bd-b0cb-10c98bec9ab2" />
+
+* After this conversion, the PMOS behaviour is no longer described using `VGSP`, `VDSP`, or `IDSP`. Instead, everything is expressed using **VIN, VOUT, and a single current variable (IDSN)**. This curve is called the **PMOS load curve ** in a CMOS inverter context, where PMOS behaviour corresponds to the charging current of the output capacitor.
+
+* The **NMOS load curve** is simpler to derive. Since the NMOS source is connected to ground, `VGSN = VIN` and `VDSN = VOUT` directly. Therefore, the NMOS ID–VDS curves obtained from SPICE simulations can be converted into load curves simply by **renaming the axes**: replace `VGSN` with `VIN` and `VDSN` with `VOUT`. No shifting or sign changes are required.
+
+* At this point, both **PMOS and NMOS load curves are expressed in the same variables: VIN, VOUT, and IDSN**. The final step is to **merge these two load curves**, which yields the **CMOS Voltage Transfer Characteristic (VTC)**. This VTC directly relates the input voltage to the output voltage and provides the foundation for understanding switching behaviour and delay in CMOS inverters.
+---
+
+---
+## Lecture 6: Step 4 – Merge PMOS – NMOS load curves and plot VTC
+
+
+
+## CMOS Voltage Transfer Characteristics (VTC) using Load Curves
+
+
+<img width="1360" height="400" alt="Screenshot 2026-02-24 144608" src="https://github.com/user-attachments/assets/25f5b95f-687b-44b1-bdb6-e48453ebf608" />
+
+To derive the **CMOS Voltage Transfer Characteristic (VTC)**, we superimpose the **NMOS and PMOS load curves** on a common graph. This works because **VIN and VOUT are common to both transistors**, while the operating point of the inverter is determined by the **intersection of their load curves** for a given VIN.
+
+### Key idea
+
+For each input voltage `VIN`, the **intersection point** of the NMOS and PMOS load curves gives the corresponding **output voltage `VOUT`**. Plotting these `(VIN, VOUT)` pairs produces the VTC.
+
+<img width="1387" height="766" alt="Screenshot 2026-02-24 145127" src="https://github.com/user-attachments/assets/bda3e488-ac6a-4b75-8f5d-71abdee65a8f" />
+
+
+### Extreme operating points
+
+* **VIN = 0 V**
+
+  * NMOS: cutoff (OFF)
+  * PMOS: linear region
+  * Intersection gives **VOUT = VDD = 2 V**
+
+* **VIN = 2 V**
+
+  * NMOS: linear region
+  * PMOS: cutoff (OFF)
+  * Intersection gives **VOUT = 0 V**
+
+These two points define the inverter's logical behaviour.
+
+
+### Intermediate input voltages
+
+* **VIN = 0.5 V**
+
+  * NMOS: saturation
+  * PMOS: linear
+  * Intersection gives **1.5 V < VOUT < 2 V**
+
+* **VIN = 1 V**
+
+  * NMOS: saturation
+  * PMOS: saturation
+  * Intersection gives **0.5 V < VOUT < 1.5 V**
+  * This is the **high-gain transition region**, where a small change in VIN causes a large change in VOUT.
+
+* **VIN = 1.5 V**
+
+  * NMOS: linear
+  * PMOS: saturation
+  * Intersection gives **0 V < VOUT < 0.5 V**
+
+
+### Final VTC construction
+
+By plotting all intersection points:
+
+* `(0, 2)`
+* `(0.5, ~1.7)`
+* `(1, ~1)`
+* `(1.5, ~0.3)`
+* `(2, 0)`
+
+and connecting them smoothly, we obtain the **CMOS inverter VTC**.
+
+---
+
+### Important observations
+
+* The **middle region** (both NMOS and PMOS in saturation) has **very high gain**.
+* Digital circuits rely on the **steep slope** of this region for fast switching.
+* The load-curve method also clearly shows **which region (cutoff / linear / saturation)** each transistor operates in for a given VIN.
+
+---
+
+### Next step
+
+Validate the analytical VTC by performing a **SPICE-based DC sweep simulation** of `VIN` and directly plotting `VOUT`.
+
+---
+
+
