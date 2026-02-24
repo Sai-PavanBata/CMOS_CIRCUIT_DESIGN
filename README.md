@@ -1959,7 +1959,7 @@ From the `nfet_01v8` folder, you go up to the `models` directory and list the fi
 After running the simulation, NGSPICE prints the operating-point information and lists all active vectors, such as node voltages and branch currents. You can see that `vdd#branch` and `vin#branch` are available, which means the simulator is ready to report supply and input currents. Using `plot -vdd#branch` opens the DC plot window and shows the drain current flowing from VDD for different bias conditions.
 <img width="1219" height="917" alt="Screenshot 2026-02-23 144635" src="https://github.com/user-attachments/assets/ba68d1e0-d954-4213-898c-f222e479c3ad" />
 
-The plot displays a family of ID–VDS curves as VDD is swept while Vin is stepped. At low VDS, the curves rise almost linearly; at higher VDS, they flatten, indicating saturation. By clicking any point on the plot, NGSPICE reports the exact voltage and current values at the terminals, which lets you read the drain current directly at a specific operating point and understand NMOS behaviour numerically.
+The plot displays a family of ID–VDS curves as VDD is swept while Vin is stepped. At low VDS, the curves rise almost linearly; at higher VDS, they flatten, indicating saturation. By clicking any point on the plot, NGSPICE reports the exact voltage and current values at the terminals, allowing you to read the drain current directly at a specific operating point and understand NMOS behaviour numerically.
 
 <img width="1218" height="739" alt="Screenshot 2026-02-23 145120" src="https://github.com/user-attachments/assets/a329ed1e-f2a7-43b6-a735-de8b36332edf" />
 
@@ -1987,15 +1987,23 @@ The same behaviour is then compared with a scaled device having **W = 0.375 µm 
 
 ---
 
-## Lecture 2: 
+## Lecture 2: Drain current vs gate voltage for long and short channel device
 
 ---
 
+<img width="1587" height="916" alt="Screenshot 2026-02-24 102746" src="https://github.com/user-attachments/assets/d5c7a9b2-6f9e-49ae-bf0e-135267ec8a66" />
 
-From the ID–VDS plots, if we fix the drain voltage at **VDS = 2.5 V** and observe the drain current for different gate voltages, the **long-channel device (L = 1.2 µm)** shows a **quadratic dependence of ID on VGS**. At VGS = 0 V, the drain current is zero because there is no channel. As VGS increases to 0.5 V, 1 V, and beyond threshold, the drain current increases nonlinearly, matching the square-law behaviour predicted by the long-channel MOSFET equation ( I_D \propto (V_{GS} - V_T)^2 ).
+
+From the ID–VDS plots, if we fix the drain voltage at **VDS = 2.5 V** and observe the drain current for different gate voltages, the **long-channel device (L = 1.2 µm)** shows a **quadratic dependence of ID on VGS**. At VGS = 0 V, the drain current is zero because there is no channel. As VGS increases to 0.5 V, 1 V, and beyond the threshold, the drain current increases nonlinearly, matching the square-law behaviour predicted by the long-channel MOSFET equation.
+
+```math
+I_D \propto (V_{GS} - V_T)^2
+```
+<img width="1608" height="912" alt="Screenshot 2026-02-24 103334" src="https://github.com/user-attachments/assets/3a5e4307-0af6-4274-bf39-da1d57c454c8" />
 
 For the **short-channel device (L = 0.25 µm)**, the behaviour initially looks similar at low VGS, where the drain current still follows a quadratic trend. However, as VGS increases further, the ID–VGS curve becomes **more linear rather than quadratic**, even though VDS is kept constant at 2.5 V. This deviation is clearly visible in the plotted curves and is not expected from long-channel theory.
 
 This difference occurs because **short-channel effects**, especially **velocity saturation**, become dominant at shorter channel lengths. In short-channel devices, carrier velocity saturates before the square-law behaviour can fully develop, leading to a drain current that increases almost linearly with gate voltage at higher VGS.
+<img width="1725" height="627" alt="Screenshot 2026-02-24 103949" src="https://github.com/user-attachments/assets/37afd246-8c55-4515-aa9f-541e572077d3" />
 
 To clearly highlight this effect, the simulation is modified to keep **VDS fixed at 2.5 V** and sweep **VGS**, generating **ID–VGS curves** for both devices. Comparing these plots side by side confirms that long-channel devices follow quadratic behaviour, while short-channel devices deviate significantly, explaining why long-channel equations fail at advanced technology nodes.
