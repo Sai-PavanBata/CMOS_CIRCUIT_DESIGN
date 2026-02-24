@@ -2060,7 +2060,7 @@ For **short-channel devices only**, when `VDSAT` is at its minimum, the device e
 
 ---
 
-## Lecture 5: Labs Sky130 Id-Vgs
+## Lecture 5 & 6: Labs Sky130 Id-Vgs
 ---
 
 In this SPICE simulation, a short-channel NMOS device with a channel length of around **0.12–0.15 µm** is analysed at a supply voltage of **1.8 V**. The drain voltage **VDS** is swept from **0 to 1.8 V** with a step of **0.1 V**, while the gate voltage **VGS** is swept in steps of **0.2 V** to generate the ID–VDS characteristics.
@@ -2070,3 +2070,47 @@ From the ID–VDS plots, the device shows normal behaviour at lower VDS, but at 
 <img width="1046" height="838" alt="Screenshot 2026-02-24 121214" src="https://github.com/user-attachments/assets/8d0c9762-c400-40f5-95f3-a4f9aa3ac87f" />
 
 When the simulation is modified to keep **VDS = 1.8 V constant** and sweep **VGS from 0 to 1.8 V** with a step of **0.1 V**, the resulting ID–VGS curve shows a nearly linear behaviour. Since the channel length is around **0.12–0.15 µm**, the quadratic dependence of drain current is no longer valid, and velocity saturation dominates the device operation.
+
+
+---
+# Chapter 2: CMOS voltage transfer characteristics (VTC)
+---
+---
+## Lecture 1:MOSFET as a switch
+---
+
+<img width="564" height="492" alt="Screenshot 2026-02-24 122645" src="https://github.com/user-attachments/assets/b3f07e0f-596b-4aa1-983f-5e2c7398c004" />
+
+To understand **CMOS Voltage Transfer Characteristics (VTC)**, we shift our view of MOSFETs from a pure device-physics perspective to a **switch-level perspective**. A MOS transistor (NMOS or PMOS) turns **ON** when the **magnitude of VGS exceeds the threshold voltage VT**, and turns **OFF** otherwise. Using `|VGS|` allows the same rule to apply to both NMOS (positive VGS) and PMOS (negative VGS).
+<img width="996" height="587" alt="Screenshot 2026-02-24 122638" src="https://github.com/user-attachments/assets/9f0554c1-3e6a-4aef-b6a5-04ac1bcbfb62" />
+
+From a switch viewpoint, when `|VGS| < VT`, the MOSFET behaves like an **open switch** with very high resistance, so no current flows between source and drain. When `|VGS| ≥ VT`, the switch **closes**, creating a finite (nonlinear) resistance between source and drain. This simple ON–OFF behaviour underlies treating MOSFETs as digital switches.
+
+A **CMOS inverter** is built using a **PMOS at the top** connected to `VDD` and an **NMOS at the bottom** connected to ground (`VSS`). The **gates of both transistors are tied together** and driven by the input voltage `VIN`, while their drains are connected to form the output node. A load capacitance `CL` at the output represents the wiring and the input of the next stage.
+<img width="677" height="776" alt="Screenshot 2026-02-24 123132" src="https://github.com/user-attachments/assets/20c54ffe-f673-44f4-9a1d-92c473aaf3ab" />
+
+When `VIN = VDD`, the **NMOS gate-to-source voltage** becomes `VGS = VDD − 0 = VDD`, so the NMOS turns ON. At the same time, the **PMOS gate-to-source voltage** becomes `VGS = VDD − VDD = 0`, so the PMOS turns OFF. This pulls the output node to ground. In the opposite case (to be analysed next), when `VIN = 0`, the NMOS turns OFF, and the PMOS turns ON, pulling the output to `VDD`. Combining these two cases yields the **CMOS voltage transfer characteristic**, which describes how the output voltage changes with the input voltage.
+
+
+---
+## Lecture 2: Introduction to standard MOS voltage current parameters
+
+---
+
+To derive the **CMOS Voltage Transfer Characteristic (VTC)**, we analyse the CMOS inverter under different **input boundary conditions** and replace the transistors with their **equivalent circuits**. This step is essential because the VTC is later used to compute **cell delay**, not only for inverters but also for logic gates like AND and OR.
+<img width="1357" height="725" alt="Screenshot 2026-02-24 134447" src="https://github.com/user-attachments/assets/e9b48f83-af9d-4b4c-b3ce-e6836f161464" />
+
+When **VIN = VDD (assume VDD = 5 V)**, the **NMOS turns ON** because its gate-to-source voltage `VGSN = VDD − 0 = VDD`, which is greater than `VT`. At the same time, the **PMOS turns OFF** because its gate-to-source voltage `VGSP = VDD − VDD = 0`, which is below its threshold. In this case, the NMOS is modelled as a finite resistance `RN`, the PMOS as an open switch, and there exists a direct discharge path from the output node to ground. As a result, the output load capacitor discharges and **VOUT = 0**.
+<img width="1371" height="692" alt="Screenshot 2026-02-24 134901" src="https://github.com/user-attachments/assets/a3015a28-3048-4a1c-914a-8d75c7a1d2fb" />
+
+When **VIN = 0 V**, the situation reverses. The **PMOS turns ON** because `VGSP = 0 − VDD = −VDD`, whose magnitude exceeds `VT`, while the **NMOS turns OFF** since `VGSN = 0`. The PMOS is modelled as a finite resistance `RP`, the NMOS as an open switch, and a direct charging path from `VDD` to the output node exists. The output capacitor fully charges, resulting in **VOUT = VDD**.
+
+To systematically derive equations, clear **naming conventions** are introduced. `VGSN` and `VGSP` denote gate-to-source voltages of NMOS and PMOS, respectively, while `VDSN` and `VDSP` represent their drain-to-source voltages. Similarly, `IDSN` and `IDSP` denote the drain-to-source currents through NMOS and PMOS. These definitions allow both devices to be analysed together while accounting for polarity differences.
+
+With both extreme input cases (`VIN = 0` and `VIN = VDD`) understood in terms of voltages, currents, and equivalent circuits, the next step is to merge these conditions and derive a continuous relationship between `VIN` and `VOUT`. This combined analysis leads directly to the **CMOS voltage transfer characteristic**, which forms the foundation for delay and timing analysis in digital circuits.
+
+
+---
+## Lecture 3: PMOS/NMOS drain current v/s drain voltage
+---
+
