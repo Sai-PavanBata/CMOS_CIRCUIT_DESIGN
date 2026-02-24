@@ -2017,14 +2017,14 @@ To clearly highlight this effect, the simulation is modified to keep **VDS fixed
 
 For **long-channel devices (≈ 1.2 µm)**, the drain current shows a clear **quadratic dependence on gate voltage** when the drain voltage is fixed. This follows the long-channel saturation model, where
 `Id ∝ (VGS − VT)^2`.
-At VGS = 0 V, the device is OFF and Id = 0. As VGS increases beyond the threshold, the drain current increases rapidly in a curved (quadratic) manner, which is clearly visible in the ID–VGS plots.
+At VGS = 0 V, the device is OFF and Id = 0. As VGS increases beyond the threshold, the drain current rises rapidly in a curved (quadratic) manner, which is clearly visible in the ID–VGS plots.
 
 For **short-channel devices (≈ 0.25 µm and below)**, the behaviour changes at higher gate voltages. At low VGS, the drain current still follows a quadratic trend. However, as VGS increases further, the ID–VGS curve becomes **more linear than quadratic**. This deviation shows that long-channel assumptions break down at smaller technology nodes, indicating the presence of short-channel effects.
 ![download](https://github.com/user-attachments/assets/85fd8cb2-0896-4b70-9870-e6de1ffab4d7)
 ![download (1)](https://github.com/user-attachments/assets/07367ca2-0884-466b-9fad-30d74e9a2e5b)
 
 
-The main cause of this behaviour is **velocity saturation**. At low electric fields, carrier velocity increases linearly with electric field (`vn = μn · E`). Beyond a critical electric field, carrier velocity saturates and becomes almost constant (`vn ≈ vsat`) due to scattering effects. Since drain current depends directly on carrier velocity, once velocity saturates, increasing VGS no longer produces a quadratic increase in current, leading to a nearly linear ID–VGS relationship.
+The leading cause of this behaviour is **velocity saturation**. At low electric fields, carrier velocity increases linearly with electric field (`vn = μn · E`). Beyond a critical electric field, carrier velocity saturates and becomes almost constant (`vn ≈ vsat`) due to scattering effects. Since drain current depends directly on carrier velocity, once velocity saturates, increasing VGS no longer produces a quadratic increase in current, leading to a nearly linear ID–VGS relationship.
 <img width="1178" height="512" alt="Screenshot 2026-02-24 105620" src="https://github.com/user-attachments/assets/2bd25916-7b92-447a-b6c0-c5743d7873fa" />
 
 Because of velocity saturation, short-channel MOSFETs introduce an **additional region of operation** beyond cutoff, linear (resistive), and saturation. This new region is called **velocity saturation**. To model all regions using one compact expression, an effective voltage is defined as
@@ -2034,11 +2034,25 @@ The drain current is zero when `VGS < VT` (cutoff), and in all other regions it 
 ---
 
 
+---
 
+# Lecture 4: Velocity saturation drain current model
 
+---
 
+<img width="1725" height="627" alt="Screenshot 2026-02-24 103949" src="https://github.com/user-attachments/assets/cb3f015c-0dac-4ab1-9b18-fb1a0560da0d" />
 
+From the ID–VDS plots, we observe that velocity saturation occurs earlier in short-channel MOSFETs. For the **long-channel device (W = 1.8 µm, L = 1.2 µm)**, the drain current increases smoothly and reaches a higher peak current of about **410 µA**. In contrast, the **short-channel device (W = 0.375 µm, L = 0.25 µm)** saturates much earlier and reaches a lower peak current of about **210 µA**, even though the W/L ratio is kept the same. This clearly shows that current scaling does not hold at lower technology nodes.
 
+To capture this behaviour, a **single-drain-current model** is introduced that operates across the entire range of operation. The idea is to use an effective voltage `Vmin`, defined as the minimum of `(VGS − VT)`, `VDS`, and `VDSAT`. The drain current is zero when `VGS < VT` (cutoff). For all other cases, the same compact expression is used, and the actual operating region is determined by which voltage becomes `Vmin`.
+<img width="1298" height="677" alt="Screenshot 2026-02-24 114224" src="https://github.com/user-attachments/assets/dfe9856c-e94d-4bda-b844-b35d1867aa57" />
+
+When `(VGS − VT)` is at its minimum, the device operates in the **saturation region**, and the model reduces to the familiar long-channel square-law behaviour. When `VDS` is the minimum, the device operates in the **linear (resistive) region**, and the drain current becomes proportional to `VDS`. These two cases apply to both long-channel and short-channel devices.
+<img width="1382" height="655" alt="Screenshot 2026-02-24 114355" src="https://github.com/user-attachments/assets/434a4242-467a-4107-978e-da36f7d08204" />
+
+For **short-channel devices only**, when `VDSAT` is at its minimum, the device enters the **velocity-saturation region**. Here, the carrier velocity has already saturated due to the high electric fields, so increasing the gate voltage no longer produces a quadratic increase in drain current. This explains why short-channel devices exhibit lower peak current and earlier saturation than long-channel devices, even at the same W/L ratio. Velocity saturation is therefore a key short-channel effect that must be included in modern MOSFET models and directly impacts current drive and delay in CMOS circuits.
+
+---
 
 
 
