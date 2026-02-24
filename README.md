@@ -2243,6 +2243,106 @@ and connecting them smoothly, we obtain the **CMOS inverter VTC**.
 
 Validate the analytical VTC by performing a **SPICE-based DC sweep simulation** of `VIN` and directly plotting `VOUT`.
 
+
+---
+# Day 3: CMOS Switching threshold and dynamic simulations
+## Chapter 1: Voltage transfer characteristics – SPICE simulations
+### Lecture 1: SPICE deck creation for CMOS inverter 
+### CMOS Inverter SPICE Deck – Key Notes
+---
+* Goal: Prepare a SPICE netlist for a **CMOS inverter** to simulate **VTC (Voltage Transfer Characteristics)**.
+* Technology assumed: **L = 0.25 µm**, **VDD = 2.5 V** (long-channel assumption).
+<img width="1271" height="646" alt="Screenshot 2026-02-24 154841" src="https://github.com/user-attachments/assets/c52e1817-19b1-45db-ad3b-680078cb51bc" />
+
 ---
 
+### Circuit Components and Values
 
+* **PMOS (M1)**
+
+  * Type: PMOS
+  * Drain = `out`
+  * Gate = `in`
+  * Source = `vdd`
+  * Bulk = `vdd`
+  * Width `W = 0.375 µm`, Length `L = 0.25 µm`
+
+* **NMOS (M2)**
+
+  * Type: NMOS
+  * Drain = `out`
+  * Gate = `in`
+  * Source = `0` (VSS)
+  * Bulk = `0`
+  * Width `W = 0.375 µm`, Length `L = 0.25 µm`
+
+* **Load Capacitance**
+
+  * `Cload = 10 fF` between `out` and `0`
+  * Represents lumped capacitance of interconnect + next-stage gates
+
+* **Supplies**
+
+  * `VDD = 2.5 V`
+  * `VSS = 0 V`
+  * Input voltage `Vin` swept from `0 → 2.5 V`
+
+---
+<img width="758" height="610" alt="Screenshot 2026-02-24 154930" src="https://github.com/user-attachments/assets/48caa716-df4c-4a7d-b2ee-9070b10f216c" />
+
+### Node Definitions
+
+* `in`  → common gate node of PMOS and NMOS
+* `out` → common drain node (output)
+* `vdd` → supply node
+* `0`   → ground (VSS)
+
+---
+<img width="1316" height="599" alt="Screenshot 2026-02-24 155222" src="https://github.com/user-attachments/assets/069bdb46-ddbe-441d-85f0-9dae57d340a5" />
+
+### SPICE Netlist (Core)
+
+
+*** MODEL Descriptions ***
+*** NETLIST Description ***
+
+* M1 out in vdd vdd pmos W=0.375u L=0.25u
+* M2 out in 0   0   nmos W=0.375u L=0.25u
+
+---
+
+### Important Observations
+
+* Substrate (bulk) **must be explicitly connected**:
+
+  * PMOS bulk → `VDD`
+  * NMOS bulk → `VSS`
+* Equal PMOS and NMOS sizing used **only for illustration**.
+
+  * In practice, **PMOS is usually 2–3× wider** to balance mobility.
+* This setup captures **static CMOS behavior**; dynamic delay analysis comes later.
+
+---
+
+---
+## Lecture 2:
+
+---
+
+We perform a **SPICE DC simulation of a CMOS inverter** to obtain its **Voltage Transfer Characteristics (VTC)** and verify the theory derived from NMOS–PMOS load curves. The technology uses a **channel length of 0.25 µm** and a **supply voltage of 2.5 V**. Only **static (DC)** behaviour is analysed.
+
+The inverter consists of one PMOS (**M1**) and one NMOS (**M2**).
+For **PMOS (M1)**, the drain is connected to `out`, the gate to `in`, and both source and substrate to `VDD`. Its dimensions are **W = 0.375 µm, L = 0.25 µm**.
+For **NMOS (M2)**, the drain is connected to `out`, the gate to `in`, and both source and substrate to ground (`0`). Its dimensions are **W = 0.375 µm, L = 0.25 µm**.
+
+An **output load capacitor of 10 fF** is connected between `out` and ground, representing interconnect and fan-out loading. The **supply voltage VDD = 2.5 V** is applied between `vdd` and ground. The **input voltage Vin** is applied between `in` and ground.
+
+To generate the VTC, a **DC sweep** is performed on `Vin` from **0 V to 2.5 V** with a **step of 0.05 V**, and the output voltage `V(out)` is plotted against `V(in)`. The transistor behaviour is defined using a **model file** containing all NMOS and PMOS technology parameters for the **250 nm node**.
+
+In the first simulation, **PMOS and NMOS have equal widths (0.375 µm)**. The resulting VTC is **left-shifted**, showing an unbalanced inverter due to lower hole mobility in PMOS devices.
+
+In the second simulation, the **PMOS width is increased to 0.9375 µm (2.5× NMOS width)** while keeping **L = 0.25 µm**. This produces a **more symmetric VTC**, with the switching point closer to **VDD/2**, indicating balanced pull-up and pull-down strengths.
+
+This confirms that **PMOS devices must be wider than NMOS devices** (typically **2–3×**) to achieve a symmetric VTC and improved noise margins.
+
+---
