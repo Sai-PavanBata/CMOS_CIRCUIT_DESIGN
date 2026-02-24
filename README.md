@@ -2112,5 +2112,37 @@ With both extreme input cases (`VIN = 0` and `VIN = VDD`) understood in terms of
 
 ---
 ## Lecture 3: PMOS/NMOS drain current v/s drain voltage
+
+
+To derive the **CMOS Voltage Transfer Characteristic (VTC)**, we first establish clear **voltage and current naming conventions** for NMOS and PMOS. Gate-to-source voltages are defined as `VGSN = VIN − VSS` for NMOS and `VGSP = VIN − VDD` for PMOS. Similarly, drain-to-source voltages are `VDSN = VOUT` and `VDSP = VOUT − VDD`. These definitions are important because NMOS calculations are simpler because the source is tied to ground, whereas PMOS calculations require subtracting `VDD`, making sign handling critical.
+<img width="1292" height="743" alt="Screenshot 2026-02-24 140259" src="https://github.com/user-attachments/assets/f4b5f5c2-c147-45a6-817e-8ae167871690" />
+
+An important observation is that the current directions are opposite for NMOS and PMOS. When the output capacitor charges, current flows from `VDD` through the PMOS; when it discharges, current flows from the capacitor through the NMOS to ground. Because of this, the drain current of PMOS is taken as the **negative of NMOS drain current**, meaning `IDSP = −IDSN`. This sign difference is purely due to current direction, not because the current itself is physically negative.
+<img width="1363" height="741" alt="Screenshot 2026-02-24 140712" src="https://github.com/user-attachments/assets/af6ec74b-a174-4cf5-85cc-7ce1c39369b6" />
+
+Using prior SPICE simulations, we already know the **NMOS ID–VDS characteristics**. For `VGSN < VT`, the NMOS is OFF, and the drain current is zero. As `VGSN` exceeds the threshold, the NMOS turns ON, and the drain current increases with `VDS`, eventually reaching saturation. Multiple curves exist for different `VGSN` values, with higher `VGSN` producing higher drain current.
+
+The **PMOS characteristics** are similar in shape but mirror each other. The `IDSP–VDSP` curves appear in the opposite quadrant because PMOS requires a **negative gate-to-source voltage** to turn ON. When `|VGSP| < |VT|`, the PMOS is OFF and the current is zero. As `VGSP` becomes more negative and exceeds the threshold in magnitude, the PMOS conducts and drain current increases, reaching its maximum at the highest `|VGSP|`.
+
+These **NMOS and PMOS load curves** are the key building blocks for CMOS analysis. By combining them under the constraint that both devices share the same output node voltage, we can merge their behaviours and derive the **CMOS voltage transfer characteristic**, which directly relates `VOUT` to `VIN` and forms the foundation for delay and timing analysis.
+
 ---
+
+---
+## Lecture 4: Step1 – Convert PMOS gate-source-voltage to Vin
+
+
+To derive the **CMOS Voltage Transfer Characteristic (VTC)**, we must express device behaviour using only **VIN and VOUT**, since internal voltages like `VGSN`, `VGSP`, `VDSN`, and `VDSP` are not visible at the logic level. Although NMOS and PMOS have separate device voltages, a digital cell is defined only by its input and output.
+<img width="1386" height="782" alt="Screenshot 2026-02-24 141935" src="https://github.com/user-attachments/assets/3b159277-eee0-4072-a65e-4ef8b253cb9f" />
+
+The first step is to eliminate **VGSP** by rewriting it in terms of input voltage. Since `VGSP = VIN − VDD`, this becomes `VIN = VGSP + VDD`. Assuming a long-channel inverter with **VDD = 2 V**, each PMOS gate voltage maps directly to a VIN value (for example, `VGSP = 0 → VIN = 2 V`, `VGSP = −0.5 → VIN = 1.5 V`). This allows PMOS characteristics to be referenced using VIN instead of VGSP.
+
+Next, PMOS current is converted into NMOS current form. Because the PMOS current flows in the opposite direction, **IDSP is the negative of IDSN**. By flipping the PMOS current axis, all currents can be represented using a single current variable, IDSN, without changing their physical meaning.
+
+After these steps, PMOS current curves become **IDSN versus VIN curves**, and VGSP is fully removed from the analysis. The next step (done later) is to eliminate `VDSP` and `VDSN` in favour of **VOUT**, after which NMOS and PMOS load curves can be combined to obtain the **CMOS voltage transfer characteristic**.
+
+---
+
+---
+## Lecture 5: Step2 & Step3 – Convert PMOS and NMOS drain-source-voltage to vout
 
