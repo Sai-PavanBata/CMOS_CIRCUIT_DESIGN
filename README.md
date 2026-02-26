@@ -2617,3 +2617,100 @@ Fall delay (tpHL) = 71 ps
 The rise delay is larger than the fall delay, which indicates that even though (W/L)n = (W/L)p = 1.5, the inverter is not dynamically symmetric. This happens due to mobility differences between electrons and holes.
 
 ---
+
+---
+## Lecture 5: Static and Dynamic simulation of CMOS inverter with increased PMOS width
+
+## Effect of PMOS Width Scaling on CMOS Inverter Performance  
+(Lp = Ln = 0.25 µm, Wn = 1 µm)
+
+### Case 1: Wp = 1 µm
+<img width="861" height="803" alt="image" src="https://github.com/user-attachments/assets/8d5f7ff1-5cba-49ea-9cfd-07ed7317fb08" />
+
+Rise delay  = 2.6694 − 2.1506 = 0.5188 ns  
+Fall delay  = 4.2116 − 4.0502 = 0.1614 ns  
+Vm = 0.65 V  
+
+### Case 2: Wp = 2 µm
+<img width="867" height="797" alt="image" src="https://github.com/user-attachments/assets/54f7c962-e014-405a-98cd-4f08a7f34aa5" />
+
+Rise delay  = 2.4270 − 2.1495 = 0.2775 ns  
+Fall delay  = 4.2163 − 4.0494 = 0.1669 ns  
+Vm = 0.684 V  
+
+### Case 3: Wp = 3 µm
+<img width="849" height="802" alt="image" src="https://github.com/user-attachments/assets/4b8efd06-2cba-4355-bb5d-621c75a313cb" />
+
+Rise delay  = 2.3473 − 2.1493 = 0.198 ns  
+Fall delay  = 4.2219 − 4.0489 = 0.173 ns  
+Vm = 0.71 V  
+
+### Case 4: Wp = 4 µm
+<img width="862" height="794" alt="image" src="https://github.com/user-attachments/assets/2d90e970-a6b7-4acd-8e51-ec454d77aef3" />
+
+Rise delay  = 2.3090 − 2.1494 = 0.1596 ns  
+Fall delay  = 4.2236 − 4.0493 = 0.1743 ns  
+Vm = 0.722 V  
+
+### Case 5: Wp = 5 µm
+<img width="859" height="797" alt="image" src="https://github.com/user-attachments/assets/8ad8c94b-1b66-40ef-a21e-6129650f6068" />
+
+Rise delay  = 2.2854 − 2.1505 = 0.1349 ns  
+Fall delay  = 4.2264 − 4.0505 = 0.1759 ns  
+Vm = 0.73 V  
+
+
+### Observation
+
+- Increasing Wp reduces rise delay significantly (0.5188 ns → 0.1349 ns).
+- Fall delay remains nearly constant (~0.16–0.1759 ns).
+- Vm shifts upward (0.65 V → 0.73 V).
+- Larger PMOS improves pull-up strength and balances delays.
+---
+
+---
+## Lecture 6: Applications of CMOS inverter in clock network and STA
+
+### Final Observations from CMOS Inverter Experiment
+
+From the experimental data collected for different PMOS widths, we observe that varying the (W/L)p while keeping (W/L)n constant changes the switching threshold (Vm) and delays, but the overall VTC shape remains intact.
+
+### Robustness of CMOS Inverter
+
+During fabrication, slight variations in transistor dimensions are unavoidable. However, the CMOS inverter demonstrates strong robustness:
+
+- Even with changes in PMOS width, Vm shifts only moderately.
+- The inverter continues to function correctly.
+- The VTC maintains its characteristic shape.
+
+This confirms that CMOS logic is tolerant to small process variations.
+
+### Symmetry Condition
+<img width="692" height="236" alt="image" src="https://github.com/user-attachments/assets/87433215-ccee-4030-b411-b48c893b3863" />
+
+When:
+
+(W/L)p ≈ 2 × (W/L)n  
+
+the rise delay and fall delay become approximately equal.
+
+This indicates balanced pull-up and pull-down strengths, resulting in:
+
+- Equal propagation delays
+- Symmetric switching behavior
+
+By simulation, an exact sizing ratio can be determined where:
+<img width="1110" height="653" alt="image" src="https://github.com/user-attachments/assets/69c2ff8a-60a9-463a-a03d-c053e130ba29" />
+
+Rise delay = Fall delay
+
+This condition defines the **symmetry point** of the CMOS inverter.
+
+### Design Insight
+
+- Vm shifts gradually with sizing.
+- Delay symmetry depends strongly on PMOS/NMOS ratio.
+- CMOS inverter behavior remains stable under moderate sizing variation.
+- Device sizing can be tuned depending on datapath requirements.
+
+Different standard cells may use different sizing strategies based on speed, power, or robustness needs.
