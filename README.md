@@ -2431,8 +2431,6 @@ Idsp + Idsn = 0
 
 This means both transistors conduct equal current.
 
----
-
 ### Drain Current Expressions
 
 Define:
@@ -2440,19 +2438,13 @@ Define:
 kn = μn * Cox * (Wn/Ln)  
 kp = μp * Cox * (Wp/Lp)
 
----
-
 ### NMOS current at Vm
 
 Idsn = kn * [ (Vm − Vtn) * Vdsatn − (Vdsatn² / 2) ]
 
----
-
 ### PMOS current at Vm
 
 Idsp = kp * [ (Vm − VDD − Vtp) * Vdsatp − (Vdsatp² / 2) ]
-
----
 
 ## Current Balance Equation
 
@@ -2464,8 +2456,6 @@ kn * [ (Vm − Vt) * Vdsatn − (Vdsatn² / 2) ]
 = 0
 
 Solving this equation for Vm gives:
-
----
 
 ### Final Expression
 
@@ -2479,8 +2469,6 @@ Substituting kn and kp:
 
 R = [ (Wp/Lp) * Kp' * Vdsatp ] / [ (Wn/Ln) * Kn' * Vdsatn ]
 
----
-
 ## Interpretation
 
 If R = 1  
@@ -2492,8 +2480,6 @@ If R > 1
 If R < 1  
 → Vm < VDD / 2 (NMOS stronger)
 
----
-
 ### Key Insight
 
 The switching threshold Vm is directly controlled by:
@@ -2501,3 +2487,95 @@ The switching threshold Vm is directly controlled by:
 (Wp/Lp) / (Wn/Ln)
 
 Thus, transistor sizing shifts Vm without changing the overall VTC shape.
+
+
+---
+## Lecture 3: Analytical expression of (W/L)n and (W/L)p as a function of Vm
+
+## Reverse Design of CMOS Inverter: Finding (W/L)p and (W/L)n for a Given Vm
+
+### Objective
+
+Given a desired switching threshold Vm, we want to determine the required
+(W/L) ratio of PMOS and NMOS such that:
+
+Vm = VDD / 2
+
+For this case:
+
+VDD = 2.5 V  
+Required Vm = 1.25 V  
+
+Instead of finding Vm from W/L, we now move in **reverse direction**:
+We calculate W/L ratios such that Vm is fixed.
+
+
+## Starting Condition at Switching Threshold
+
+At Vm:
+
+Vin = Vout = Vm
+
+The current balance condition is:
+
+Idsn = -Idsp  
+or  
+Idsp + Idsn = 0  
+
+Both transistors conduct equal magnitude current.
+
+
+### Expanded Current Equation
+
+Using velocity saturation current model:
+
+<img width="962" height="362" alt="image" src="https://github.com/user-attachments/assets/7d01249a-a03a-4e94-9ab8-3f9cec3a3896" />
+
+
+where:
+
+kn = Kn' * (Wn / Ln)  
+kp = Kp' * (Wp / Lp)
+
+Kn' and Kp' are technology gain parameters obtained from model files.
+
+### Required Ratio for Setting Vm
+
+Rearranging the equation gives:
+
+(kp * Vdsatp) / (kn * Vdsatn) =  
+
+[ (Vm − Vt) − (Vdsatn / 2) ]  
+--------------------------------  
+[ (−Vm + VDD + Vt) + (Vdsatp / 2) ]
+
+Substituting gain factors:
+
+<img width="517" height="92" alt="image" src="https://github.com/user-attachments/assets/0b474e4b-3feb-485f-a69c-d625616048ae" />
+
+### Final Expression for Sizing Ratio
+
+<img width="517" height="92" alt="image" src="https://github.com/user-attachments/assets/50b669ae-0524-4256-a2f0-a350716d0332" />
+
+
+### Important Insight
+
+- All parameters on RHS are constants from model file.
+- Only Vm is user-defined.
+- Once Vm is fixed (e.g., 1.25 V), required (Wp/Lp)/(Wn/Ln) can be computed.
+- This tells how much wider PMOS must be than NMOS.
+
+### Design Strategy
+
+To study inverter behavior, we vary W/L ratios such as:
+
+<img width="301" height="233" alt="image" src="https://github.com/user-attachments/assets/8e907f77-3a90-4dad-9acc-5749ef6e435e" />
+
+
+By simulating these ratios, we observe:
+
+- Shift in switching threshold
+- Change in VTC symmetry
+- Variation in rise/fall delays
+- Power consumption differences
+---
