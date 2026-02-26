@@ -2579,3 +2579,41 @@ By simulating these ratios, we observe:
 - Variation in rise/fall delays
 - Power consumption differences
 ---
+
+---
+## Lecture 4: Static and Dynamic Simulation of CMOS Inverter
+
+### Static Behavior – VTC Analysis
+
+For this case, both transistors are sized equally:
+
+(W/L)n = (W/L)p = 1.5  
+
+The Voltage Transfer Characteristic (VTC) is plotted along with a 45° reference line (Vout = Vin).  
+The intersection of the VTC curve with the 45° line gives the switching threshold voltage (Vm).
+
+With equal sizing, the switching threshold is observed close to the mid-supply region.  
+However, equal W/L does not necessarily guarantee perfectly balanced delay, since mobility differences still exist.
+<img width="1735" height="925" alt="image" src="https://github.com/user-attachments/assets/14ef0e55-bcfc-4506-96ac-36a6d9b5c955" />
+
+The VTC maintains the typical CMOS shape:
+
+- Output ≈ VDD for low input
+- Output ≈ 0 for high input
+- Sharp transition in the switching region
+
+This confirms the static robustness of the CMOS inverter.
+
+## Dynamic Behavior – Transient Analysis
+
+Transient simulation is used to evaluate propagation delays.  
+A pulse input is applied, and output response is observed.
+
+Using the 50% VDD method:
+
+Rise delay (tpLH) = 148 ps  
+Fall delay (tpHL) = 71 ps  
+
+The rise delay is larger than the fall delay, which indicates that even though (W/L)n = (W/L)p = 1.5, the inverter is not dynamically symmetric. This happens due to mobility differences between electrons and holes.
+
+---
