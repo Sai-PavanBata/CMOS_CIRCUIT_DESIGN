@@ -62,13 +62,9 @@ Follow the steps below to load the provided **CMOS VDI file** in **Oracle Virtua
 
 ---
 
-# Ngspice SKY130 – Day 1
+# Ngspice SKY130 – Day 1: Basics of NMOS Drain Current (Id) vs Drain-to-Source Voltage (Vds)
 
-# Basics of NMOS Drain Current (Id) vs Drain-to-Source Voltage (Vds)
-
----
-
-# Chapter 1: Introduction to Circuit Design and SPICE Simulations
+## Chapter 1: Introduction to Circuit Design and SPICE Simulations
 
 ---
 
@@ -104,8 +100,6 @@ The above inverter will have the following characteristics. We will run SPICE si
   * Determining appropriate **W/L ratios** of transistors
   * Validating circuit performance before fabrication
 
----
-
 ### Role of SPICE in VLSI Physical Design
 
 * **SPICE (Simulation Program with Integrated Circuit Emphasis)** is the backbone of:
@@ -119,8 +113,6 @@ The above inverter will have the following characteristics. We will run SPICE si
   * Timing closure is not possible
   * CTS optimisation becomes meaningless
   * Crosstalk analysis has no practical reference
-
----
 
 ## Example: Delay Extraction Using SPICE
 
@@ -174,10 +166,6 @@ The above inverter will have the following characteristics. We will run SPICE si
 
 7. **Result**
    The interpolated value is the buffer propagation delay.
-
----
-
----
 
 ## Question 1
 
@@ -2837,5 +2825,85 @@ Unlike an ideal inverter (vertical transition), practical VTC has finite slope.
 - Around switching point, magnitude of slope ≈ −1.
 - This region determines noise margin and gain.
 
-Higher magnitude of slope → Better noise immunity.
-CMOS inverter robustness depends on how sharply the transition occurs and how well VOH, VOL, VIL, and VIH are separated.
+#### Higher magnitude of slope → Better noise immunity.CMOS inverter robustness depends on how sharply the transition occurs and how well VOH, VOL, VIL, and VIH are separated.
+---
+
+---
+## Lecture 3: Noise margin equation and summary
+
+## Noise Margin – CMOS Inverter
+
+### 1. Noise Margin Concept
+
+Noise margin represents the tolerance of a CMOS inverter against unwanted voltage disturbances (noise).
+
+It defines how much noise can be added to a logic signal without causing incorrect interpretation at the next stage.
+
+### 2. Important Voltage Levels from VTC
+
+<img width="733" height="443" alt="image" src="https://github.com/user-attachments/assets/ca26e3a8-b687-45e2-9cb0-125a39327b67" />
+
+From the Voltage Transfer Characteristic (VTC):
+
+- VOH → Output High voltage  
+- VOL → Output Low voltage  
+- VIL → Maximum input voltage recognized as logic 0  
+- VIH → Minimum input voltage recognized as logic 1  
+
+The slope of the VTC in the transition region is negative.
+At VIL and VIH, the slope magnitude is approximately:
+
+dVout/dVin = −1
+
+These points define the noise boundaries.
+
+### 3. Noise Margin High (NMH)
+
+Noise Margin High is the tolerance when the signal is at logic 1.
+
+NMH = VOH − VIH
+
+Meaning:
+If the output is logic 1, any noise added up to NMH will still be correctly interpreted as logic 1 at the next stage.
+
+### 4. Noise Margin Low (NML)
+
+Noise Margin Low is the tolerance when the signal is at logic 0.
+
+NML = VIL − VOL
+
+Meaning:
+If the output is logic 0, any noise added up to NML will still be correctly interpreted as logic 0.
+
+### 5. Undefined Region
+<img width="1131" height="567" alt="image" src="https://github.com/user-attachments/assets/0b5ad4d0-bc88-48d1-b77c-79573ce49857" />
+
+The region between VIL and VIH is called the undefined region.
+
+- Any signal in this region is indeterminate.
+- It may be interpreted as logic 0 or logic 1.
+- Circuits must avoid operating in this region.
+
+This is the transition zone where both PMOS and NMOS conduct.
+
+### 6. Noise Bump Interpretation
+<img width="1167" height="734" alt="image" src="https://github.com/user-attachments/assets/f57f4c68-4287-474f-b04d-9f71317c4875" />
+
+
+From the 1D noise margin plot:
+
+Case 1: Noise bump between VOL and VIL  
+→ Still interpreted as logic 0 (safe)
+
+Case 2: Noise bump between VIL and VIH  
+→ Falls in undefined region (unsafe)
+
+Case 3: Noise bump between VIH and VOH  
+→ Still interpreted as logic 1 (safe)
+
+Thus, for reliable digital operation:
+
+- Logic 0 must remain within NML range  
+- Logic 1 must remain within NMH range  
+
+---
