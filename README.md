@@ -2907,3 +2907,141 @@ Thus, for reliable digital operation:
 - Logic 1 must remain within NMH range  
 
 ---
+
+---
+
+## Lecture 4: Noise margin variation with respect to PMOS width
+
+### Noise Margin Evaluation using PMOS/NMOS Size Scaling
+
+Noise margins of a CMOS inverter are evaluated using SPICE DC transfer simulations.  
+From the VTC curve, the slope (dVout/dVin = -1) points are identified to extract:
+
+- VIL
+- VIH
+- VOH
+- VOL
+
+Using these values:
+
+NMH = VOH − VIH  
+NML = VIL − VOL  
+
+## Effect of PMOS Size Scaling
+
+When PMOS width is increased relative to NMOS:
+
+- NMH (Noise Margin High) increases.
+- Example: NMH increases from 0.3 V → 0.42 V when PMOS = 5× (W/L)n.
+- NML slightly decreases beyond 3× (W/L)n.
+
+Thus, increasing PMOS strength shifts the switching point and improves high-level noise immunity, but slightly affects low-level margin at higher scaling.
+
+## Digital vs Analog Perspective
+
+### Digital Design:
+
+<img width="1138" height="896" alt="image" src="https://github.com/user-attachments/assets/733fdc31-5805-4338-b99e-bbe4e9490a49" />
+- Operates in strong logic regions (VOH and VOL).
+- Tolerates small variations in noise margin.
+- Robust even with ±5% fabrication variations.
+
+
+### Analog Design:
+
+<img width="1120" height="896" alt="image" src="https://github.com/user-attachments/assets/fdd37805-9f7e-40fa-af36-6e8eb4d7fffa" />
+- Operates in transition region.
+- Sensitive to slope and switching point shifts.
+
+## Fabrication Impact
+
+Process variations during fabrication cause:
+- Slight changes in W/L ratios
+- Small shifts in VIL, VIH
+- Variation in NMH and NML
+
+However, CMOS inverter remains robust within optimal sizing ratios.
+
+---
+---
+## Lecture 5: Sky130 Noise margin labs
+
+### Noise Margin Calculation (SPICE)
+
+<img width="883" height="799" alt="image" src="https://github.com/user-attachments/assets/11202470-3866-489b-b6e2-8fd8815643ef" />
+
+W/L ratio:
+(W/L)p / (W/L)n = 2.77  
+
+DC sweep:
+Vin from 0 → 1.8 V  
+Step size = 0.01 V  
+
+From VTC curve, locate points where slope (dVout/dVin) = −1:
+
+- X-axis → VIL, VIH  
+- Y-axis → VOH, VOL  
+
+Extracted values:
+VOH = 1.70952 V  
+VIH = 0.98778 V  
+VIL = 0.7733 V  
+VOL = 0.09523 V  
+
+Noise Margins:
+
+NMH = VOH − VIH  
+NMH = 1.70952 − 0.98778 = 0.72 V  
+
+NML = VIL − VOL  
+NML = 0.7733 − 0.09523 = 0.68 V  
+
+---
+---
+# NgspiceSky130-Day5-CMOS power supply and device variation robustness evaluation
+
+## Chapter 1: Static behaviour evaluation-CMOS inverter robustness-Power supply variation
+---
+---
+## Lecture 1: Smart SPICE simulations for power supply variations
+
+### CMOS Inverter Robustness under Power Supply Scaling
+
+To evaluate inverter robustness, power supply scaling must be considered.  
+As technology scales (e.g., 250 nm → 20 nm), the supply voltage (VDD) also reduces:
+<img width="1566" height="898" alt="image" src="https://github.com/user-attachments/assets/e75c0ce4-cde7-44b6-bacd-5dbfad71763b" />
+
+- Older nodes: 2.5 V
+- Scaled nodes: 1 V, 0.9 V, 0.7 V
+
+The goal is to verify that CMOS inverter behavior remains consistent under reduced VDD.
+
+## Experimental Setup (SPICE)
+
+CMOS inverter sizing:
+
+(W/L)p = 0.9375 µm / 0.25 µm  
+(W/L)n = 0.375 µm / 0.25 µm  
+
+PMOS is wider to balance pull-up and pull-down resistances.
+
+Load capacitance = 10 fF  
+
+Initial VDD = 2.5 V  
+
+## Power Supply Sweep
+
+Using SPICE scripting (`.control` block):
+
+- Define variable: power_supply = 2.5
+- Use `alter VDD = power_supply`
+- Reduce VDD in steps of 0.5 V
+- Sweep from 2.5 V → 0.5 V
+
+## Observations
+
+- VTC shape remains similar as VDD scales down.
+- Switching behavior is preserved.
+- Even at 0.5 V, inverter still operates.
+- Threshold and slope adjust proportionally with VDD.
+---
