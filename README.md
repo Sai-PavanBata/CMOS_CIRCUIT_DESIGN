@@ -1,7 +1,92 @@
-# CMOS_CIRCUIT_DESIGN1
+# CMOS-Circuit-Design-Spice-Simulation-using-Sky130nm-technology
+
+
+---
+# Table of Contents
+
+## 1. VirtualBox Setup
+
+## A) NgspiceSky130 - Day 1: Basics of NMOS Drain Current (Id) vs Drain-to-Source Voltage (Vds)
+
+### Chapter 1: Introduction to Circuit Design and SPICE Simulations
+- Lecture 1: Why do we need SPICE simulations?
+- Lecture 2: Introduction to basic element in circuit design – NMOS
+- Lecture 3: Strong inversion and threshold voltage
+- Lecture 4: Threshold voltage with positive substrate potential
+
+### Chapter 2: NMOS Resistive and Saturation Regions of Operation
+- Lecture 1: Resistive region with small Vds
+- Lecture 2: Drift current theory
+- Lecture 3: Drain current model for linear region
+- Lecture 4: SPICE conclusion to resistive operation
+- Lecture 5: Pinch-off region condition
+- Lecture 6: Drain current model for saturation region
+
+### Chapter 3:Introduction to SPICE
+- Lecture 1: Basic SPICE setup
+- Lecture 2: Circuit description in SPICE syntax
+- Lecture 3: Define technology parameters
+- Lecture 4: First SPICE simulation
+- Lecture 5: SPICE lab with Sky130 models
+
+## B) NgspiceSky130 - Day 2: Velocity Saturation and Basics of CMOS Inverter VTC
+
+### Chapter 1: SPICE Simulation for Lower Nodes & Velocity Saturation
+- Lecture 1: SPICE simulation for lower nodes
+- Lecture 2: Id vs Vgs for long and short channel devices
+- Lecture 3: Velocity saturation at low and high electric fields
+- Lecture 4: Velocity saturation drain current model
+- Lecture 5: Sky130 Id–Vgs Lab
+- Lecture 6: Sky130 Vt Lab
+
+### Chapter 2: CMOS Voltage Transfer Characteristics (VTC)
+- Lecture 1: MOSFET as a switch
+- Lecture 2: Standard MOS voltage-current parameters
+- Lecture 3: PMOS/NMOS Id vs Vd
+- Lecture 4: Convert PMOS Vgs to Vin
+- Lecture 5: Convert PMOS/NMOS Vds to Vout
+- Lecture 6: Merge PMOS-NMOS load curves and plot VTC
+
+## C) NgspiceSky130 - Day 3: CMOS Switching Threshold and Dynamic Simulations
+
+### Chapter 1: VTC – SPICE Simulations
+- Lecture 1: SPICE deck creation for CMOS inverter
+- Lecture 2: SPICE simulation for CMOS inverter
+- Lecture 3: Sky130 SPICE simulation Lab
+
+### Chapter 2: Static Behaviour Evaluation – Switching Threshold
+- Lecture 1: Switching Threshold (Vm)
+- Lecture 2: Analytical expression of Vm as function of (W/L)n and (W/L)p
+- Lecture 3: Analytical expression of (W/L)n and (W/L)p as function of Vm
+- Lecture 4: Static & Dynamic simulation of CMOS inverter
+- Lecture 5: Simulation with increased PMOS width
+- Lecture 6: Applications in clock network and STA
+
+## D) NgspiceSky130 - Day 4: CMOS Noise Margin Robustness Evaluation
+
+### Chapter 1: Static Behaviour – Noise Margin
+- Lecture 1: Introduction to Noise Margin
+- Lecture 2: Noise margin voltage parameters
+- Lecture 3: Noise margin equations and summary
+- Lecture 4: Noise margin variation vs PMOS width
+- Lecture 5: Sky130 Noise Margin Labs
+
+## E) NgspiceSky130 - Day 5: CMOS Power Supply and Device Variation Robustness
+
+### Chapter 1: Power Supply Variation
+- Lecture 1: Smart SPICE simulations for supply scaling
+- Lecture 2: Advantages and disadvantages of low supply voltage
+- Lecture 3: Sky130 Supply Variation Labs
+
+### Chapter 2: Device Variation
+- Lecture 1: Sources of variation – Etching process
+- Lecture 2: Sources of variation – Oxide thickness
+- Lecture 3: Smart SPICE simulations for device variations
+- Lecture 4: Conclusion
 
 ---
 
+---
 ## VirtualBox Setup
 
 Follow the steps below to load the provided **CMOS VDI file** in **Oracle VirtualBox**.
@@ -194,11 +279,7 @@ The above inverter will have the following characteristics. We will run SPICE si
 ---
 
 
-## Lecture 2
-
-## Introduction to Fundamental Elements in Circuit Design – NMOS
-
----
+## Lecture 2: Introduction to Fundamental Elements in Circuit Design – NMOS
 
 ### Structure of an NMOS Transistor
 
@@ -215,8 +296,6 @@ NMOS consists of four terminals:
 * **S** — Source
 * **D** — Drain
 * **B** — Body (Substrate)
-
----
 
 ### 2) Physical Regions
 
@@ -243,8 +322,6 @@ NMOS consists of four terminals:
 
   * Electrically separates adjacent devices
 
----
-
 ### Working Principle
 
 * When $V_{GS} = 0$:
@@ -258,9 +335,7 @@ NMOS consists of four terminals:
   * Current flows when $V_{DS}$ is applied
 
 * The resulting current is called **Drain Current**, denoted as $I_D$
-
----
-
+* 
 ### Body Effect and Threshold Voltage Tuning
 
 Usually, the body is connected to the ground.
@@ -272,8 +347,6 @@ $$
 
 The threshold voltage changes.
 
----
-
 ### Body Effect
 
 * Increasing $V_{SB}$ (reverse-biasing source-body junction):
@@ -281,8 +354,6 @@ The threshold voltage changes.
   * Increases depletion width
   * Requires a higher gate voltage for inversion
   * Therefore increases $V_{th}$
-
----
 
 ### Threshold Voltage with Body Effect
 
@@ -296,16 +367,12 @@ Where:
 * $\gamma$ = Body-effect coefficient
 * $\phi_F$ = Fermi potential
 * $V_{SB}$ = Source-to-body voltage
-
----
-
+* 
 ### Threshold Voltage
 <img width="1352" height="498" alt="image" src="https://github.com/user-attachments/assets/f90da67d-f583-4833-873a-5ef4da14a07e" />
 
 
 ## NMOS Threshold Voltage – Physical Understanding
-
----
 
 ### 1. Importance of Threshold Voltage
 
@@ -322,8 +389,6 @@ V_T = f(x, y, z)
 ```
 
 * Advanced SPICE models use complex equations, but analysis starts with the **basic threshold voltage model**.
-
----
 
 ### 2. Initial Condition: $V_{GS} = 0$
 
@@ -352,8 +417,6 @@ V_T = f(x, y, z)
 I_D \approx 0
 ```
 
----
-
 ### 3. Applying a Small Positive Gate Voltage ($V_{GS} > 0$)
 
 * Gate, oxide, and substrate form a **MOS capacitor**.
@@ -367,8 +430,6 @@ I_D \approx 0
   * Accumulation of **positive charge on gate**
   * Repulsion of **holes** (majority carriers) from substrate surface
 * Holes move deeper into the substrate.
-
----
 
 ### 4. Depletion Region Formation
 
@@ -385,7 +446,6 @@ I_D \approx 0
   * Only an immobile negative charge
 * Still **no conduction channel** exists.
 
----
 
 ### 5. Toward Threshold Voltage 
 
@@ -400,13 +460,12 @@ V_{GS} = V_T \Rightarrow \text{Onset of inversion}
 ```
 
 * Inversion layer forms a **conductive channel** between Source and Drain.
+---
 
 ---
 
 
 ## Lecture 3: Strong Inversion and Threshold Voltage
-
----
 
 <img width="1365" height="654" alt="Screenshot 2026-02-17 151838" src="https://github.com/user-attachments/assets/bff35db2-a072-4900-b699-845d41f2cf6c" />
 
@@ -419,8 +478,6 @@ V_{GS} = V_T \Rightarrow \text{Onset of inversion}
 * A **depletion region** forms under the gate.
 * Behavior similar to a **reverse-biased PN junction diode**.
 
----
-
 ### 2️. Increasing Gate Voltage
 
 * As $V_{GS}$ increases:
@@ -428,8 +485,6 @@ V_{GS} = V_T \Rightarrow \text{Onset of inversion}
   * More holes are repelled
   * Depletion width increases
 * Eventually, the surface concentration of electrons increases.
-
----
 
 ### 3️. Strong Inversion
 
@@ -448,8 +503,6 @@ V_{GS} = V_T
 * The gate voltage at which strong inversion occurs is called
   **Threshold Voltage ($V_T$)**.
 
----
-
 ### 4️. After Threshold ($V_{GS} > V_T$)
 
 * Depletion region width remains approximately constant.
@@ -465,8 +518,6 @@ V_{GS} = V_T
 * A **continuous n-channel** forms between Source and Drain.
 * Now current can flow if $V_{DS}$ is applied.
 
----
-
 ### 5️. Region of Operation
 
 * Before inversion → **Cutoff Region**
@@ -476,24 +527,17 @@ V_{GS} = V_T
 ```math
 V_{DS} > 0
 ```
-
 (Subthreshold current ignored for now.)
-
----
 
 ## 6️. Effect of Body Terminal (Body Effect Introduction)
 
 Consider two cases:
-
----
 
 ### Case 1: $V_{SB} = 0$
 
 * No additional bias between source and body.
 * Standard depletion region width.
 * Threshold voltage = normal $V_T$.
-
----
 <img width="1307" height="586" alt="Screenshot 2026-02-17 152044" src="https://github.com/user-attachments/assets/1ffa528f-0532-4138-9ecf-55805745b695" />
 
 ### Case 2: $V_{SB} > 0$ (Source positive w.r.t Body)
@@ -509,8 +553,6 @@ Consider two cases:
   * Inversion happens earlier when $V_{SB} = 0$
   * Inversion is delayed when $V_{SB} > 0$
 
----
-
 ### 7️. Body Effect Concept
 
 Increasing $V_{SB}$:
@@ -525,9 +567,6 @@ V_T \uparrow \quad \text{as} \quad V_{SB} \uparrow
 
 This is called the **Body Effect**.
 
----
-
-
 * **No standalone parentheses**
 * **Proper headings only**
 * **Image insertion clearly indicated**
@@ -535,10 +574,9 @@ This is called the **Body Effect**.
 * **Zero formatting ambiguity**
 
 ---
+---
 
 ## Lecture 4 Threshold Voltage with Positive Substrate Potential (Body Effect)
-
----
 
 ### 1. Objective of This Lecture
 
@@ -549,8 +587,6 @@ This is called the **Body Effect**.
   * Threshold voltage
 * Understand the **body effect**
 * Relate physical behavior to **SPICE model parameters**
-
----
 
 ### 2. Case A: Zero Substrate Bias ($V_{SB} = 0$)
 
@@ -572,19 +608,14 @@ V_{GS} = V_{TO} \Rightarrow \text{Strong inversion begins}
 
   * Threshold voltage when $V_{SB} = 0$
   * A function of device and technology parameters
-
----
 <img width="1284" height="601" alt="Screenshot 2026-02-17 153737" src="https://github.com/user-attachments/assets/ac817483-0492-40b3-b79e-cd7e42b83210" />
 
----
 ### 3. Case B: Positive Substrate Bias ($V_{SB} > 0$)
 
 
 * Source is at a higher potential compared to the Body.
 * The Source–Body PN junction becomes **more reverse biased**.
 * This introduces an **additional depletion region near the source**.
-
----
 
 ### 4. Key Physical Observation
 
@@ -601,8 +632,6 @@ V_{GS} = V_{TO} \Rightarrow \text{Strong inversion begins}
   * Positive Source potential attracts a negative charge
 * This redistribution does not occur when $V_{SB} = 0$
 
----
-
 ## 5. Effect on Surface Inversion
 
 
@@ -615,8 +644,6 @@ V_{GS} = V_{TO} \Rightarrow \text{Strong inversion begins}
   * Increased depletion width requires additional gate voltage
   * Channel formation near the Source is resisted
 
----
-
 ## 6. Definition of Threshold Voltages
 
 ### Threshold Voltage at Zero Body Bias
@@ -627,8 +654,6 @@ V_T = V_{TO} \quad \text{when } V_{SB} = 0
 
 * $V_{TO}$ is the reference threshold voltage.
 
----
-
 ### Threshold Voltage with Body Bias
 
 ```math
@@ -637,12 +662,10 @@ V_T = V_{TO} + V_1 \quad \text{when } V_{SB} > 0
 
 * $V_1$ is the additional voltage required due to body bias.
 
----
-
 ## 7. Threshold Voltage Equation Including Body Effect
 
 ```math
-V_T = V_{TO} + \gamma \left( \sqrt{2\phi_F + V_{SB}} - \sqrt{2\phi_F} \right)
+V_T = V_{TO} + \gamma \left( \sqrt{|-2\phi_F + V_{SB}|} - \sqrt{|-2\phi_F|} \right)
 ```
 
 ### Parameter Definitions
@@ -653,7 +676,6 @@ V_T = V_{TO} + \gamma \left( \sqrt{2\phi_F + V_{SB}} - \sqrt{2\phi_F} \right)
 * $\phi_F$ : Fermi potential
 * $V_{SB}$ : Source-to-Body voltage
 
----
 
 ### 8. Body Effect Coefficient
 
@@ -665,8 +687,6 @@ V_T = V_{TO} + \gamma \left( \sqrt{2\phi_F + V_{SB}} - \sqrt{2\phi_F} \right)
 
 All parameters are **technology-dependent** and provided by the **foundry**.
 
----
-
 ### 9. Fermi Potential
 
 ```math
@@ -677,8 +697,6 @@ All parameters are **technology-dependent** and provided by the **foundry**.
 * $n_i$ = Intrinsic carrier concentration
 
 (Treated as a constant here; covered in device physics.)
-
----
 
 ## 10. Key Conclusions
 
@@ -702,11 +720,11 @@ V_{SB} > 0 \Rightarrow V_T > V_{TO}
 ---
 ---
 
-# Chapter 2
+# Chapter 2: NMOS Resistive and Saturation Regions of Operation
 
 ## Lecture 1: NMOS Resistive Region and Saturation Region of Operation
 
----
+
 
 ### Regions of NMOS Operation
 
@@ -716,7 +734,7 @@ V_{SB} > 0 \Rightarrow V_T > V_{TO}
   * **Resistive (Linear) region**
   * **Saturation region**
 
----
+
 
 ### Cutoff Region 
 
@@ -742,7 +760,6 @@ V_{GS} = V_T
 * Surface of p-substrate inverts to n-type
 * Conducting channel forms between Source and Drain
 
----
 
 ### Resistive (Linear) Region of Operation
 
@@ -760,7 +777,6 @@ V_{GS} > V_T
 V_{DS} < (V_{GS} - V_T)
 ```
 
----
 
 ### Physical Interpretation
 
@@ -771,7 +787,6 @@ V_{DS} < (V_{GS} - V_T)
   * Channel remains continuous
 * NMOS behaves like a **voltage-controlled resistor**
 
----
 
 ### Channel Charge Behaviour
 
@@ -786,8 +801,6 @@ V_{GS} - V_T
   * Increases electron concentration
   * Increases channel width
   * Reduces channel resistance
-
----
 
 ### Voltage Distribution Along Channel
 
@@ -808,7 +821,6 @@ V(L) = V_{DS} \quad \text{(Drain end)}
 
 * Channel voltage varies continuously between 0 and $V_{DS}$
 
----
 
 ### Effective Gate-to-Channel Voltage
 
@@ -821,7 +833,6 @@ V_{GC}(x) = V_{GS} - V(x)
 * Channel charge is **not uniform**
 * Drain current must be derived using position-dependent quantities
 
----
 
 ## Saturation Region of Operation
 
@@ -834,8 +845,6 @@ V_{GC}(x) = V_{GS} - V(x)
 V_{DS} \ge (V_{GS} - V_T)
 ```
 
----
-
 ### Physical Interpretation
 
 * Channel near the drain gets pinched off
@@ -845,7 +854,6 @@ V_{DS} \ge (V_{GS} - V_T)
   * Current becomes weakly dependent on $V_{DS}$
 * Drain current mainly controlled by $V_{GS}$
 
----
 
 ## Key Comparison
 
@@ -858,13 +866,8 @@ V_{DS} \ge (V_{GS} - V_T)
 
 ---
 
-
-
-
-
-## Lecture 2: Drift Current Theory (Resistive Region with Small $V_{DS}$)
-
 ---
+## Lecture 2: Drift Current Theory (Resistive Region with Small $V_{DS}$)
 
 ### 1. Channel Potential Variation with Applied $V_{DS}$
 
@@ -896,8 +899,6 @@ V_{GS} - V(x) = 0.95\ \text{V}
 * A **voltage gradient exists along the channel**, caused purely by the applied $V_{DS}$.
 * This gradient is the fundamental reason current can flow from Source to Drain.
 
----
-
 
 ### 2. Effective Gate Voltage Along the Channel
 
@@ -917,7 +918,6 @@ V_{GC}(x) = V_{GS} - V(x)
   * Channel charge density is **higher near the source**
   * Channel charge density is **lower near the drain**
 
----
 
 ### 3. Induced Channel Charge in Presence of $V_{DS}$
 
@@ -938,7 +938,6 @@ Q_i(x) = C_{ox}\left( V_{GS} - V(x) - V_T \right)
   * Channel charge is **position-dependent**
   * Charge decreases gradually as we move from source to drain
 
----
 
 ### 4. Gate Oxide Capacitance and Technology Parameters
 
@@ -962,7 +961,6 @@ C_{ox} = \frac{\varepsilon_{ox}}{t_{ox}}
   * Are directly used in SPICE models
 * These expressions form the physical foundation before moving to simulations.
 
----
 <img width="1392" height="732" alt="Screenshot 2026-02-17 182345" src="https://github.com/user-attachments/assets/471bce0e-fd26-421c-a0bc-3af251cfe822" />
 
 ### 5. Drift Current Concept in NMOS
@@ -981,8 +979,6 @@ C_{ox} = \frac{\varepsilon_{ox}}{t_{ox}}
   * Drain is at $V_{DS}$
   * An electric field exists along the channel
 * Electrons drift from source to drain under this electric field, producing drain current.
-
----
 
 ### 6. Drain Current Dependence on Channel Charge
 
@@ -1008,9 +1004,8 @@ I_D \propto (\text{channel charge}) \times (\text{carrier velocity}) \times (\te
 
 ---
 
-## Lecture 3: Drain Current Model for Linear (Resistive) Region of Operation
-
 ---
+## Lecture 3: Drain Current Model for Linear (Resistive) Region of Operation
 
 ### 1. Objective and Physical Basis of Drain Current Model
 
@@ -1027,7 +1022,6 @@ I_D \propto (\text{channel charge}) \times (\text{carrier velocity}) \times (\te
   * Explains the underlying physics
   * Forms the foundation for advanced models
 
----
 
 ### 2. Channel Geometry and Voltage Distribution
 
@@ -1060,8 +1054,6 @@ V(0) = 0
 V(L) = V_{DS}
 ```
 
----
-
 ### 3. Induced Channel Charge Along the Channel
 
 
@@ -1091,8 +1083,6 @@ C_{ox} = \frac{\varepsilon_{ox}}{t_{ox}}
 
   * Maximum near the source
   * Minimum near the drain
-
----
 
 ### 4. Drift Current Expression and Integration
 
@@ -1126,8 +1116,6 @@ Resulting expression:
 I_D = \mu_n C_{ox}\frac{W}{L}
 \left[ (V_{GS} - V_T)V_{DS} - \frac{V_{DS}^2}{2} \right]
 ```
-
----
 
 ### 5. Linear Region Approximation and Final Model
 
@@ -1168,8 +1156,6 @@ Where:
 k_n = k_n' \frac{W}{L}
 ```
 
----
-
 ## 6. Linear Region Condition and Key Observations
 
 * NMOS operates in **resistive (linear) region** when:
@@ -1203,8 +1189,6 @@ V_{DS} < (V_{GS} - V_T)
 
 ## SPICE Conclusion to Resistive Operation and Pinch-Off Condition
 
----
-
 ### 1. Motivation for SPICE-Based Analysis
 
 * From earlier lectures, we derived a **linear-region drain current equation** valid when:
@@ -1222,8 +1206,6 @@ V_{DS} < (V_{GS} - V_T)
   * Automatically sweep voltages
   * Compute drain current accurately using foundry-provided parameters
 * Before running SPICE, it is essential to **physically understand** what happens as $V_{DS}$ increases.
-
----
 
 ### 2. Channel Voltage Concept with Increasing $V_{DS}$
 
@@ -1256,8 +1238,6 @@ V_{GS} - V_{DS} > V_T
 
 The channel remains intact across the full length.
 
----
-
 ### 3. Sweep of $V_{DS}$ and Channel Validity
 
 <img width="476" height="584" alt="Screenshot 2026-02-17 192535" src="https://github.com/user-attachments/assets/68ff2c67-10cb-453e-9fd7-09bf0300d51c" />
@@ -1284,8 +1264,6 @@ V_{GS} - V_{DS} = V_T
 
 * This marks the **onset of channel degradation at the drain side**.
 
----
-
 ### 4. Physical Meaning of Pinch-Off Initiation
 
 
@@ -1306,8 +1284,6 @@ V_{GS} - V_{DS} = V_T
   * Channel still exists near the source
   * Channel disappears progressively toward the drain
 * Pinch-off does **not** mean current stops flowing.
-
----
 
 ### 5. Transition from Resistive to Saturation Region
 
@@ -1332,8 +1308,6 @@ V_{DS} \ge (V_{GS} - V_T)
   * Channel length effectively shortens
   * Drain current becomes **almost constant**
 * This operating mode is called the **saturation region**.
-
----
 
 ### 6. Key Conclusions and Link to SPICE Models
 
@@ -1365,12 +1339,9 @@ V_{DS} \ge (V_{GS} - V_T)
 
 ---
 
-
-## Lecture 6: Drain Current Model for Saturation Region of Operation
-
 ---
 
-
+## Lecture 6: Drain Current Model for Saturation Region of Operation
 
 ### 1. Channel Voltage Behaviour in Saturation
 
@@ -1393,8 +1364,6 @@ V_{DS} = V_{GS} - V_T
 * This substitution reflects the physical fact that:
 
   * Any additional $V_{DS}$ drops across the **drain depletion region**, not the channel.
-
----
 
 ### 2. Drain Current Equation in Saturation (Ideal Case)
 
@@ -1426,8 +1395,6 @@ I_D = \frac{k_n}{2}(V_{GS} - V_T)^2
     * Device parameters ($W/L$)
 * This gives the **ideal saturation current model**.
 
----
-
 ### 3. Why Saturation Current Is Not Truly Constant
 
 * The ideal model suggests NMOS behaves like a **perfect current source**.
@@ -1444,8 +1411,6 @@ I_D = \frac{k_n}{2}(V_{GS} - V_T)^2
 
 
 Reduction of effective channel length as $V_{DS}$ increases
-
----
 
 ## 4. Saturation Current with Channel Length Modulation
 
@@ -1464,17 +1429,13 @@ I_D = \frac{k_n}{2}(V_{GS} - V_T)^2(1 + \lambda V_{DS})
 
   * Drain current increases **slightly linearly** with $V_{DS}$
   * Output resistance becomes finite (not infinite)
-
----
-# Chapter 3
-
-## Introduction to SPICE
-
 ---
 
+---
+# Chapter 3: Introduction to SPICE
+
+---
 ## Lecture 1: Basic SPICE Setup (Linking Device Physics to Simulation)
-
----
 
 ### 1. Context from Saturation Region Operation
 
@@ -1497,8 +1458,6 @@ V_{GS} - V_{DS} \le V_T
 
   * In saturation, the **channel voltage clamps to $(V_{GS} - V_T)$**.
   * Any extra $V_{DS}$ drops across the drain-side depletion region.
-
----
 
 ### 2. Channel Voltage in Saturation Region
 
@@ -1524,8 +1483,6 @@ V_{channel} = V_{GS} - V_T
 <img width="1330" height="639" alt="Screenshot 2026-02-17 195233" src="https://github.com/user-attachments/assets/f8c5632a-7347-42f8-8937-7d28c471d7d0" />
 
 Channel pinch-off near the drain and constant channel voltage
-
----
 
 ### 3. Saturation Region Drain Current Model (Ideal)
 
@@ -1553,8 +1510,6 @@ I_D = \frac{k_n}{2}(V_{GS} - V_T)^2
   * Drain current appears independent of $V_{DS}$.
 * This gives the **ideal saturation current model**.
 
----
-
 ### 4. Why Ideal Saturation Is Not Fully Accurate
 
 * The ideal model suggests NMOS behaves like a perfect current source.
@@ -1570,8 +1525,6 @@ I_D = \frac{k_n}{2}(V_{GS} - V_T)^2
 <img width="1278" height="726" alt="Screenshot 2026-02-17 215143" src="https://github.com/user-attachments/assets/878329ac-0ca9-4675-9c5a-4ec377c7e644" />
 
 Reduction of effective channel length with increasing $V_{DS}$
-
----
 
 ### 5. Channel Length Modulation and Improved Model
 
@@ -1590,9 +1543,7 @@ I_D = \frac{k_n}{2}(V_{GS} - V_T)^2 (1 + \lambda V_{DS})
 
   * Drain current increases slightly with $V_{DS}$.
   * Output resistance becomes finite.
-
----
-
+    
 ### 6. Motivation for SPICE Simulations
 
 * At this stage, three key models are available:
@@ -1616,12 +1567,12 @@ I_D = \frac{k_n}{2}(V_{GS} - V_T)^2 (1 + \lambda V_{DS})
   * Build a basic SPICE setup
   * Understand required parameters
   * Run simulations for different technology nodes
+---
+---
 
 ## Lecture 2
 
 ### Circuit Description in SPICE Syntax (NMOS Example)
-
----
 
 ### 1. Objective of This Lecture
 
@@ -1629,8 +1580,6 @@ I_D = \frac{k_n}{2}(V_{GS} - V_T)^2 (1 + \lambda V_{DS})
 * Understand how SPICE interprets a circuit using nodes and components.
 * Learn the correct syntax and pin ordering used by SPICE for MOSFETs, resistors, and voltage sources.
 * Prepare the circuit description so it can be simulated using a technology (model) file.
-
----
 
 ### 2. Identifying and Defining Nodes
 
@@ -1656,8 +1605,6 @@ Summary of nodes:
 * `N1` → Drain node of MOSFET and resistor connection
 
 These node names can be chosen freely, but must be used consistently.
-
----
 
 ### 3. MOSFET Declaration in SPICE
 
@@ -1696,8 +1643,6 @@ M1 N1 IN 0 0 NMOS W=0.8u L=1.2u
 
 This line fully describes the NMOS device and connects it electrically to the circuit.
 
----
-
 ### 4. Resistor Definition
 
 * Resistors start with the letter `R`.
@@ -1717,9 +1662,6 @@ SPICE line:
 
 
 R1 VDD N1 55
-
-
----
 
 ### 5. Voltage Source Definitions
 
@@ -1751,9 +1693,6 @@ Gate input voltage (VIN):
 
 VIN IN 0 2.5
 
-
----
-
 ### 6. Complete SPICE Netlist (So Far)
 
 Putting everything together:
@@ -1768,12 +1707,9 @@ VIN IN 0 2.5
 * This netlist fully represents the NMOS circuit topology.
 * At this stage, SPICE understands the circuit connectivity but not the device physics.
 * The electrical behaviour will only be defined after adding the technology (model) file.
-
 ---
-
+---
 ## Lecture 3: Circuit Description in SPICE Syntax and Technology Parameters 
-
----
 
 ### 1. Goal of This Lecture
 
@@ -1786,10 +1722,6 @@ VIN IN 0 2.5
   * A technology (model) file that provides device parameters
 
 <img width="621" height="703" alt="Screenshot 2026-02-17 230855" src="https://github.com/user-attachments/assets/1a9ccf29-cbb1-4c8e-82e1-719275678efd" />
-
-
-
----
 
 ### 2. Node Identification and Naming
 
@@ -1807,7 +1739,6 @@ Example node identification in this circuit:
 
 These node names are user-defined and can be numeric or symbolic, but must be used consistently.
 
----
 
 ### 3. Writing the SPICE Netlist (Circuit Description)
 
@@ -1861,10 +1792,6 @@ Vin in 0 2.5
 * The Second node is the negative terminal
 * Last value is DC voltage in volts
 
-
-
----
-
 ### 4. Role of the Technology (Model) File
 
 * The SPICE engine does not compute NMOS behaviour using geometry alone.
@@ -1886,10 +1813,6 @@ These parameters allow SPICE to internally evaluate:
 * Linear-region drain current
 * Saturation-region drain current
 
-
-
----
-
 ### 5. Defining NMOS and PMOS Models
 
 Models are defined using the `.MODEL` statement.
@@ -1904,8 +1827,6 @@ Important rules:
 * The model name `nmos` must exactly match the name used in the MOSFET line (`M1 ... nmos`).
 * Any mismatch between the model name and the netlist name will cause simulation failure or incorrect results.
 * NMOS and PMOS have separate models, even if only NMOS is used in the circuit.
-
----
 
 ### 6. Including the Model File in the Netlist
 
@@ -1927,21 +1848,19 @@ Structure of a complete SPICE setup:
 * Simulation commands (to be added next)
 
 Anything starting with `*` is treated as a comment and ignored by SPICE.
-
-## Lecture 4: First SPICE simulation
 ---
+---
+## Lecture 4: First SPICE simulation
 
 * You start by opening the terminal and attempting to clone the SKY130 workshop repository, but since it already exists, you move into the existing `sky130CircuitDesignWorkshop/design` directory. After listing the files to confirm the setup, you enter the `sky130_fd_pr` folder, which contains the SKY130 technology data used for simulations.
 <img width="1920" height="1080" alt="Screenshot 2026-02-23 142911" src="https://github.com/user-attachments/assets/cb00299f-609c-4c44-893c-d68b3a3c63c3" />
 
 * From there, you navigate into the `cells` directory and then into `nfet_01v8`, where the NMOS device models are stored. Listing the contents shows multiple SPICE files corresponding to different process corners such as `tt`, `ss`, `ff`, and others. Opening the typical corner file lets you view the actual model parameters that NGSPICE uses during NMOS simulation, confirming how the device behaviour is defined in SKY130.
----
 
 <img width="1920" height="1080" alt="Screenshot 2026-02-23 143252" src="https://github.com/user-attachments/assets/95c4896b-a993-458c-9ea4-d2bf4b9e3dd2" />
 
 From the `nfet_01v8` folder, you go up to the `models` directory and list the files. This shows `sky130.lib.spice`, which serves as the main entry file that links all NMOS and PMOS models across process corners. Including this one file in a netlist gives access to the complete SKY130 device library. After checking this, you return to the design directory and clear the terminal, confirming that the model setup is complete and ready for simulation.
 
----
 <img width="1920" height="1080" alt="Screenshot 2026-02-23 144507" src="https://github.com/user-attachments/assets/1597b9c9-1195-4b96-ad72-06065c92e568" />
 
 After running the simulation, NGSPICE prints the operating-point information and lists all active vectors, such as node voltages and branch currents. You can see that `vdd#branch` and `vin#branch` are available, which means the simulator is ready to report supply and input currents. Using `plot -vdd#branch` opens the DC plot window and shows the drain current flowing from VDD for different bias conditions.
@@ -1950,17 +1869,15 @@ After running the simulation, NGSPICE prints the operating-point information and
 The plot displays a family of ID–VDS curves as VDD is swept while Vin is stepped. At low VDS, the curves rise almost linearly; at higher VDS, they flatten, indicating saturation. By clicking any point on the plot, NGSPICE reports the exact voltage and current values at the terminals, allowing you to read the drain current directly at a specific operating point and understand NMOS behaviour numerically.
 
 <img width="1218" height="739" alt="Screenshot 2026-02-23 145120" src="https://github.com/user-attachments/assets/a329ed1e-f2a7-43b6-a735-de8b36332edf" />
-
+---
 ---
 
 # NgspiceSky130 - Day 2 - Velocity saturation and basics of CMOS inverter VTC
 
----
-# Chapter 1: SPICE simulation for lower nodes and velocity saturation effect
+## Chapter 1: SPICE simulation for lower nodes and velocity saturation effect
 ---
 ## Lecture-1: SPICE simulation for lower nodes
 
----
 <img width="1271" height="743" alt="Screenshot 2026-02-23 162218" src="https://github.com/user-attachments/assets/0e58a96f-827e-4911-8b76-586c985bf967" />
 
 The figures show NMOS **ID–VDS characteristics** with drain current on the y-axis and drain-to-source voltage on the x-axis for multiple gate voltages. For **W = 1.8 µm and L = 1.2 µm (W/L = 1.5)**, the lowest curve corresponds to **VGS = 0 V**, where the device is OFF, and the drain current is zero. As VGS exceeds the threshold, a channel forms and the drain current begins to increase, producing a family of curves at higher VGS values.
@@ -1970,14 +1887,9 @@ Each curve clearly splits into two regions. At low VDS, the current increases al
 <img width="1582" height="845" alt="Screenshot 2026-02-23 220815" src="https://github.com/user-attachments/assets/7f7458ec-0a1a-472c-9415-1543c73fa5a6" />
 
 The same behaviour is then compared with a scaled device having **W = 0.375 µm and L = 0.25 µm**, while keeping **W/L = 1.5**. Although theory suggests the drain current should remain constant for constant W/L, the plots show lower current levels and greater spacing between curves in the smaller device. This difference, clearly visible in the side-by-side images, highlights short-channel effects and shows why long-channel equations no longer accurately predict behaviour at lower technology nodes.
-
-
-
 ---
-
+---
 ## Lecture 2: Drain current vs gate voltage for long and short channel devices
-
----
 
 <img width="1587" height="916" alt="Screenshot 2026-02-24 102746" src="https://github.com/user-attachments/assets/d5c7a9b2-6f9e-49ae-bf0e-135267ec8a66" />
 
@@ -1996,12 +1908,12 @@ This difference occurs because **short-channel effects**, especially **velocity 
 
 To clearly highlight this effect, the simulation is modified to keep **VDS fixed at 2.5 V** and sweep **VGS**, generating **ID–VGS curves** for both devices. Comparing these plots side by side confirms that long-channel devices follow quadratic behaviour, while short-channel devices deviate significantly, explaining why long-channel equations fail at advanced technology nodes.
 
-
+---
 
 ---
 
 ## Lecture 3: Velocity saturation at lower and higher electric fields
----
+
 
 For **long-channel devices (≈ 1.2 µm)**, the drain current shows a clear **quadratic dependence on gate voltage** when the drain voltage is fixed. This follows the long-channel saturation model, where
 `Id ∝ (VGS − VT)^2`.
@@ -2020,13 +1932,9 @@ Because of velocity saturation, short-channel MOSFETs introduce an **additional 
 The drain current is zero when `VGS < VT` (cutoff), and in all other regions it follows a unified expression that smoothly captures both long-channel and velocity-saturated short-channel behaviour.
 
 ---
-
-
 ---
 
 ## Lecture 4: Velocity saturation drain current model
-
----
 
 <img width="1725" height="627" alt="Screenshot 2026-02-24 103949" src="https://github.com/user-attachments/assets/cb3f015c-0dac-4ab1-9b18-fb1a0560da0d" />
 <img width="1382" height="655" alt="Screenshot 2026-02-24 114355" src="https://github.com/user-attachments/assets/434a4242-467a-4107-978e-da36f7d08204" />
@@ -2039,17 +1947,11 @@ When `(VGS − VT)` is at its minimum, the device operates in the **saturation r
 
 
 For **short-channel devices only**, when `VDSAT` is at its minimum, the device enters the **velocity-saturation region**. Here, the carrier velocity has already saturated due to the high electric fields, so increasing the gate voltage no longer produces a quadratic increase in drain current. This explains why short-channel devices exhibit lower peak current and earlier saturation than long-channel devices, even at the same W/L ratio. Velocity saturation is therefore a key short-channel effect that must be included in modern MOSFET models and directly impacts current drive and delay in CMOS circuits.
-
----
-
-
 <img width="1563" height="910" alt="image" src="https://github.com/user-attachments/assets/3a39b5f5-9346-4e7f-b249-84e573d877f9" />
-
-
 ---
 
+---
 ## Lecture 5 & 6: Labs Sky130 Id-Vgs
----
 
 In this SPICE simulation, a short-channel NMOS device with a channel length of around **0.12–0.15 µm** is analysed at a supply voltage of **1.8 V**. The drain voltage **VDS** is swept from **0 to 1.8 V** with a step of **0.1 V**, while the gate voltage **VGS** is swept in steps of **0.2 V** to generate the ID–VDS characteristics.
 <img width="1037" height="841" alt="image" src="https://github.com/user-attachments/assets/d0c87917-7a76-4e81-8de4-9df500bad86a" />
@@ -2058,14 +1960,13 @@ From the ID–VDS plots, the device shows normal behaviour at lower VDS, but at 
 <img width="1046" height="838" alt="Screenshot 2026-02-24 121214" src="https://github.com/user-attachments/assets/8d0c9762-c400-40f5-95f3-a4f9aa3ac87f" />
 
 When the simulation is modified to keep **VDS = 1.8 V constant** and sweep **VGS from 0 to 1.8 V** with a step of **0.1 V**, the resulting ID–VGS curve shows a nearly linear behaviour. Since the channel length is around **0.12–0.15 µm**, the quadratic dependence of drain current is no longer valid, and velocity saturation dominates the device operation.
-
+---
 
 ---
 # Chapter 2: CMOS voltage transfer characteristics (VTC)
 ---
 ---
 ## Lecture 1:MOSFET as a switch
----
 
 <img width="564" height="492" alt="Screenshot 2026-02-24 122645" src="https://github.com/user-attachments/assets/b3f07e0f-596b-4aa1-983f-5e2c7398c004" />
 
@@ -2078,12 +1979,10 @@ A **CMOS inverter** is built using a **PMOS at the top** connected to `VDD` and 
 <img width="677" height="776" alt="Screenshot 2026-02-24 123132" src="https://github.com/user-attachments/assets/20c54ffe-f673-44f4-9a1d-92c473aaf3ab" />
 
 When `VIN = VDD`, the **NMOS gate-to-source voltage** becomes `VGS = VDD − 0 = VDD`, so the NMOS turns ON. At the same time, the **PMOS gate-to-source voltage** becomes `VGS = VDD − VDD = 0`, so the PMOS turns OFF. This pulls the output node to ground. In the opposite case (to be analysed next), when `VIN = 0`, the NMOS turns OFF, and the PMOS turns ON, pulling the output to `VDD`. Combining these two cases yields the **CMOS voltage transfer characteristic**, which describes how the output voltage changes with the input voltage.
-
+---
 
 ---
 ## Lecture 2: Introduction to standard MOS voltage current parameters
-
----
 
 To derive the **CMOS Voltage Transfer Characteristic (VTC)**, we analyse the CMOS inverter under different **input boundary conditions** and replace the transistors with their **equivalent circuits**. This step is essential because the VTC is later used to compute **cell delay**, not only for inverters but also for logic gates like AND and OR.
 <img width="1357" height="725" alt="Screenshot 2026-02-24 134447" src="https://github.com/user-attachments/assets/e9b48f83-af9d-4b4c-b3ce-e6836f161464" />
@@ -2096,7 +1995,7 @@ When **VIN = 0 V**, the situation reverses. The **PMOS turns ON** because `VGSP 
 To systematically derive equations, clear **naming conventions** are introduced. `VGSN` and `VGSP` denote gate-to-source voltages of NMOS and PMOS, respectively, while `VDSN` and `VDSP` represent their drain-to-source voltages. Similarly, `IDSN` and `IDSP` denote the drain-to-source currents through NMOS and PMOS. These definitions allow both devices to be analysed together while accounting for polarity differences.
 
 With both extreme input cases (`VIN = 0` and `VIN = VDD`) understood in terms of voltages, currents, and equivalent circuits, the next step is to merge these conditions and derive a continuous relationship between `VIN` and `VOUT`. This combined analysis leads directly to the **CMOS voltage transfer characteristic**, which forms the foundation for delay and timing analysis in digital circuits.
-
+---
 
 ---
 ## Lecture 3: PMOS/NMOS drain current v/s drain voltage
@@ -2217,7 +2116,6 @@ By plotting all intersection points:
 
 and connecting them smoothly, we obtain the **CMOS inverter VTC**.
 
----
 
 ### Important observations
 
@@ -2225,25 +2123,23 @@ and connecting them smoothly, we obtain the **CMOS inverter VTC**.
 * Digital circuits rely on the **steep slope** of this region for fast switching.
 * The load-curve method also clearly shows **which region (cutoff / linear / saturation)** each transistor operates in for a given VIN.
 
----
-
 ### Next step
 
 Validate the analytical VTC by performing a **SPICE-based DC sweep simulation** of `VIN` and directly plotting `VOUT`.
-
+---
 
 ---
 # NgspiceSky130-Day 3: CMOS Switching threshold and dynamic simulations
 ## Chapter 1: Voltage transfer characteristics – SPICE simulations
+---
+
 ## Lecture 1: SPICE deck creation for CMOS inverter 
 
----
 ### CMOS Inverter SPICE Deck 
 * Goal: Prepare a SPICE netlist for a **CMOS inverter** to simulate **VTC (Voltage Transfer Characteristics)**.
 * Technology assumed: **L = 0.25 µm**, **VDD = 2.5 V** (long-channel assumption).
 <img width="1271" height="646" alt="Screenshot 2026-02-24 154841" src="https://github.com/user-attachments/assets/c52e1817-19b1-45db-ad3b-680078cb51bc" />
 
----
 
 ### Circuit Components and Values
 
@@ -2276,7 +2172,6 @@ Validate the analytical VTC by performing a **SPICE-based DC sweep simulation** 
   * `VSS = 0 V`
   * Input voltage `Vin` swept from `0 → 2.5 V`
 
----
 <img width="758" height="610" alt="Screenshot 2026-02-24 154930" src="https://github.com/user-attachments/assets/48caa716-df4c-4a7d-b2ee-9070b10f216c" />
 
 ### Node Definitions
@@ -2285,8 +2180,6 @@ Validate the analytical VTC by performing a **SPICE-based DC sweep simulation** 
 * `out` → common drain node (output)
 * `vdd` → supply node
 * `0`   → ground (VSS)
-
----
 <img width="1316" height="599" alt="Screenshot 2026-02-24 155222" src="https://github.com/user-attachments/assets/069bdb46-ddbe-441d-85f0-9dae57d340a5" />
 
 ### SPICE Netlist (Core)
@@ -2297,8 +2190,6 @@ Validate the analytical VTC by performing a **SPICE-based DC sweep simulation** 
 
 * M1 out in vdd vdd pmos W=0.375u L=0.25u
 * M2 out in 0   0   nmos W=0.375u L=0.25u
-
----
 
 ### Important Observations
 
@@ -2312,11 +2203,8 @@ Validate the analytical VTC by performing a **SPICE-based DC sweep simulation** 
 * This setup captures **static CMOS behavior**; dynamic delay analysis comes later.
 
 ---
-
 ---
 ## Lecture 2: SPICE simulation for CMOS inverter
-
----
 
 We perform a **SPICE DC simulation of a CMOS inverter** to obtain its **Voltage Transfer Characteristics (VTC)** and verify the theory derived from NMOS–PMOS load curves. The technology uses a **channel length of 0.25 µm** and a **supply voltage of 2.5 V**. Only **static (DC)** behaviour is analysed.
 <img width="818" height="763" alt="image" src="https://github.com/user-attachments/assets/b078175a-2d69-44c0-bba0-8dc1e714970b" />
@@ -2336,11 +2224,9 @@ In the first simulation, **PMOS and NMOS have equal widths (0.375 µm)**. The re
 In the second simulation, the **PMOS width is increased to 0.9375 µm (2.5× NMOS width)** while keeping **L = 0.25 µm**. This produces a **more symmetric VTC**, with the switching point closer to **VDD/2**, indicating balanced pull-up and pull-down strengths.
 
 This confirms that **PMOS devices must be wider than NMOS devices** (typically **2–3×**) to achieve a symmetric VTC and improved noise margins.
-
+---
 ---
 ## Lecture 3: Labs Sky130 SPICE simulation for CMOS
-
----
 
 ### CMOS Inverter – VTC and Transient Analysis (NGSPICE)
 
@@ -2352,8 +2238,6 @@ The input voltage is swept from **0 V to 1.8 V** with a step of **0.01 V**, and 
 <img width="402" height="287" alt="image" src="https://github.com/user-attachments/assets/395e18c1-f6a2-435b-8866-a91a3edc73ab" />
 
 The switching threshold (VM), defined where **Vin = Vout**, is found by zooming into the intersection region. It lies between **0.87 V and 0.88 V**, with a measured value of approximately **0.876 V**. Since VDD/2 = 0.9 V, this confirms that **Wp/Wn ≈ 2.33** centers the switching point close to mid-supply.
-
----
 
 ## Transient Analysis
 <img width="339" height="316" alt="image" src="https://github.com/user-attachments/assets/d59dc857-4a71-4ecd-bbc0-3a26a767fa78" />
@@ -2378,7 +2262,6 @@ Delays are measured at **50% of VDD = 0.9 V**.
   → **tpHL = 0.285 ns**
 
 ---
-
 ---
 # Chapter 2: Static behavior evaluation – CMOS inverter robustness – Switching Threshold
 
@@ -2519,8 +2402,6 @@ Both transistors conduct equal magnitude current.
 Using velocity saturation current model:
 
 <img width="962" height="362" alt="image" src="https://github.com/user-attachments/assets/7d01249a-a03a-4e94-9ab8-3f9cec3a3896" />
-
-
 where:
 
 kn = Kn' * (Wn / Ln)  
@@ -2709,7 +2590,7 @@ Different standard cells may use different sizing strategies based on speed, pow
 ---
 # NgspiceSky130-Day4-CMOS Noise Margin robustness evaluation
 ## Chapter 1: Static behaviour evaluation-CMOS inverter robustness-Noise Margin
-
+---
 ## Lecture 1: Introduction to Noise Margin.
 
 ### Noise Margin – Definition
@@ -3249,7 +3130,6 @@ Since inverter delay depends on charging/discharging current:
 
 SPICE simulations will be used to evaluate inverter robustness under oxide thickness variation.
 ---
-
 ---
 ## Lecture 3: Smart SPICE simulation for device variations
 
@@ -3290,7 +3170,6 @@ Total iterations = 5
 <img width="1104" height="836" alt="image" src="https://github.com/user-attachments/assets/c73917d4-11aa-4170-a241-fec16407ae2d" />
 For each iteration, DC transfer characteristics are plotted.
 
-
 ### SPICE Methodology
 
 Using `.control` scripting:
@@ -3303,7 +3182,6 @@ Using `.control` scripting:
 Each curve represents a different strength combination of PMOS and NMOS.
 
 ---
-
 
 ---
 ## Lecture 4: Conclusion: CMOS Inverter Robustness to Device Variation
