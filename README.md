@@ -716,7 +716,7 @@ V_{SB} > 0 \Rightarrow V_T > V_{TO}
 
 # Chapter 2
 
-### Lecture 1: NMOS Resistive Region and Saturation Region of Operation
+## Lecture 1: NMOS Resistive Region and Saturation Region of Operation
 
 ---
 
@@ -2245,11 +2245,12 @@ Validate the analytical VTC by performing a **SPICE-based DC sweep simulation** 
 
 
 ---
-# Day 3: CMOS Switching threshold and dynamic simulations
+# NgspiceSky130-Day 3: CMOS Switching threshold and dynamic simulations
 ## Chapter 1: Voltage transfer characteristics – SPICE simulations
-### Lecture 1: SPICE deck creation for CMOS inverter 
-### CMOS Inverter SPICE Deck – Key Notes
+## Lecture 1: SPICE deck creation for CMOS inverter 
+
 ---
+### CMOS Inverter SPICE Deck 
 * Goal: Prepare a SPICE netlist for a **CMOS inverter** to simulate **VTC (Voltage Transfer Characteristics)**.
 * Technology assumed: **L = 0.25 µm**, **VDD = 2.5 V** (long-channel assumption).
 <img width="1271" height="646" alt="Screenshot 2026-02-24 154841" src="https://github.com/user-attachments/assets/c52e1817-19b1-45db-ad3b-680078cb51bc" />
@@ -2714,3 +2715,127 @@ This condition defines the **symmetry point** of the CMOS inverter.
 - Device sizing can be tuned depending on datapath requirements.
 
 Different standard cells may use different sizing strategies based on speed, power, or robustness needs.
+
+---
+
+---
+# NgspiceSky130-Day4-CMOS Noise Margin robustness evaluation
+## Chapter 1: Static behaviour evaluation-CMOS inverter robustness-Noise Margin
+
+## Lecture 1: Introduction to Noise Margin.
+
+### Noise Margin – Definition
+
+Noise Margin is the measure of how much unwanted electrical noise a logic circuit can tolerate at its input without producing an incorrect output.
+
+It indicates the robustness of a CMOS inverter against disturbances.
+
+### Ideal Inverter Behavior
+<img width="557" height="451" alt="image" src="https://github.com/user-attachments/assets/da21322a-f445-44dd-8416-d9e10e36cc38" />
+
+In an ideal inverter:
+
+- Input 0 → Output 1  
+- Input 1 → Output 0  
+- The switching transition occurs exactly at VDD/2  
+- The slope at switching point is infinite  
+
+This means the output changes instantly with a small change in input.
+
+### Practical Inverter Behavior
+
+In real CMOS inverters:
+<img width="368" height="316" alt="image" src="https://github.com/user-attachments/assets/664ff9d4-f0f8-4130-8257-f64baaf487a4" />
+
+- The slope at the switching region is finite.
+- Due to parasitic resistances and capacitances, switching takes time.
+- The VTC transition region has a finite slope instead of a vertical line.
+
+This finite slope defines the noise tolerance limits.
+
+### Important Voltage Levels
+
+<img width="405" height="342" alt="image" src="https://github.com/user-attachments/assets/5ed70674-2f35-4e41-b47e-ab999af687b4" />
+From the VTC curve:
+
+- VOH → Output High Voltage  
+- VOL → Output Low Voltage  
+- VIL → Maximum input voltage recognized as LOW  
+- VIH → Minimum input voltage recognized as HIGH  
+
+Behavior:
+
+- If input ∈ [0, VIL] → Output = VOH  
+- If input ∈ [VIH, VDD] → Output = VOL  
+- If input ∈ (VIL, VIH) → Transition region (both devices conduct)
+
+### Key Insight
+
+Noise margin depends on how far:
+
+- VOH is from VIH  
+- VIL is from VOL  
+
+A steeper VTC (higher gain near switching) results in better noise immunity.
+
+Noise margin determines the reliability of digital logic under noise conditions.
+---
+
+---
+## Lecture 2: Noise Margin voltage paramters
+
+## CMOS Inverter – Noise Margin & VTC Regions
+
+### 1. Voltage Regions from VTC
+
+The CMOS inverter VTC divides the input voltage into three regions:
+<img width="356" height="337" alt="image" src="https://github.com/user-attachments/assets/8a79d933-83a5-4a77-8b77-36e2565c407b" />
+
+#### Logic 0 Region
+- Input range: 0 → VIL  
+- Output: VOH (Output High)
+
+#### Transition Region
+- Input range: VIL → VIH  
+- Output is switching
+- Both PMOS and NMOS conduct
+- Region of high gain
+
+#### Logic 1 Region
+- Input range: VIH → VDD  
+- Output: VOL (Output Low)
+
+
+### 2. Important Voltage Levels
+
+- VOH → Output High voltage  
+- VOL → Output Low voltage  
+- VIL → Maximum input voltage recognized as LOW  
+- VIH → Minimum input voltage recognized as HIGH  
+
+For proper cascading of logic gates:
+
+- VOL < VIL  
+- VOH > VIH  
+
+These conditions ensure correct logic detection in the next stage.
+
+### 3. Practical VTC Behavior
+
+In real CMOS circuits:
+
+- VOH is not exactly VDD  
+- VOL is not exactly 0 V  
+- The transition curve is smooth (finite slope)  
+- Non-idealities arise due to parasitic resistance and capacitance  
+
+Unlike an ideal inverter (vertical transition), practical VTC has finite slope.
+
+### 4. Slope in Transition Region
+
+- Slope is negative because increasing input decreases output.
+- Around switching point, magnitude of slope ≈ −1.
+- This region determines noise margin and gain.
+
+Higher magnitude of slope → Better noise immunity.
+CMOS inverter robustness depends on how sharply the transition occurs and how well VOH, VOL, VIL, and VIH are separated.
