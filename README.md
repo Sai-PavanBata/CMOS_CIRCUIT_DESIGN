@@ -358,7 +358,7 @@ The threshold voltage changes.
 ### Threshold Voltage with Body Effect
 
 $$
-V_{th} = V_{th0} + \gamma \left( \sqrt{2\phi_F + V_{SB}} - \sqrt{2\phi_F} \right)
+V_{th} = V_{th0} + \gamma \left( \sqrt{|-2\phi_F + V_{SB}|} - \sqrt{|-2\phi_F|} \right)
 $$
 
 Where:
@@ -1570,9 +1570,7 @@ I_D = \frac{k_n}{2}(V_{GS} - V_T)^2 (1 + \lambda V_{DS})
 ---
 ---
 
-## Lecture 2
-
-### Circuit Description in SPICE Syntax (NMOS Example)
+## Lecture 2: Circuit Description in SPICE Syntax (NMOS Example)
 
 ### 1. Objective of This Lecture
 
