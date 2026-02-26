@@ -2325,24 +2325,179 @@ Validate the analytical VTC by performing a **SPICE-based DC sweep simulation** 
 ---
 
 ---
-## Lecture 2:
+## Lecture 2: SPICE simulation for CMOS inverter
 
 ---
 
 We perform a **SPICE DC simulation of a CMOS inverter** to obtain its **Voltage Transfer Characteristics (VTC)** and verify the theory derived from NMOS–PMOS load curves. The technology uses a **channel length of 0.25 µm** and a **supply voltage of 2.5 V**. Only **static (DC)** behaviour is analysed.
+<img width="818" height="763" alt="image" src="https://github.com/user-attachments/assets/b078175a-2d69-44c0-bba0-8dc1e714970b" />
 
 The inverter consists of one PMOS (**M1**) and one NMOS (**M2**).
 For **PMOS (M1)**, the drain is connected to `out`, the gate to `in`, and both source and substrate to `VDD`. Its dimensions are **W = 0.375 µm, L = 0.25 µm**.
 For **NMOS (M2)**, the drain is connected to `out`, the gate to `in`, and both source and substrate to ground (`0`). Its dimensions are **W = 0.375 µm, L = 0.25 µm**.
 
 An **output load capacitor of 10 fF** is connected between `out` and ground, representing interconnect and fan-out loading. The **supply voltage VDD = 2.5 V** is applied between `vdd` and ground. The **input voltage Vin** is applied between `in` and ground.
+<img width="880" height="806" alt="image" src="https://github.com/user-attachments/assets/64395148-4a01-4d26-8f31-03cdeab50999" />
 
 To generate the VTC, a **DC sweep** is performed on `Vin` from **0 V to 2.5 V** with a **step of 0.05 V**, and the output voltage `V(out)` is plotted against `V(in)`. The transistor behaviour is defined using a **model file** containing all NMOS and PMOS technology parameters for the **250 nm node**.
 
 In the first simulation, **PMOS and NMOS have equal widths (0.375 µm)**. The resulting VTC is **left-shifted**, showing an unbalanced inverter due to lower hole mobility in PMOS devices.
+<img width="867" height="813" alt="image" src="https://github.com/user-attachments/assets/2151bcf0-834e-4df7-a295-d945f723f6da" />
 
 In the second simulation, the **PMOS width is increased to 0.9375 µm (2.5× NMOS width)** while keeping **L = 0.25 µm**. This produces a **more symmetric VTC**, with the switching point closer to **VDD/2**, indicating balanced pull-up and pull-down strengths.
 
 This confirms that **PMOS devices must be wider than NMOS devices** (typically **2–3×**) to achieve a symmetric VTC and improved noise margins.
 
 ---
+## Lecture 3: Labs Sky130 SPICE simulation for CMOS
+
+---
+
+### CMOS Inverter – VTC and Transient Analysis (NGSPICE)
+
+## VTC (DC Sweep)
+
+The CMOS inverter is simulated in the **typical corner** with **VDD = 1.8 V**. The NMOS width is **0.36 µm**, the PMOS width is **0.84 µm**, giving **Wp/Wn ≈ 2.33**. The output load capacitance is **50 fF**.
+
+The input voltage is swept from **0 V to 1.8 V** with a step of **0.01 V**, and `v(out)` is plotted versus `v(in)` to obtain the VTC. The inverter switches correctly from 1.8 V to 0 V with a sharp transition region.
+<img width="402" height="287" alt="image" src="https://github.com/user-attachments/assets/395e18c1-f6a2-435b-8866-a91a3edc73ab" />
+
+The switching threshold (VM), defined where **Vin = Vout**, is found by zooming into the intersection region. It lies between **0.87 V and 0.88 V**, with a measured value of approximately **0.876 V**. Since VDD/2 = 0.9 V, this confirms that **Wp/Wn ≈ 2.33** centers the switching point close to mid-supply.
+
+---
+
+## Transient Analysis
+<img width="339" height="316" alt="image" src="https://github.com/user-attachments/assets/d59dc857-4a71-4ecd-bbc0-3a26a767fa78" />
+
+Using the same sizing and **Cload = 50 fF**, a pulse input from **0 V to 1.8 V** is applied with:
+
+* Rise time = **0.1 ns**
+* Fall time = **0.1 ns**
+* Pulse width = **2 ns**
+* Period = **4 ns**
+
+Delays are measured at **50% of VDD = 0.9 V**.
+
+* Rise delay (tpLH):
+  Output crosses 0.9 V at **2.482 ns**,
+  Input crosses 0.9 V at **2.15 ns**,
+  → **tpLH = 0.332 ns**
+
+* Fall delay (tpHL):
+  Output crosses 0.9 V at **4.3349 ns**,
+  Input crosses 0.9 V at **4.049 ns**,
+  → **tpHL = 0.285 ns**
+
+---
+
+---
+# Chapter 2: Static behavior evaluation – CMOS inverter robustness – Switching Threshold
+
+## Lecture 1: Switching Threshold, Vm
+---
+---
+### Comparison of CMOS Inverters with Different W/L Ratios
+
+When we compare two CMOS inverters designed with different PMOS and NMOS W/L ratios, the overall shape of the Voltage Transfer Characteristic (VTC) remains the same. In both cases, the inverter clearly transitions from high output to low output with a sharp switching region. This confirms the structural robustness of the CMOS inverter — resizing devices does not distort the VTC shape, but it does shift the switching point.
+<img width="1243" height="578" alt="image" src="https://github.com/user-attachments/assets/77babd51-fb9b-4d66-a5ce-5e7a40614f5d" />
+
+To determine the switching threshold voltage (Vm), a 45° line (Vout = Vin) is drawn on the VTC curve. The point where this line intersects the VTC gives Vm. In the first case, Vm is approximately 0.9 V, while in the second case, Vm shifts to around 1.2 V. This shift occurs because changing the W/L ratio alters the relative strength of the PMOS and NMOS devices. A stronger PMOS shifts the switching threshold toward higher voltages, while a stronger NMOS shifts it lower.
+<img width="1168" height="417" alt="image" src="https://github.com/user-attachments/assets/5078588f-48fb-48dd-ba12-65fc16c50aba" />
+
+The region around Vm is particularly important. At this operating point, both PMOS and NMOS are in saturation and conduct simultaneously. This creates a direct current path from VDD to ground, resulting in maximum current flow. Although this condition exists only during switching, it represents a critical region because it leads to higher power dissipation and determines the inverter’s delay characteristics.
+<img width="1083" height="462" alt="image" src="https://github.com/user-attachments/assets/adbea68d-b6ae-4a5f-91cc-31030906a039" />
+
+### Overall, while device sizing shifts the switching threshold, the fundamental behavior of the CMOS inverter remains intact. This demonstrates both the robustness of CMOS logic and the sensitivity of its switching point to transistor sizing.
+---
+
+---
+## Lecture 2: Analytical expression of Vm as a function of (W/L)n and (W/L)p
+
+## Analytical Expression of Switching Threshold (Vm)
+
+### Condition at Switching Threshold
+
+At the switching threshold:
+
+Vin = Vout = Vm
+
+At this point, the pull-up and pull-down currents are equal in magnitude:
+
+Idsp = -Idsn  
+
+or
+
+Idsp + Idsn = 0
+
+This means both transistors conduct equal current.
+
+---
+
+### Drain Current Expressions
+
+Define:
+
+kn = μn * Cox * (Wn/Ln)  
+kp = μp * Cox * (Wp/Lp)
+
+---
+
+### NMOS current at Vm
+
+Idsn = kn * [ (Vm − Vtn) * Vdsatn − (Vdsatn² / 2) ]
+
+---
+
+### PMOS current at Vm
+
+Idsp = kp * [ (Vm − VDD − Vtp) * Vdsatp − (Vdsatp² / 2) ]
+
+---
+
+## Current Balance Equation
+
+At switching threshold:
+
+kp * [ (Vm − VDD − Vt) * Vdsatp − (Vdsatp² / 2) ]  
++  
+kn * [ (Vm − Vt) * Vdsatn − (Vdsatn² / 2) ]  
+= 0
+
+Solving this equation for Vm gives:
+
+---
+
+### Final Expression
+
+Vm = (R * VDD) / (1 + R)
+
+where
+
+R = (kp * Vdsatp) / (kn * Vdsatn)
+
+Substituting kn and kp:
+
+R = [ (Wp/Lp) * Kp' * Vdsatp ] / [ (Wn/Ln) * Kn' * Vdsatn ]
+
+---
+
+## Interpretation
+
+If R = 1  
+→ Vm = VDD / 2 (perfectly symmetric inverter)
+
+If R > 1  
+→ Vm > VDD / 2 (PMOS stronger)
+
+If R < 1  
+→ Vm < VDD / 2 (NMOS stronger)
+
+---
+
+### Key Insight
+
+The switching threshold Vm is directly controlled by:
+
+(Wp/Lp) / (Wn/Ln)
+
+Thus, transistor sizing shifts Vm without changing the overall VTC shape.
