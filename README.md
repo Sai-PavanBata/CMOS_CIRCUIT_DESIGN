@@ -3045,3 +3045,140 @@ Using SPICE scripting (`.control` block):
 - Even at 0.5 V, inverter still operates.
 - Threshold and slope adjust proportionally with VDD.
 ---
+
+---
+## Lecture 2: Advantages and disadvantages using low supply voltage
+
+As VDD scales down (e.g., 2.5 V → 0.5 V), CMOS inverter behavior changes in both beneficial and limiting ways.
+<img width="1568" height="766" alt="image" src="https://github.com/user-attachments/assets/d32f0c8c-fecf-42be-a879-2edc8066670c" />
+
+### Advantages
+
+**1. Higher Gain**
+<img width="968" height="516" alt="image" src="https://github.com/user-attachments/assets/0dee014c-6247-4ccb-95c4-6a19a3247f1d" />
+
+<img width="976" height="547" alt="image" src="https://github.com/user-attachments/assets/51afb06a-4f4f-4016-a486-12f9e2c61e06" />
+
+A 0.5 V device shows nearly 50% improvement in gain compared to a 2.5 V device.
+
+Lower supply increases the steepness of the normalized transition region.
+
+**2. Lower Energy Consumption**
+<img width="1000" height="526" alt="image" src="https://github.com/user-attachments/assets/67e582d3-1e82-4d04-a71f-35343a3b9429" />
+
+<img width="927" height="527" alt="image" src="https://github.com/user-attachments/assets/a4762df1-8fc9-4294-bb57-dff06737379f" />
+
+Energy required for charging/discharging:
+
+E ∝ C · VDD²
+
+Reducing VDD from 2.5 V to 0.5 V results in approximately 90% reduction in switching energy.
+
+This makes low-VDD operation highly suitable for low-power applications.
+
+### Disadvantage
+
+Although power consumption is lower and gain improves:
+
+- The device does not get sufficient voltage headroom.
+- Charging and discharging of nodes becomes slower.
+- Propagation delay increases compared to 2.5 V operation.
+
+Thus, low-VDD devices trade speed for energy efficiency.
+---
+
+---
+## Lecture 3: Sky130 Supply variation Labs
+
+### Gain Analysis under Supply Scaling (SPICE)
+
+SPICE DC simulations were performed to analyze inverter gain at different supply voltages.
+
+<img width="850" height="807" alt="image" src="https://github.com/user-attachments/assets/2549e1e4-d328-4564-ad9c-3cd48880f495" />
+
+Measured gain values:
+
+VDD = 1.8 V  → Gain = 8.33  
+VDD = 1.6 V  → Gain = 8.43  
+VDD = 1.4 V  → Gain = 9.06  
+VDD = 1.2 V  → Gain = 9.82  
+VDD = 1.0 V  → Gain = 9.02  
+VDD = 0.8 V  → Gain = 8.46  
+
+Observation:
+
+- Gain increases as VDD reduces from 1.8 V to 1.2 V.
+- Maximum gain occurs near VDD = 1.2 V.
+- Gain reduces again at very low VDD (0.8 V).
+
+Thus, moderate supply scaling improves gain, but excessive reduction degrades it.
+
+---
+
+---
+# Chapter 2: Static behaviour evaluation-CMOS inverter robustness-Device variation
+
+## Lecture 1: Sources of variation - Etching process
+
+### Etching Variations and CMOS Inverter Robustness
+
+Etching is a critical fabrication step that defines the physical geometry of CMOS transistors. It determines the width (W) and length (L) of the gate and diffusion regions. Any imperfection during etching alters these dimensions, which directly impacts transistor performance.
+
+Since CMOS inverter behavior depends strongly on the W/L ratio, even small distortions introduced during fabrication can modify electrical characteristics such as current drive and delay. These dimensional changes propagate through logic chains, affecting overall circuit timing and reliability.
+
+<img width="1824" height="647" alt="image" src="https://github.com/user-attachments/assets/39cb35c1-dedc-4046-9623-361aefa27b50" />
+
+### Etching-Induced Geometrical Variations
+
+During ideal fabrication, transistor gates and diffusion regions have well-defined rectangular shapes. In real manufacturing environments, however, etching can cause edge distortions, roughness, and dimensional shifts. As a result:
+
+- Effective width (W') and length (L') differ from intended values.
+- Overlap areas between gate and diffusion change.
+- Technology node accuracy (gate length definition) is affected.
+
+Because drain current is proportional to the W/L ratio, any deviation alters current flow capability.
+
+
+
+### Impact on Drain Current and Delay
+<img width="926" height="483" alt="image" src="https://github.com/user-attachments/assets/a1b3ac88-c600-429d-957d-ba1f87c9c869" />
+
+The drain current equation for a MOSFET shows:
+
+I_D ∝ (W / L)
+
+Thus, variations in W or L directly modify current drive strength. Since inverter delay depends on how quickly capacitances charge and discharge, altered drain current results in timing variations.
+
+Lower effective W/L → reduced current → increased delay  
+Higher effective W/L → increased current → reduced delay  
+
+
+
+### Spatial Variation Across Layout
+
+Variations are not uniform across the chip:
+
+- Inverters located in central regions often experience periodic distortions due to similar neighboring structures.
+- Edge inverters may show irregular distortions because adjacent circuitry differs.
+- Structural differences in surrounding layout influence local etching behavior.
+
+These local mismatches cause performance differences between otherwise identical inverters.
+
+
+<img width="1991" height="1063" alt="image" src="https://github.com/user-attachments/assets/3064a116-aa38-47e1-9c3f-d78202d67f81" />
+
+### Propagation Through Logic Chains
+
+When multiple inverters are connected in series, dimensional variations accumulate. Small mismatches in each stage can:
+<img width="1288" height="652" alt="image" src="https://github.com/user-attachments/assets/88d44167-32e0-4e7e-bbda-7008ff52d46b" />
+
+- Shift switching thresholds
+- Modify propagation delay
+- Affect noise margins
+
+Over long data paths, these variations impact overall circuit robustness.
+
+---
+
+
+
