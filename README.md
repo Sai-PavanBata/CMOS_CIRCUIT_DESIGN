@@ -3179,6 +3179,186 @@ When multiple inverters are connected in series, dimensional variations accumula
 Over long data paths, these variations impact overall circuit robustness.
 
 ---
+---
+## Lecture 2: Sources of variation - Oxide thickness
+
+### Source of Variation: Oxide Thickness (Tox)
+
+<img width="1318" height="561" alt="image" src="https://github.com/user-attachments/assets/4b791789-5117-4277-87e7-d3d7b585d1ba" />
+
+After analyzing W/L variation due to etching, the next major fabrication variation is **oxide thickness (Tox)**. To understand its impact, we examine the cross-sectional view of a MOSFET inside a CMOS inverter.
+
+### MOSFET Cross-Section View
+<img width="826" height="377" alt="image" src="https://github.com/user-attachments/assets/c7e93bd3-a0c3-4342-b814-ef4bcc9fd502" />
+
+When observing a transistor cross-section, we see:
+
+- Polysilicon (or metal) gate  
+- Gate oxide layer (SiO₂)  
+- Source and drain diffusion regions  
+- Substrate  
+
+The **gate oxide** lies between the gate and the channel and plays a critical role in device behavior.
+
+### Ideal vs Real Oxidation
+<img width="1162" height="461" alt="image" src="https://github.com/user-attachments/assets/395f4d54-c038-4601-803d-6e23a0dc6ce6" />
+
+In an ideal fabrication process:
+
+- Oxide thickness is uniform across the entire channel length.
+- Electrical characteristics remain consistent.
+
+In reality:
+
+- Oxide thickness varies along the channel.
+- Thickness is non-uniform due to fabrication imperfections.
+- Variation differs from transistor to transistor across the chip.
+
+Even within an inverter chain:
+- Central transistors show relatively smaller variation (due to symmetry).
+- Edge transistors exhibit larger variation (influenced by surrounding structures).
+- 
+### Impact on Drain Current
+
+Drain current equation:
+
+ID = μ · Cox · (W/L) · (Voltage terms)
+
+Where:
+
+Cox = εox / Tox
+
+Since Cox is inversely proportional to oxide thickness (Tox):
+
+- Oxide thickness directly affects Cox.
+- Increase in Tox → decrease in Cox.
+- Decrease in Cox → decrease in ID.
+- Variation in Tox → variation in Cox → variation in ID.
+
+Therefore, oxide thickness variation directly impacts drain current and inverter switching behavior.
+
+More oxide thickness variation → more drain current variation.
+
+### Why This Matters
+
+Since inverter delay depends on charging/discharging current:
+
+- Any variation in \( I_D \) alters switching delay.
+- Variations propagate through inverter chains.
+- Overall circuit timing reliability is impacted.
+
+SPICE simulations will be used to evaluate inverter robustness under oxide thickness variation.
+---
+
+---
+## Lecture 3: Smart SPICE simulation for device variations
 
 
+### CMOS Inverter Robustness Under Extreme Device Variation
 
+To prove CMOS inverter robustness, we must verify that its behavior is least responsive to device variations. The expectation is that even under significant changes in transistor dimensions, the inverter’s DC characteristics should not vary drastically. If this holds true, CMOS inverters remain reliable building blocks for logic and dynamic circuits.
+
+To test this, extreme SPICE simulations are performed by sweeping transistor widths across wide limits.
+
+<img width="1722" height="304" alt="image" src="https://github.com/user-attachments/assets/f68c88ab-7b53-4fcc-baf4-1c8782ad89e0" />
+
+### Extreme Width Variation Setup
+
+Two extreme conditions are defined:
+
+**Case 1: Strong PMOS, Weak NMOS**
+- PMOS width = 1.875 µm (maximum)
+- NMOS width = 0.375 µm (minimum)
+
+A strong PMOS means lower effective resistance (wider device → lower resistance path for charging).  
+A weak NMOS means higher resistance (narrower device).
+
+**Case 2: Weak PMOS, Strong NMOS**
+- PMOS width = 0.375 µm
+- NMOS width = 1.875 µm
+
+Here, PMOS has higher resistance and NMOS has lower resistance.
+
+The experiment sweeps:
+
+- PMOS width from 1.875 µm → 0.375 µm
+- NMOS width from 0.375 µm → 1.875 µm
+
+Step size = 0.375 µm  
+Total iterations = 5
+
+<img width="1104" height="836" alt="image" src="https://github.com/user-attachments/assets/c73917d4-11aa-4170-a241-fec16407ae2d" />
+For each iteration, DC transfer characteristics are plotted.
+
+
+### SPICE Methodology
+
+Using `.control` scripting:
+
+- Initialize NMOS and PMOS widths
+- Use `alter` command to update device widths
+- Perform DC sweep for each width pair
+- Generate 5 DC curves (dc1 to dc5)
+
+Each curve represents a different strength combination of PMOS and NMOS.
+
+---
+
+
+---
+## Lecture 4: Conclusion: CMOS Inverter Robustness to Device Variation
+
+In the previous analyses, CMOS inverter robustness was evaluated under extreme device variations by sweeping PMOS and NMOS widths from strong PMOS–weak NMOS to weak PMOS–strong NMOS conditions. SPICE simulations were performed across all corner cases to observe how inverter characteristics respond to these variations.
+
+Two primary metrics were used to quantify robustness: **Switching Threshold (Vm)** and **Noise Margin**.
+
+## Switching Threshold Variation
+
+<img width="994" height="537" alt="image" src="https://github.com/user-attachments/assets/55890118-ce61-4b6c-a224-0d521fe4d373" />
+
+The switching threshold is identified by drawing a 45° line (Vin = Vout) on the VTC and locating the intersection point.
+
+Across extreme device variations:
+
+- Vm shifts from approximately **0.2 V to 1.4 V**.
+- Although this appears large numerically, it remains acceptable relative to the total supply voltage.
+- Most importantly, the inverter behavior remains intact — it still performs inversion correctly.
+
+Even when device dimensions vary significantly, the VTC shape remains preserved. The inverter does not transform into another logic function; only the switching point shifts. This confirms that CMOS logic operation is stable under width variation.
+
+## Noise Margin Analysis
+
+<img width="1006" height="541" alt="image" src="https://github.com/user-attachments/assets/44a86367-8cdc-41c3-a541-4172b6094afd" />
+
+Noise margin was also evaluated across the extreme cases.
+
+Observed margins:
+
+- High-level noise margin ≈ **0.4 V**
+- Low-level noise margin ≈ **0.3 V**
+
+These margins are sufficiently large to tolerate:
+
+- Supply noise
+- Ground bounce
+- Process-induced fluctuations
+
+In all cases, valid logic 0 and logic 1 regions remain clearly defined. The inverter continues to reject noise effectively.
+
+## Final Observation
+
+<img width="519" height="169" alt="image" src="https://github.com/user-attachments/assets/4b318934-9eb6-4b5c-bd23-48dddf1009e3" />
+
+Even when sweeping from:
+
+- Strong PMOS → Weak PMOS  
+- Weak NMOS → Strong NMOS  
+
+the CMOS inverter:
+
+- Maintains proper inversion behavior
+- Preserves logic interpretation
+- Retains adequate noise margins
+
+This demonstrates that CMOS inverter operation is largely insensitive to significant device size variations.
+---
